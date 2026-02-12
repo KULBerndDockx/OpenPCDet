@@ -58,7 +58,14 @@ ENV OpenCV_DIR=/usr/share/OpenCV
 
 
 # PyTorch for CUDA 11.6
-RUN pip3 install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu116
+#RUN pip3 install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
+
+#RUN pip3 install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.0 --extra-index-url https://download.pytorch.org/whl/cu116
+
+RUN pip3 install typing-extensions==4.7.1 && \
+    pip3 install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.0 \
+    --extra-index-url https://download.pytorch.org/whl/cu116
+
 ENV TORCH_CUDA_ARCH_LIST="3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6+PTX"
     
 # OpenPCDet
