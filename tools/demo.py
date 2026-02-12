@@ -2,17 +2,10 @@ import argparse
 import glob
 from pathlib import Path
 
-try:
-    import open3d
-    from visual_utils import open3d_vis_utils as V
-    OPEN3D_FLAG = True
-except:
-    import mayavi.mlab as mlab
-    from visual_utils import visualize_utils as V
-    OPEN3D_FLAG = False
-
 import numpy as np
 import torch
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 
 from pcdet.config import cfg, cfg_from_yaml_file
 from pcdet.datasets import DatasetTemplate
@@ -60,6 +53,78 @@ class DemoDataset(DatasetTemplate):
         return data_dict
 
 
+def draw_bev_image(points, pred_boxes, pred_scores, pred_labels, class_names, save_path,
+                   score_thresh=0.3, point_range=(-50, -50, 50, 50)):
+    """
+    Draw bird's-eye view of point cloud with 3D bounding boxes and save as image.
+    """
+    fig, ax = plt.subplots(1, 1, figsize=(10, 10), dpi=150)
+
+    # Filter points within range
+    mask = (points[:, 0] > point_range[0]) & (points[:, 0] < point_range[2]) & \
+           (points[:, 1] > point_range[1]) & (points[:, 1] < point_range[3])
+    points = points[mask]
+
+    # Plot points (BEV: x=forward, y=left)
+    ax.scatter(points[:, 1], points[:, 0], s=0.1, c='white', alpha=0.5)
+
+    # Colors for different classes
+    colors = ['lime', 'cyan', 'yellow', 'red', 'magenta', 'orange']
+
+    # Draw boxes
+    if pred_boxes is not None:
+        for i in range(len(pred_boxes)):
+            if pred_scores[i] < score_thresh:
+                continue
+            box = pred_boxes[i]
+            x, y, z, dx, dy, dz, heading = box
+            label = int(pred_labels[i])
+            color = colors[(label - 1) % len(colors)]
+
+            # Create rotated rectangle (BEV: swap x/y for plotting)
+            corners = get_box_corners_2d(x, y, dx, dy, heading)
+            polygon = plt.Polygon(corners[:, [1, 0]], fill=False, edgecolor=color, linewidth=1.5)
+            ax.add_patch(polygon)
+
+            # Add label text
+            label_name = class_names[label - 1] if label <= len(class_names) else str(label)
+            ax.text(y, x, f'{label_name}\n{pred_scores[i]:.2f}',
+                    color=color, fontsize=5, ha='center', va='bottom')
+
+    ax.set_xlim(point_range[1], point_range[3])
+    ax.set_ylim(point_range[0], point_range[2])
+    ax.set_facecolor('black')
+    ax.set_aspect('equal')
+    ax.set_xlabel('Y (m)')
+    ax.set_ylabel('X (m)')
+    ax.set_title('Bird\'s Eye View')
+    fig.tight_layout()
+    fig.savefig(save_path, bbox_inches='tight', facecolor='black')
+    plt.close(fig)
+
+
+def get_box_corners_2d(cx, cy, dx, dy, heading):
+    """Get 4 corners of a rotated 2D box."""
+    cos_h = np.cos(heading)
+    sin_h = np.sin(heading)
+    half_dx = dx / 2
+    half_dy = dy / 2
+
+    corners = np.array([
+        [-half_dx, -half_dy],
+        [ half_dx, -half_dy],
+        [ half_dx,  half_dy],
+        [-half_dx,  half_dy],
+    ])
+
+    rot = np.array([[cos_h, -sin_h],
+                    [sin_h,  cos_h]])
+    corners = corners @ rot.T
+    corners[:, 0] += cx
+    corners[:, 1] += cy
+    return corners
+
+
 def parse_config():
     parser = argparse.ArgumentParser(description='arg parser')
     parser.add_argument('--cfg_file', type=str, default='cfgs/kitti_models/second.yaml',
@@ -90,22 +155,31 @@ def main():
     model.load_params_from_file(filename=args.ckpt, logger=logger, to_cpu=True)
     model.cuda()
     model.eval()
+
+    output_dir = Path('/OpenPCDet/output/demo_images')
+    output_dir.mkdir(parents=True, exist_ok=True)
+
     with torch.no_grad():
         for idx, data_dict in enumerate(demo_dataset):
-            logger.info(f'Visualized sample index: \t{idx + 1}')
+            logger.info(f'Processing sample index: \t{idx + 1}')
             data_dict = demo_dataset.collate_batch([data_dict])
             load_data_to_gpu(data_dict)
             pred_dicts, _ = model.forward(data_dict)
 
-            V.draw_scenes(
-                points=data_dict['points'][:, 1:], ref_boxes=pred_dicts[0]['pred_boxes'],
-                ref_scores=pred_dicts[0]['pred_scores'], ref_labels=pred_dicts[0]['pred_labels']
-            )
+            points = data_dict['points'][:, 1:].cpu().numpy()
+            pred_boxes = pred_dicts[0]['pred_boxes'].cpu().numpy()
+            pred_scores = pred_dicts[0]['pred_scores'].cpu().numpy()
+            pred_labels = pred_dicts[0]['pred_labels'].cpu().numpy()
 
-            if not OPEN3D_FLAG:
-                mlab.show(stop=True)
+            sample_name = Path(demo_dataset.sample_file_list[idx]).stem
+            save_path = output_dir / f'{sample_name}.png'
 
-    logger.info('Demo done.')
+            draw_bev_image(points, pred_boxes, pred_scores, pred_labels,
+                           cfg.CLASS_NAMES, save_path, score_thresh=0.3)
+
+            logger.info(f'  Saved BEV image -> {save_path}')
+
+    logger.info(f'Demo done. Images saved to {output_dir}')
 
 
 if __name__ == '__main__':
