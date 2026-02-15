@@ -8,6 +8,8 @@ venv/
 *.idea/
 *.so
 *.yaml
+!tools/cfgs/**/*.yaml
+!pcdet/**/*.yaml
 *.sh
 *.pth
 *.pkl
