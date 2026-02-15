@@ -89,8 +89,6 @@ class PointPillar_TENT(PointPillar):
                 module.train()  # Use batch statistics
                 # Prevent running stats from being updated during adaptation
                 module.track_running_stats = False
-                module.running_mean = None
-                module.running_var = None
                 if module.affine:
                     module.weight.requires_grad_(True)
                     module.bias.requires_grad_(True)
