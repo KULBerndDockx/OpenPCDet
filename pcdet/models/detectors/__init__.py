@@ -2,6 +2,7 @@ from .detector3d_template import Detector3DTemplate
 from .PartA2_net import PartA2Net
 from .point_rcnn import PointRCNN
 from .pointpillar import PointPillar
+from .pointpillar_tent import PointPillar_TENT
 from .pv_rcnn import PVRCNN
 from .second_net import SECONDNet
 from .second_net_iou import SECONDNetIoU
@@ -22,6 +23,7 @@ __all__ = {
     'PartA2Net': PartA2Net,
     'PVRCNN': PVRCNN,
     'PointPillar': PointPillar,
+    'PointPillar_TENT': PointPillar_TENT,
     'PointRCNN': PointRCNN,
     'SECONDNetIoU': SECONDNetIoU,
     'CaDDN': CaDDN,
