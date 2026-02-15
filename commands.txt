@@ -1,3 +1,4 @@
+Demo met pointpillar runnen
 python demo.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/pointpillar.yaml \
     --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth \
     --data_path /OpenPCDet/datasets/kitti/testing/velodyne
@@ -5,10 +6,15 @@ python demo.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/pointpillar.yaml \
 
 python demo.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/pointpillar.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --data_path /OpenPCDet/datasets/kitti/testing/velodyne
 
-${CONFIG_FILE} = /OpenPCDet/tools/cfgs/kitti_models/pointpillar.yaml
 
-
+algemeen test runnen
 python test.py --cfg_file ${CONFIG_FILE} --batch_size ${BATCH_SIZE} --ckpt ${CKPT}
 
-python test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/pointpillar.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --data_path /OpenPCDet/datasets/kitti/testing/velodyne
+test runnen met pointpillar
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/pointpillar.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth 
 
+test runnen met second
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth 
+
+test runnen met poitrcnn
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/pointrcnn.yaml --ckpt /OpenPCDet/pcdet/models/pth/PointRCNN.pth 
