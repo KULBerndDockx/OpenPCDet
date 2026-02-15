@@ -52,9 +52,10 @@ MODEL:
 
     TENT:
         ENABLED: True
-        LR: 0.001
+        LR: 0.00001
         STEPS: 1
         EPISODIC: True
+        ADAPT_MODULES: ['backbone_2d']
 
     VFE:
         NAME: PillarVFE
