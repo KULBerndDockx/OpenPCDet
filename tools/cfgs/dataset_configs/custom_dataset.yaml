@@ -1,7 +1,7 @@
-DATASET: 'CustomDataset'
-DATA_PATH: '../data/custom'
+DATASET: 'erod'
+DATA_PATH: '/OpenPCDet/erod'
 
-POINT_CLOUD_RANGE: [-75.2, -75.2, -2, 75.2, 75.2, 4]
+POINT_CLOUD_RANGE: [-75.2, -75.2, -4, 75.2, 75.2, 4]
 
 MAP_CLASS_TO_KITTI: {
     'Vehicle': 'Car',

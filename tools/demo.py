@@ -14,7 +14,7 @@ from pcdet.utils import common_utils
 
 
 class DemoDataset(DatasetTemplate):
-    def __init__(self, dataset_cfg, class_names, training=True, root_path=None, logger=None, ext='.bin'):
+    def __init__(self, dataset_cfg, class_names, training=True, root_path=None, logger=None, ext='.npy'):
         """
         Args:
             root_path:
@@ -54,16 +54,27 @@ class DemoDataset(DatasetTemplate):
 
 
 def draw_bev_image(points, pred_boxes, pred_scores, pred_labels, class_names, save_path,
-                   score_thresh=0.3, point_range=(-50, -50, 50, 50)):
+                   score_thresh=0.3, point_range=(-50, -50, 50, 50), show_realtime=False,
+                   fig_ax=None):
     """
-    Draw bird's-eye view of point cloud with 3D bounding boxes and save as image.
+    Draw bird's-eye view of point cloud. If `show_realtime` is False, saves image to
+    `save_path` (like before). If `show_realtime` is True, updates or creates a
+    matplotlib figure for realtime display using `fig_ax` (tuple of fig, ax).
     """
-    fig, ax = plt.subplots(1, 1, figsize=(10, 10), dpi=150)
 
     # Filter points within range
     mask = (points[:, 0] > point_range[0]) & (points[:, 0] < point_range[2]) & \
            (points[:, 1] > point_range[1]) & (points[:, 1] < point_range[3])
     points = points[mask]
+
+    # Prepare figure/axis (reuse if provided)
+    if fig_ax is None:
+        fig, ax = plt.subplots(1, 1, figsize=(10, 10), dpi=150)
+        created_fig = True
+    else:
+        fig, ax = fig_ax
+        ax.clear()
+        created_fig = False
 
     # Plot points (BEV: x=forward, y=left)
     ax.scatter(points[:, 1], points[:, 0], s=0.1, c='white', alpha=0.5)
@@ -99,8 +110,18 @@ def draw_bev_image(points, pred_boxes, pred_scores, pred_labels, class_names, sa
     ax.set_ylabel('X (m)')
     ax.set_title('Bird\'s Eye View')
     fig.tight_layout()
-    fig.savefig(save_path, bbox_inches='tight', facecolor='black')
-    plt.close(fig)
+
+    if show_realtime:
+        fig.canvas.draw()
+        fig.canvas.flush_events()
+        plt.pause(0.001)
+        return (fig, ax)
+    else:
+        if save_path is not None:
+            fig.savefig(save_path, facecolor='black')
+        if created_fig:
+            plt.close(fig)
+        return None
 
 
 def get_box_corners_2d(cx, cy, dx, dy, heading):
@@ -133,6 +154,8 @@ def parse_config():
                         help='specify the point cloud data file or directory')
     parser.add_argument('--ckpt', type=str, default=None, help='specify the pretrained model')
     parser.add_argument('--ext', type=str, default='.bin', help='specify the extension of your point cloud data file')
+    parser.add_argument('--realtime', action='store_true', default=False,
+                        help='show BEV images in realtime instead of saving to png')
 
     args = parser.parse_args()
 
@@ -159,6 +182,13 @@ def main():
     output_dir = Path('/OpenPCDet/output/demo_images')
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    # Setup realtime display if requested
+    fig_ax = None
+    if args.realtime:
+        plt.ion()
+        fig, ax = plt.subplots(1, 1, figsize=(10, 10), dpi=150)
+        fig_ax = (fig, ax)
+
     with torch.no_grad():
         for idx, data_dict in enumerate(demo_dataset):
             logger.info(f'Processing sample index: \t{idx + 1}')
@@ -174,10 +204,20 @@ def main():
             sample_name = Path(demo_dataset.sample_file_list[idx]).stem
             save_path = output_dir / f'{sample_name}.png'
 
-            draw_bev_image(points, pred_boxes, pred_scores, pred_labels,
-                           cfg.CLASS_NAMES, save_path, score_thresh=0.3)
+            if args.realtime:
+                # update the existing figure
+                fig_ax = draw_bev_image(points, pred_boxes, pred_scores, pred_labels,
+                                       cfg.CLASS_NAMES, None, score_thresh=0.3,
+                                       show_realtime=True, fig_ax=fig_ax)
+                logger.info(f'  Displaying BEV image realtime -> {sample_name}')
+            else:
+                draw_bev_image(points, pred_boxes, pred_scores, pred_labels,
+                               cfg.CLASS_NAMES, save_path, score_thresh=0.3)
+                logger.info(f'  Saved BEV image -> {save_path}')
 
-            logger.info(f'  Saved BEV image -> {save_path}')
+    if args.realtime:
+        plt.ioff()
+        plt.show()
 
     logger.info(f'Demo done. Images saved to {output_dir}')
 
