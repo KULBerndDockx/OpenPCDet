@@ -1,0 +1,26 @@
+{
+    "classes": [
+        {
+            "name": "Car",
+            "id": 0,
+            "color": "#ff0000"
+        },
+        {
+            "name": "Cyclist",
+            "id": 1,
+            "color": "#000045"
+        },
+        {
+            "name": "Pedestrian",
+            "id": 2,
+            "color": "#ffff00"
+        }
+    ],
+    "default": 0,
+    "type": "object_detection",
+    "format": "centroid_abs",
+    "created_with": {
+        "name": "labelCloud",
+        "version": "1.1.1"
+    }
+}
