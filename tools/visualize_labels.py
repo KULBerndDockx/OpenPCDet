@@ -203,12 +203,11 @@ def main():
         # Try to find a matching label file
         label_file = label_path / f'{frame_id}.txt' if frame_id else None
         if label_file is None or not label_file.exists():
-            print(f'[{stem}]  No label file found (frame_id={frame_id}), '
-                  'drawing points only.')
-            gt_boxes, gt_names = np.zeros((0, 7), dtype=np.float32), []
-        else:
-            gt_boxes, gt_names = parse_label_file(label_file)
-            print(f'[{stem}]  Loaded {len(gt_names)} GT box(es) from {label_file.name}')
+            print(f'[{stem}]  No label file found (frame_id={frame_id}), skipping.')
+            continue
+        
+        gt_boxes, gt_names = parse_label_file(label_file)
+        print(f'[{stem}]  Loaded {len(gt_names)} GT box(es) from {label_file.name}')
 
         # Load points
         if args.ext == '.bin':
