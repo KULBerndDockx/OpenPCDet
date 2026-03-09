@@ -275,9 +275,10 @@ if __name__ == '__main__':
 
         dataset_cfg = EasyDict(yaml.safe_load(open(sys.argv[2])))
         ROOT_DIR = (Path(__file__).resolve().parent / '../../../').resolve()
+        data_path = Path(dataset_cfg.DATA_PATH)
         create_custom_infos(
             dataset_cfg=dataset_cfg,
-            class_names=['Vehicle', 'Pedestrian', 'Cyclist'],
-            data_path=ROOT_DIR / 'data' / 'custom',
-            save_path=ROOT_DIR / 'data' / 'custom',
+            class_names=['Car', 'Pedestrian', 'Cyclist'],
+            data_path=data_path,
+            save_path=data_path,
         )

@@ -13,6 +13,8 @@ import argparse
 import glob
 import re
 from pathlib import Path
+from functools import partial
+from multiprocessing import Pool, cpu_count
 
 import numpy as np
 import matplotlib
@@ -45,13 +47,17 @@ def get_box_corners_2d(cx, cy, dx, dy, heading):
 
 
 def draw_bev_image(points, gt_boxes, gt_names, save_path,
-                   point_range=(-50, -50, 50, 50)):
+                   point_range=(-50, -50, 50, 50), z_range=None):
     """
     Draw bird's-eye view of point cloud with ground-truth boxes.
+    z_range: optional (z_min, z_max) tuple to filter points by height.
     """
-    # Filter points within range
+    # Filter points within XY range
     mask = ((points[:, 0] > point_range[0]) & (points[:, 0] < point_range[2]) &
             (points[:, 1] > point_range[1]) & (points[:, 1] < point_range[3]))
+    # Filter points within Z range
+    if z_range is not None:
+        mask &= (points[:, 2] >= z_range[0]) & (points[:, 2] <= z_range[1])
     points = points[mask]
 
     fig, ax = plt.subplots(1, 1, figsize=(10, 10), dpi=150)
@@ -171,6 +177,31 @@ def extract_frame_id(filename_stem):
     return None
 
 
+# ── Worker function (runs in a subprocess) ───────────────────────────────────
+
+def _process_one(pc_file, label_dir, output_dir, ext, z_range):
+    """Load one point cloud + label, render BEV, save PNG. Returns a status string."""
+    stem = Path(pc_file).stem
+    frame_id = extract_frame_id(stem)
+
+    label_file = Path(label_dir) / f'{frame_id}.txt' if frame_id else None
+    if label_file is None or not label_file.exists():
+        return None  # skip silently
+
+    gt_boxes, gt_names = parse_label_file(label_file)
+
+    if ext == '.bin':
+        points = np.fromfile(pc_file, dtype=np.float32).reshape(-1, 4)
+    elif ext == '.npy':
+        points = np.load(pc_file)
+    else:
+        raise ValueError(f'Unsupported extension: {ext}')
+
+    save_path = Path(output_dir) / f'{stem}.png'
+    draw_bev_image(points, gt_boxes, gt_names, save_path, z_range=z_range)
+    return f'[{stem}]  {len(gt_names)} GT box(es) → {save_path}'
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -185,6 +216,12 @@ def main():
     parser.add_argument('--output_dir', type=str,
                         default='/OpenPCDet/output/gt_images',
                         help='Where to save the BEV images')
+    parser.add_argument('--z_min', type=float, default=None,
+                        help='Min height (Z) of points to plot')
+    parser.add_argument('--z_max', type=float, default=None,
+                        help='Max height (Z) of points to plot')
+    parser.add_argument('--workers', type=int, default=None,
+                        help='Number of parallel workers (default: CPU count)')
     args = parser.parse_args()
 
     data_path = Path(args.data_path)
@@ -192,36 +229,30 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    z_range = None
+    if args.z_min is not None or args.z_max is not None:
+        z_range = (args.z_min if args.z_min is not None else -float('inf'),
+                   args.z_max if args.z_max is not None else  float('inf'))
+
     # Gather point cloud files
     pc_files = sorted(glob.glob(str(data_path / f'*{args.ext}')))
     print(f'Found {len(pc_files)} point cloud files in {data_path}')
 
-    for pc_file in pc_files:
-        stem = Path(pc_file).stem
-        frame_id = extract_frame_id(stem)
+    num_workers = args.workers if args.workers else min(cpu_count(), len(pc_files), 16)
+    worker_fn = partial(_process_one,
+                        label_dir=str(label_path),
+                        output_dir=str(output_dir),
+                        ext=args.ext,
+                        z_range=z_range)
 
-        # Try to find a matching label file
-        label_file = label_path / f'{frame_id}.txt' if frame_id else None
-        if label_file is None or not label_file.exists():
-            print(f'[{stem}]  No label file found (frame_id={frame_id}), skipping.')
-            continue
-        
-        gt_boxes, gt_names = parse_label_file(label_file)
-        print(f'[{stem}]  Loaded {len(gt_names)} GT box(es) from {label_file.name}')
+    done = 0
+    with Pool(processes=num_workers) as pool:
+        for result in pool.imap_unordered(worker_fn, pc_files):
+            if result is not None:
+                done += 1
+                print(result)
 
-        # Load points
-        if args.ext == '.bin':
-            points = np.fromfile(pc_file, dtype=np.float32).reshape(-1, 4)
-        elif args.ext == '.npy':
-            points = np.load(pc_file)
-        else:
-            raise ValueError(f'Unsupported extension: {args.ext}')
-
-        save_path = output_dir / f'{stem}.png'
-        draw_bev_image(points, gt_boxes, gt_names, save_path)
-        print(f'  → Saved {save_path}')
-
-    print(f'\nDone. GT images saved to {output_dir}')
+    print(f'\nDone. {done} GT images saved to {output_dir}  ({num_workers} workers)')
 
 
 if __name__ == '__main__':

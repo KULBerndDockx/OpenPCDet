@@ -4,8 +4,11 @@ from pathlib import Path
 
 import numpy as np
 import torch
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+from concurrent.futures import ProcessPoolExecutor
 
 from pcdet.config import cfg, cfg_from_yaml_file
 from pcdet.datasets import DatasetTemplate
@@ -41,6 +44,9 @@ class DemoDataset(DatasetTemplate):
             points = np.fromfile(self.sample_file_list[index], dtype=np.float32).reshape(-1, 4)
         elif self.ext == '.npy':
             points = np.load(self.sample_file_list[index])
+            # Normalize intensity to [0, 1] range (KITTI convention)
+            if points.shape[1] >= 4 and points[:, 3].max() > 1.0:
+                points[:, 3] = points[:, 3] / 255.0
         else:
             raise NotImplementedError
 
@@ -156,6 +162,8 @@ def parse_config():
     parser.add_argument('--ext', type=str, default='.bin', help='specify the extension of your point cloud data file')
     parser.add_argument('--realtime', action='store_true', default=False,
                         help='show BEV images in realtime instead of saving to png')
+    parser.add_argument('--workers', type=int, default=4,
+                        help='number of parallel workers for data loading and image rendering')
 
     args = parser.parse_args()
 
@@ -182,6 +190,13 @@ def main():
     output_dir = Path('/OpenPCDet/output/demo_images')
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    # Use DataLoader for parallel point cloud loading
+    dataloader = torch.utils.data.DataLoader(
+        demo_dataset, batch_size=1, shuffle=False,
+        num_workers=args.workers, collate_fn=demo_dataset.collate_batch,
+        pin_memory=True
+    )
+
     # Setup realtime display if requested
     fig_ax = None
     if args.realtime:
@@ -189,10 +204,12 @@ def main():
         fig, ax = plt.subplots(1, 1, figsize=(10, 10), dpi=150)
         fig_ax = (fig, ax)
 
+    render_pool = None if args.realtime else ProcessPoolExecutor(max_workers=args.workers)
+    futures = []
+
     with torch.no_grad():
-        for idx, data_dict in enumerate(demo_dataset):
+        for idx, data_dict in enumerate(dataloader):
             logger.info(f'Processing sample index: \t{idx + 1}')
-            data_dict = demo_dataset.collate_batch([data_dict])
             load_data_to_gpu(data_dict)
             pred_dicts, _ = model.forward(data_dict)
 
@@ -205,15 +222,24 @@ def main():
             save_path = output_dir / f'{sample_name}.png'
 
             if args.realtime:
-                # update the existing figure
                 fig_ax = draw_bev_image(points, pred_boxes, pred_scores, pred_labels,
                                        cfg.CLASS_NAMES, None, score_thresh=0.3,
                                        show_realtime=True, fig_ax=fig_ax)
                 logger.info(f'  Displaying BEV image realtime -> {sample_name}')
             else:
-                draw_bev_image(points, pred_boxes, pred_scores, pred_labels,
-                               cfg.CLASS_NAMES, save_path, score_thresh=0.3)
-                logger.info(f'  Saved BEV image -> {save_path}')
+                # Render images in parallel background processes
+                fut = render_pool.submit(
+                    draw_bev_image, points, pred_boxes, pred_scores, pred_labels,
+                    list(cfg.CLASS_NAMES), str(save_path), 0.3
+                )
+                futures.append((sample_name, fut))
+
+    # Wait for all renders to finish
+    if render_pool is not None:
+        for sample_name, fut in futures:
+            fut.result()  # raises if the worker hit an error
+            logger.info(f'  Saved BEV image -> {sample_name}')
+        render_pool.shutdown(wait=True)
 
     if args.realtime:
         plt.ioff()
