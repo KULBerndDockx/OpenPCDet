@@ -20,3 +20,20 @@ python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/pointrcnn.yaml --c
 
 Visualize ground-truth labels on point clouds as BEV images, so they can be compared side-by-side with demo.py model predictions.
 python3 visualize_labels.py --data_path /OpenPCDet/erod/points --label_path /OpenPCDet/erod/labels --ext .npy   --z_min -1.0 --z_max 3.0
+
+
+
+cd /OpenPCDet/tools && python3 demo.py --cfg_file cfgs/kitti_models/pointpillar_erod.yaml --ckpt ../pcdet/models/pth/pointpillar_7728.pth --data_path /OpenPCDet/erod/points --ext .npy
+
+
+test runnen met pointpillar erod
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/pointpillar_erod.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --set DATA_CONFIG.DATA_SPLIT.test val_small
+
+240-245 proberen
+
+
+
+
+
+Labels importeren en omzetten naar KITTI formaat
+1. Via 

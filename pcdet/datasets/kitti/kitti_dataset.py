@@ -45,6 +45,26 @@ class KittiDataset(DatasetTemplate):
                 infos = pickle.load(f)
                 kitti_infos.extend(infos)
 
+        # Respect ImageSets/<split>.txt so custom tiny splits (e.g., val_small)
+        # can evaluate only selected frames without regenerating info pkl files.
+        if self.sample_id_list is not None:
+            def id_aliases(sample_id):
+                sid = str(sample_id).strip()
+                aliases = {sid}
+                if sid.isdigit():
+                    sid_int = int(sid)
+                    aliases.update({str(sid_int), f'{sid_int:04d}', f'{sid_int:06d}'})
+                return aliases
+
+            sample_id_set = set()
+            for sid in self.sample_id_list:
+                sample_id_set.update(id_aliases(sid))
+
+            kitti_infos = [
+                info for info in kitti_infos
+                if len(id_aliases(info['point_cloud']['lidar_idx']).intersection(sample_id_set)) > 0
+            ]
+
         self.kitti_infos.extend(kitti_infos)
 
         if self.logger is not None:

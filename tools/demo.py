@@ -14,6 +14,7 @@ from pcdet.config import cfg, cfg_from_yaml_file
 from pcdet.datasets import DatasetTemplate
 from pcdet.models import build_network, load_data_to_gpu
 from pcdet.utils import common_utils
+from visual_utils.multiview_renderer import MultiViewRenderer
 
 
 class DemoDataset(DatasetTemplate):
@@ -152,6 +153,45 @@ def get_box_corners_2d(cx, cy, dx, dy, heading):
     return corners
 
 
+def _render_prediction_outputs(points, boxes, scores, labels, class_names, sample_name, output_dir):
+    """Render frame and per-instance prediction images in a worker process."""
+    renderer = MultiViewRenderer()
+
+    keep_mask = scores >= 0.3
+    boxes = boxes[keep_mask]
+    scores = scores[keep_mask]
+    labels = labels[keep_mask]
+
+    pred_names = []
+    pred_class_names = []
+    for i in range(len(boxes)):
+        label = int(labels[i])
+        cls_name = class_names[label - 1] if 1 <= label <= len(class_names) else str(label)
+        pred_class_names.append(cls_name)
+        pred_names.append(f'{cls_name} {scores[i]:.2f}')
+
+    frame_save_path = Path(output_dir) / f'{sample_name}.png'
+    renderer.draw_frame(
+        points=points,
+        boxes=boxes,
+        names=pred_names,
+        save_path=frame_save_path,
+        bev_title='BEV (X-Y)  -  Predictions',
+        front_title='Front View (X-Z)  -  Predictions'
+    )
+
+    instances_dir = Path(output_dir) / 'instances_pred'
+    renderer.render_instances(
+        points=points,
+        boxes=boxes,
+        names=pred_class_names,
+        frame_key=sample_name,
+        instances_dir=instances_dir
+    )
+
+    return sample_name
+
+
 def parse_config():
     parser = argparse.ArgumentParser(description='arg parser')
     parser.add_argument('--cfg_file', type=str, default='cfgs/kitti_models/second.yaml',
@@ -229,8 +269,14 @@ def main():
             else:
                 # Render images in parallel background processes
                 fut = render_pool.submit(
-                    draw_bev_image, points, pred_boxes, pred_scores, pred_labels,
-                    list(cfg.CLASS_NAMES), str(save_path), 0.3
+                    _render_prediction_outputs,
+                    points,
+                    pred_boxes,
+                    pred_scores,
+                    pred_labels,
+                    list(cfg.CLASS_NAMES),
+                    sample_name,
+                    str(output_dir)
                 )
                 futures.append((sample_name, fut))
 
@@ -238,7 +284,7 @@ def main():
     if render_pool is not None:
         for sample_name, fut in futures:
             fut.result()  # raises if the worker hit an error
-            logger.info(f'  Saved BEV image -> {sample_name}')
+            logger.info(f'  Saved frame + instances -> {sample_name}')
         render_pool.shutdown(wait=True)
 
     if args.realtime:
