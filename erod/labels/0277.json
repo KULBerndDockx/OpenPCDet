@@ -1,7 +1,7 @@
 {
 	"folder": "2025-11-18-13-51-31",
-	"filename": "2025-11-18-13-51-31_Velodyne-VLP-16-Data (Frame 277).pcd",
-	"path": "pointclouds\\2025-11-18-13-51-31\\2025-11-18-13-51-31_Velodyne-VLP-16-Data (Frame 277).pcd",
+	"filename": "0277.pcd",
+	"path": "pointclouds\\2025-11-18-13-51-31\\0277.pcd",
 	"objects": [
 		{
 			"name": "Car",
@@ -14,6 +14,42 @@
 				"length": 2.26,
 				"width": 4.59,
 				"height": 1.78
+			},
+			"rotations": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+			"name": "Pedestrian",
+			"centroid": {
+				"x": 2.46509388,
+				"y": 13.02604229,
+				"z": -0.48857161
+			},
+			"dimensions": {
+				"length": 0.39,
+				"width": 0.47,
+				"height": 1.6
+			},
+			"rotations": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+			"name": "Pedestrian",
+			"centroid": {
+				"x": 2.61082757,
+				"y": 11.95966122,
+				"z": -0.40825824
+			},
+			"dimensions": {
+				"length": 0.76,
+				"width": 0.27292683,
+				"height": 1.36878049
 			},
 			"rotations": {
 				"x": 0,

@@ -1,19 +1,19 @@
 {
 	"folder": "2025-11-18-13-51-31",
-	"filename": "2025-11-18-13-51-31_Velodyne-VLP-16-Data (Frame 195).pcd",
-	"path": "pointclouds\\2025-11-18-13-51-31\\2025-11-18-13-51-31_Velodyne-VLP-16-Data (Frame 195).pcd",
+	"filename": "0195.pcd",
+	"path": "pointclouds\\2025-11-18-13-51-31\\0195.pcd",
 	"objects": [
 		{
 			"name": "Car",
 			"centroid": {
-				"x": -5.66004109,
-				"y": 11.20166947,
-				"z": -0.49707172
+				"x": -5.42004109,
+				"y": 5.50166947,
+				"z": -0.37707172
 			},
 			"dimensions": {
-				"length": 1.72,
+				"length": 2.02,
 				"width": 4.65,
-				"height": 1.54
+				"height": 1.78
 			},
 			"rotations": {
 				"x": 0,

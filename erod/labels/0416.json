@@ -1,0 +1,25 @@
+{
+	"folder": "2025-11-18-13-51-31",
+	"filename": "0416.pcd",
+	"path": "pointclouds\\2025-11-18-13-51-31\\0416.pcd",
+	"objects": [
+		{
+			"name": "Car",
+			"centroid": {
+				"x": -5.19337157,
+				"y": -22.15245869,
+				"z": -0.27774054
+			},
+			"dimensions": {
+				"length": 2.41,
+				"width": 4.59,
+				"height": 1.84
+			},
+			"rotations": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		}
+	]
+}

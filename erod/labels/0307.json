@@ -1,0 +1,79 @@
+{
+	"folder": "2025-11-18-13-51-31",
+	"filename": "0307.pcd",
+	"path": "pointclouds\\2025-11-18-13-51-31\\0307.pcd",
+	"objects": [
+		{
+			"name": "Car",
+			"centroid": {
+				"x": -3.68437157,
+				"y": -27.19245869,
+				"z": -0.30774054
+			},
+			"dimensions": {
+				"length": 2.26,
+				"width": 4.59,
+				"height": 1.78
+			},
+			"rotations": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+			"name": "Pedestrian",
+			"centroid": {
+				"x": 2.315,
+				"y": 3.29,
+				"z": -0.46183732
+			},
+			"dimensions": {
+				"length": 0.62,
+				"width": 0.55,
+				"height": 1.81
+			},
+			"rotations": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+			"name": "Pedestrian",
+			"centroid": {
+				"x": 2.406,
+				"y": 2.425,
+				"z": -0.41919139
+			},
+			"dimensions": {
+				"length": 0.68,
+				"width": 0.54,
+				"height": 1.84
+			},
+			"rotations": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+			"name": "Cyclist",
+			"centroid": {
+				"x": -3.1608791,
+				"y": 27.91285516,
+				"z": -0.54
+			},
+			"dimensions": {
+				"length": 0.72,
+				"width": 1.53,
+				"height": 1.6
+			},
+			"rotations": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		}
+	]
+}
