@@ -32,8 +32,5 @@ python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/pointpillar_erod.y
 240-245 proberen
 
 
-
-
-
 Labels importeren en omzetten naar KITTI formaat
 1. Via 
