@@ -1,6 +1,7 @@
 import copy
 import pickle
 import os
+from pathlib import Path
 
 import numpy as np
 
@@ -24,12 +25,53 @@ class CustomDataset(DatasetTemplate):
         )
         self.split = self.dataset_cfg.DATA_SPLIT[self.mode]
 
-        split_dir = os.path.join(self.root_path, 'ImageSets', (self.split + '.txt'))
-        self.sample_id_list = [x.strip() for x in open(split_dir).readlines()] if os.path.exists(split_dir) else None
+        self.sample_id_list = self._load_split_ids(self.split)
 
         self.custom_infos = []
+        self._infos_by_lidar_idx = {}
+        self._active_sample_id_list = None
         self.include_data(self.mode)
+        self._build_infos_index()
         self.map_class_to_kitti = self.dataset_cfg.MAP_CLASS_TO_KITTI
+
+    def _load_split_ids(self, split_value):
+        """Load split ids from either ImageSets/<split>.txt or an absolute .txt path."""
+        if split_value is None:
+            return None
+
+        split_str = str(split_value)
+        # Absolute or explicit file path
+        split_path = Path(split_str)
+        if split_str.endswith('.txt') and split_path.exists():
+            return [x.strip() for x in split_path.read_text().splitlines() if x.strip()]
+
+        # Named split under ImageSets
+        split_file = Path(self.root_path) / 'ImageSets' / f'{split_str}.txt'
+        if split_file.exists():
+            return [x.strip() for x in split_file.read_text().splitlines() if x.strip()]
+
+        return None
+
+    def _build_infos_index(self):
+        self._infos_by_lidar_idx = {}
+        for info in self.custom_infos:
+            lidar_idx = info.get('point_cloud', {}).get('lidar_idx', None)
+            if lidar_idx is None:
+                continue
+            self._infos_by_lidar_idx[str(lidar_idx)] = info
+
+        if self.sample_id_list is not None:
+            missing_ids = [sid for sid in self.sample_id_list if sid not in self._infos_by_lidar_idx]
+            if missing_ids:
+                raise ValueError(
+                    f"Split file contains {len(self.sample_id_list)} ids, but {len(missing_ids)} ids are missing from infos. "
+                    f"Example missing ids: {missing_ids[:20]} (split={self.split})"
+                )
+
+            # Keep the full split ordering (do not silently drop ids).
+            self._active_sample_id_list = list(self.sample_id_list)
+        else:
+            self._active_sample_id_list = None
 
     def include_data(self, mode):
         self.logger.info('Loading Custom dataset.')
@@ -43,7 +85,42 @@ class CustomDataset(DatasetTemplate):
                 infos = pickle.load(f)
                 custom_infos.extend(infos)
 
-        self.custom_infos.extend(custom_infos)
+        self.custom_infos = list(custom_infos)
+
+        swap_lw = bool(self.dataset_cfg.get('SWAP_LW', False))
+        heading_in_degrees_cfg = self.dataset_cfg.get('HEADING_IN_DEGREES', None)
+
+        # Auto-detect degrees if not explicitly configured.
+        heading_in_degrees_auto = False
+        if heading_in_degrees_cfg is None:
+            for info in self.custom_infos:
+                annos = info.get('annos', None)
+                if not annos or 'gt_boxes_lidar' not in annos:
+                    continue
+                gt = np.asarray(annos['gt_boxes_lidar'])
+                if gt.size == 0 or gt.shape[1] < 7:
+                    continue
+                max_abs = float(np.max(np.abs(gt[:, 6])))
+                if max_abs > (2 * np.pi + 1.0):
+                    heading_in_degrees_auto = True
+                    break
+
+        heading_in_degrees = bool(heading_in_degrees_cfg) if heading_in_degrees_cfg is not None else heading_in_degrees_auto
+
+        if swap_lw or heading_in_degrees:
+            for info in self.custom_infos:
+                annos = info.get('annos', None)
+                if annos is None or 'gt_boxes_lidar' not in annos:
+                    continue
+                gt_boxes = np.asarray(annos['gt_boxes_lidar'])
+                if gt_boxes.size == 0:
+                    continue
+                if swap_lw and gt_boxes.shape[1] >= 5:
+                    gt_boxes[:, [3, 4]] = gt_boxes[:, [4, 3]]
+                if heading_in_degrees and gt_boxes.shape[1] >= 7:
+                    gt_boxes[:, 6] = np.deg2rad(gt_boxes[:, 6])
+                annos['gt_boxes_lidar'] = gt_boxes
+
         self.logger.info('Total samples for CUSTOM dataset: %d' % (len(custom_infos)))
 
     def get_label(self, idx):
@@ -65,8 +142,21 @@ class CustomDataset(DatasetTemplate):
     def get_lidar(self, idx):
         lidar_file = self.root_path / 'points' / ('%s.npy' % idx)
         assert lidar_file.exists()
-        point_features = np.load(lidar_file)
-        return point_features
+        points = np.load(lidar_file)
+
+        # Normalize intensity to KITTI-style [0, 1].
+        # Common custom encodings: 0-127 or 0-255.
+        if points.ndim == 2 and points.shape[1] >= 4:
+            intensity_max = float(points[:, 3].max())
+            if intensity_max > 1.0:
+                if intensity_max <= 127.5:
+                    points[:, 3] = points[:, 3] / 127.0
+                elif intensity_max <= 255.0:
+                    points[:, 3] = points[:, 3] / 255.0
+                else:
+                    points[:, 3] = points[:, 3] / max(intensity_max, 1e-6)
+
+        return points
 
     def set_split(self, split):
         super().__init__(
@@ -75,24 +165,38 @@ class CustomDataset(DatasetTemplate):
         )
         self.split = split
 
-        split_dir = self.root_path / 'ImageSets' / (self.split + '.txt')
-        self.sample_id_list = [x.strip() for x in open(split_dir).readlines()] if split_dir.exists() else None
+        self.sample_id_list = self._load_split_ids(self.split)
+        self._build_infos_index()
 
     def __len__(self):
         if self._merge_all_iters_to_one_epoch:
-            return len(self.sample_id_list) * self.total_epochs
+            base_len = len(self._active_sample_id_list) if self._active_sample_id_list is not None else len(self.custom_infos)
+            return base_len * self.total_epochs
+
+        if self._active_sample_id_list is not None:
+            return len(self._active_sample_id_list)
 
         return len(self.custom_infos)
 
     def __getitem__(self, index):
         if self._merge_all_iters_to_one_epoch:
-            index = index % len(self.custom_infos)
+            index = index % len(self)
 
-        info = copy.deepcopy(self.custom_infos[index])
-        sample_idx = info['point_cloud']['lidar_idx']
+        if self._active_sample_id_list is not None:
+            sample_idx = self._active_sample_id_list[index]
+            src_info = self._infos_by_lidar_idx.get(sample_idx, None)
+            if src_info is None:
+                raise KeyError(f"Missing info for sample_id={sample_idx}. Regenerate infos or fix ImageSets split.")
+            info = copy.deepcopy(src_info)
+            frame_id = sample_idx
+        else:
+            info = copy.deepcopy(self.custom_infos[index])
+            sample_idx = str(info['point_cloud']['lidar_idx'])
+            frame_id = sample_idx
+
         points = self.get_lidar(sample_idx)
         input_dict = {
-            'frame_id': self.sample_id_list[index],
+            'frame_id': frame_id,
             'points': points
         }
 
@@ -111,7 +215,12 @@ class CustomDataset(DatasetTemplate):
         return data_dict
 
     def evaluation(self, det_annos, class_names, **kwargs):
-        if 'annos' not in self.custom_infos[0].keys():
+        if self._active_sample_id_list is not None and len(self._active_sample_id_list) > 0:
+            first_info = self._infos_by_lidar_idx[self._active_sample_id_list[0]]
+        else:
+            first_info = self.custom_infos[0]
+
+        if 'annos' not in first_info.keys():
             return 'No ground-truth boxes for evaluation', {}
 
         def kitti_eval(eval_det_annos, eval_gt_annos, map_name_to_kitti):
@@ -130,7 +239,14 @@ class CustomDataset(DatasetTemplate):
             return ap_result_str, ap_dict
 
         eval_det_annos = copy.deepcopy(det_annos)
-        eval_gt_annos = [copy.deepcopy(info['annos']) for info in self.custom_infos]
+
+        if self._active_sample_id_list is not None:
+            eval_gt_annos = [
+                copy.deepcopy(self._infos_by_lidar_idx[sid]['annos'])
+                for sid in self._active_sample_id_list
+            ]
+        else:
+            eval_gt_annos = [copy.deepcopy(info['annos']) for info in self.custom_infos]
 
         if kwargs['eval_metric'] == 'kitti':
             ap_result_str, ap_dict = kitti_eval(eval_det_annos, eval_gt_annos, self.map_class_to_kitti)
@@ -151,6 +267,10 @@ class CustomDataset(DatasetTemplate):
             if has_label:
                 annotations = {}
                 gt_boxes_lidar, name = self.get_label(sample_idx)
+                if self.dataset_cfg.get('SWAP_LW', False) and gt_boxes_lidar.shape[1] >= 5:
+                    gt_boxes_lidar[:, [3, 4]] = gt_boxes_lidar[:, [4, 3]]
+                if self.dataset_cfg.get('HEADING_IN_DEGREES', False) and gt_boxes_lidar.shape[1] >= 7:
+                    gt_boxes_lidar[:, 6] = np.deg2rad(gt_boxes_lidar[:, 6])
                 annotations['name'] = name
                 annotations['gt_boxes_lidar'] = gt_boxes_lidar[:, :7]
                 info['annos'] = annotations

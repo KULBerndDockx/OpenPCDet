@@ -2,10 +2,15 @@ CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
 
 DATA_CONFIG: 
     _BASE_CONFIG_: cfgs/dataset_configs/custom_dataset.yaml
+        
+    # Make XY grid divisible by stride=8 when using VOXEL_SIZE=[0.1, 0.1, 0.1].
+    # 129.6 / 0.1 = 1296 -> 1296 / 8 = 162 (matches backbone feature map).
+    POINT_CLOUD_RANGE: [-64.8, -64.8, -3.0, 64.8, 64.8, 1.0]
 
-    #POINT_CLOUD_RANGE: [-39.68, 0, -1.0, 39.68, 69.12, 3.0]
-    POINT_CLOUD_RANGE: [-64.64, -64.64, -3.0, 64.64, 64.64, 1.0]
-
+    # NOTE: SECONDNet's VoxelBackBone8x expects enough Z bins so that after downsampling
+    # the encoded tensor has depth D=2. With POINT_CLOUD_RANGE z=[-3, 1] and
+    # VOXEL_SIZE z=0.15, depth collapses to D=1 and HeightCompression produces 128
+    # channels instead of 256, causing a runtime channel mismatch in BACKBONE_2D.
     DATA_PROCESSOR:
         - NAME: mask_points_and_boxes_outside_range
           REMOVE_OUTSIDE_BOXES: True
@@ -14,63 +19,38 @@ DATA_CONFIG:
           SHUFFLE_ENABLED: {
             'train': True,
             'test': False
-          }
+            }
 
         - NAME: transform_points_to_voxels
-          VOXEL_SIZE: [0.16, 0.16, 4]
-          MAX_POINTS_PER_VOXEL: 32
+          VOXEL_SIZE: [0.1, 0.1, 0.1]
+          MAX_POINTS_PER_VOXEL: 5
           MAX_NUMBER_OF_VOXELS: {
-            'train': 160000,
-            'test': 4000000
+            'train': 150000,
+            'test': 150000
           }
-    DATA_AUGMENTOR:
-        DISABLE_AUG_LIST: ['placeholder']
-        AUG_CONFIG_LIST:
-            - NAME: gt_sampling
-              USE_ROAD_PLANE: True
-              DB_INFO_PATH:
-                  - custom_dbinfos_train.pkl
-              PREPARE: {
-                 filter_by_min_points: ['Car:5', 'Pedestrian:5', 'Cyclist:5'],
-                 filter_by_difficulty: [-1],
-              }
 
-              SAMPLE_GROUPS: ['Car:15','Pedestrian:15', 'Cyclist:15']
-              NUM_POINT_FEATURES: 4
-              DATABASE_WITH_FAKELIDAR: False
-              REMOVE_EXTRA_WIDTH: [0.0, 0.0, 0.0]
-              LIMIT_WHOLE_SCENE: False
-
-            - NAME: random_world_flip
-              ALONG_AXIS_LIST: ['x']
-
-            - NAME: random_world_rotation
-              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
-
-            - NAME: random_world_scaling
-              WORLD_SCALE_RANGE: [0.95, 1.05]
 
 MODEL:
-    NAME: PointPillar
+    NAME: SECONDNet
 
     VFE:
-        NAME: PillarVFE
-        WITH_DISTANCE: False
-        USE_ABSLOTE_XYZ: True
-        USE_NORM: True
-        NUM_FILTERS: [64]
+        NAME: MeanVFE
+
+    BACKBONE_3D:
+        NAME: VoxelBackBone8x
 
     MAP_TO_BEV:
-        NAME: PointPillarScatter
-        NUM_BEV_FEATURES: 64
+        NAME: HeightCompression
+        NUM_BEV_FEATURES: 256
 
     BACKBONE_2D:
         NAME: BaseBEVBackbone
-        LAYER_NUMS: [3, 5, 5]
-        LAYER_STRIDES: [2, 2, 2]
-        NUM_FILTERS: [64, 128, 256]
-        UPSAMPLE_STRIDES: [1, 2, 4]
-        NUM_UPSAMPLE_FILTERS: [128, 128, 128]
+
+        LAYER_NUMS: [5, 5]
+        LAYER_STRIDES: [1, 2]
+        NUM_FILTERS: [128, 256]
+        UPSAMPLE_STRIDES: [1, 2]
+        NUM_UPSAMPLE_FILTERS: [256, 256]
 
     DENSE_HEAD:
         NAME: AnchorHeadSingle
@@ -88,27 +68,27 @@ MODEL:
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-1.78],
                 'align_center': False,
-                'feature_map_stride': 2,
+                'feature_map_stride': 8,
                 'matched_threshold': 0.6,
                 'unmatched_threshold': 0.45
             },
             {
                 'class_name': 'Pedestrian',
-                'anchor_sizes': [[0.6, 0.8, 1.73]],
+                'anchor_sizes': [[0.8, 0.6, 1.73]],
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-0.6],
                 'align_center': False,
-                'feature_map_stride': 2,
+                'feature_map_stride': 8,
                 'matched_threshold': 0.5,
                 'unmatched_threshold': 0.35
             },
             {
                 'class_name': 'Cyclist',
-                'anchor_sizes': [[0.6, 1.76, 1.73]],
+                'anchor_sizes': [[1.76, 0.6, 1.73]],
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-0.6],
                 'align_center': False,
-                'feature_map_stride': 2,
+                'feature_map_stride': 8,
                 'matched_threshold': 0.5,
                 'unmatched_threshold': 0.35
             }
@@ -132,7 +112,7 @@ MODEL:
 
     POST_PROCESSING:
         RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
-        SCORE_THRESH: 0.10
+        SCORE_THRESH: 0.1
         OUTPUT_RAW_SCORE: False
 
         EVAL_METRIC: kitti
@@ -140,13 +120,13 @@ MODEL:
         NMS_CONFIG:
             MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.5
-            NMS_PRE_MAXSIZE: 8192
-            NMS_POST_MAXSIZE: 1000
+            NMS_THRESH: 0.01
+            NMS_PRE_MAXSIZE: 4096
+            NMS_POST_MAXSIZE: 500
 
 
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 1
+    BATCH_SIZE_PER_GPU: 4
     NUM_EPOCHS: 80
 
     OPTIMIZER: adam_onecycle

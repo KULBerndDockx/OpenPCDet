@@ -1,17 +1,29 @@
-DATASET: 'erod'
+DATASET: 'CustomDataset'
 DATA_PATH: '/OpenPCDet/erod'
 
-POINT_CLOUD_RANGE: [-75.2, -75.2, -4, 75.2, 75.2, 4]
+# If your labels were exported as (x, y, z, width, length, height, heading)
+# instead of OpenPCDet's expected (x, y, z, length, width, height, heading),
+# set this to True. Default is False.
+SWAP_LW: False
+
+# If heading angles in your label files / infos are in degrees (e.g. 0..360),
+# set this to True so they are converted to radians.
+HEADING_IN_DEGREES: True
+
+#POINT_CLOUD_RANGE: [-75.2, -75.2, -4, 75.2, 75.2, 4]
+POINT_CLOUD_RANGE: [-64.64, -64.64, -3.0, 64.64, 64.64, 1.0]
+
 
 MAP_CLASS_TO_KITTI: {
     'Vehicle': 'Car',
+  'Car': 'Car',
     'Pedestrian': 'Pedestrian',
     'Cyclist': 'Cyclist',
 }
 
 DATA_SPLIT: {
     'train': train,
-    'test': val
+  'test': val_small
 }
 
 INFO_PATH: {

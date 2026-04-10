@@ -88,13 +88,15 @@ def get_no_evaluated_ckpt(ckpt_dir, ckpt_record_file, args):
 
 def repeat_eval_ckpt(model, test_loader, args, eval_output_dir, logger, ckpt_dir, dist_test=False):
     # evaluated ckpt record
-    ckpt_record_file = eval_output_dir / ('eval_list_%s.txt' % cfg.DATA_CONFIG.DATA_SPLIT['test'])
+    test_split_raw = cfg.DATA_CONFIG.DATA_SPLIT['test']
+    test_split_tag = Path(test_split_raw).stem if str(test_split_raw).endswith('.txt') or os.path.isabs(str(test_split_raw)) else str(test_split_raw)
+    ckpt_record_file = eval_output_dir / ('eval_list_%s.txt' % test_split_tag)
     with open(ckpt_record_file, 'a'):
         pass
 
     # tensorboard log
     if cfg.LOCAL_RANK == 0:
-        tb_log = SummaryWriter(log_dir=str(eval_output_dir / ('tensorboard_%s' % cfg.DATA_CONFIG.DATA_SPLIT['test'])))
+        tb_log = SummaryWriter(log_dir=str(eval_output_dir / ('tensorboard_%s' % test_split_tag)))
     total_time = 0
     first_eval = True
 
@@ -119,7 +121,7 @@ def repeat_eval_ckpt(model, test_loader, args, eval_output_dir, logger, ckpt_dir
         model.cuda()
 
         # start evaluation
-        cur_result_dir = eval_output_dir / ('epoch_%s' % cur_epoch_id) / cfg.DATA_CONFIG.DATA_SPLIT['test']
+        cur_result_dir = eval_output_dir / ('epoch_%s' % cur_epoch_id) / test_split_tag
         tb_dict = eval_utils.eval_one_epoch(
             cfg, args, model, test_loader, cur_epoch_id, logger, dist_test=dist_test,
             result_dir=cur_result_dir
@@ -137,6 +139,13 @@ def repeat_eval_ckpt(model, test_loader, args, eval_output_dir, logger, ckpt_dir
 
 def main():
     args, cfg = parse_config()
+
+    # Allow passing an absolute split-file path via
+    # `--set DATA_CONFIG.DATA_SPLIT.test /abs/path/to/split.txt`.
+    # That string must NOT be used directly in output paths, because pathlib
+    # treats absolute paths as path roots and will discard the intended prefix.
+    test_split_raw = cfg.DATA_CONFIG.DATA_SPLIT['test']
+    test_split_tag = Path(test_split_raw).stem if str(test_split_raw).endswith('.txt') or os.path.isabs(str(test_split_raw)) else str(test_split_raw)
 
     if args.infer_time:
         os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
@@ -167,7 +176,7 @@ def main():
     if not args.eval_all:
         num_list = re.findall(r'\d+', args.ckpt) if args.ckpt is not None else []
         epoch_id = num_list[-1] if num_list.__len__() > 0 else 'no_number'
-        eval_output_dir = eval_output_dir / ('epoch_%s' % epoch_id) / cfg.DATA_CONFIG.DATA_SPLIT['test']
+        eval_output_dir = eval_output_dir / ('epoch_%s' % epoch_id) / test_split_tag
     else:
         eval_output_dir = eval_output_dir / 'eval_all_default'
 

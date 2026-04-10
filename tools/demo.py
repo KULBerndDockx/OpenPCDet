@@ -153,11 +153,11 @@ def get_box_corners_2d(cx, cy, dx, dy, heading):
     return corners
 
 
-def _render_prediction_outputs(points, boxes, scores, labels, class_names, sample_name, output_dir):
+def _render_prediction_outputs(points, boxes, scores, labels, class_names, sample_name, output_dir, score_thresh):
     """Render frame and per-instance prediction images in a worker process."""
     renderer = MultiViewRenderer()
 
-    keep_mask = scores >= 0.3
+    keep_mask = scores >= score_thresh
     boxes = boxes[keep_mask]
     scores = scores[keep_mask]
     labels = labels[keep_mask]
@@ -204,6 +204,12 @@ def parse_config():
                         help='show BEV images in realtime instead of saving to png')
     parser.add_argument('--workers', type=int, default=4,
                         help='number of parallel workers for data loading and image rendering')
+    parser.add_argument('--score_thresh', type=float, default=None,
+                        help='override MODEL.POST_PROCESSING.SCORE_THRESH at runtime')
+    parser.add_argument('--nms_thresh', type=float, default=None,
+                        help='override MODEL.POST_PROCESSING.NMS_CONFIG.NMS_THRESH at runtime')
+    parser.add_argument('--nms_post_maxsize', type=int, default=None,
+                        help='override MODEL.POST_PROCESSING.NMS_CONFIG.NMS_POST_MAXSIZE at runtime')
 
     args = parser.parse_args()
 
@@ -214,6 +220,16 @@ def parse_config():
 
 def main():
     args, cfg = parse_config()
+
+    if args.score_thresh is not None:
+        cfg.MODEL.POST_PROCESSING.SCORE_THRESH = args.score_thresh
+    if args.nms_thresh is not None:
+        cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_THRESH = args.nms_thresh
+    if args.nms_post_maxsize is not None:
+        cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_POST_MAXSIZE = args.nms_post_maxsize
+
+    render_score_thresh = float(cfg.MODEL.POST_PROCESSING.SCORE_THRESH)
+
     logger = common_utils.create_logger()
     logger.info('-----------------Quick Demo of OpenPCDet-------------------------')
     demo_dataset = DemoDataset(
@@ -263,7 +279,7 @@ def main():
 
             if args.realtime:
                 fig_ax = draw_bev_image(points, pred_boxes, pred_scores, pred_labels,
-                                       cfg.CLASS_NAMES, None, score_thresh=0.3,
+                                       cfg.CLASS_NAMES, None, score_thresh=render_score_thresh,
                                        show_realtime=True, fig_ax=fig_ax)
                 logger.info(f'  Displaying BEV image realtime -> {sample_name}')
             else:
@@ -276,7 +292,8 @@ def main():
                     pred_labels,
                     list(cfg.CLASS_NAMES),
                     sample_name,
-                    str(output_dir)
+                    str(output_dir),
+                    render_score_thresh
                 )
                 futures.append((sample_name, fut))
 
