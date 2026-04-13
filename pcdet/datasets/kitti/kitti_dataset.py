@@ -377,7 +377,83 @@ class KittiDataset(DatasetTemplate):
 
         from .kitti_object_eval_python import eval as kitti_eval
 
+        def _sanitize_det_annos(annos_list):
+            sanitized = []
+            numeric_keys_1d = ('score', 'alpha', 'rotation_y')
+            numeric_keys_2d = ('bbox', 'dimensions', 'location', 'boxes_lidar')
+            for anno in annos_list:
+                if anno is None:
+                    sanitized.append(anno)
+                    continue
+
+                scores = anno.get('score', None)
+                if scores is None:
+                    sanitized.append(anno)
+                    continue
+
+                scores = np.asarray(scores)
+                num_det = scores.shape[0]
+                if num_det == 0:
+                    sanitized.append(anno)
+                    continue
+
+                mask = np.isfinite(scores)
+
+                dims = anno.get('dimensions', None)
+                if dims is not None:
+                    dims = np.asarray(dims)
+                    if dims.ndim == 2 and dims.shape[0] == num_det:
+                        mask &= np.isfinite(dims).all(axis=1)
+                        mask &= (dims > 0).all(axis=1)
+
+                loc = anno.get('location', None)
+                if loc is not None:
+                    loc = np.asarray(loc)
+                    if loc.ndim == 2 and loc.shape[0] == num_det:
+                        mask &= np.isfinite(loc).all(axis=1)
+
+                rot_y = anno.get('rotation_y', None)
+                if rot_y is not None:
+                    rot_y = np.asarray(rot_y)
+                    if rot_y.ndim == 1 and rot_y.shape[0] == num_det:
+                        mask &= np.isfinite(rot_y)
+
+                alpha = anno.get('alpha', None)
+                if alpha is not None:
+                    alpha = np.asarray(alpha)
+                    if alpha.ndim == 1 and alpha.shape[0] == num_det:
+                        mask &= np.isfinite(alpha)
+
+                bbox = anno.get('bbox', None)
+                if bbox is not None:
+                    bbox = np.asarray(bbox)
+                    if bbox.ndim == 2 and bbox.shape[0] == num_det:
+                        mask &= np.isfinite(bbox).all(axis=1)
+
+                # Apply mask to all per-detection fields we know about.
+                if not mask.all():
+                    new_anno = dict(anno)
+                    for k in numeric_keys_1d:
+                        if k in new_anno and new_anno[k] is not None:
+                            arr = np.asarray(new_anno[k])
+                            if arr.ndim == 1 and arr.shape[0] == num_det:
+                                new_anno[k] = arr[mask]
+                    for k in numeric_keys_2d:
+                        if k in new_anno and new_anno[k] is not None:
+                            arr = np.asarray(new_anno[k])
+                            if arr.ndim == 2 and arr.shape[0] == num_det:
+                                new_anno[k] = arr[mask]
+                    if 'name' in new_anno and new_anno['name'] is not None:
+                        names = np.asarray(new_anno['name'])
+                        if names.ndim == 1 and names.shape[0] == num_det:
+                            new_anno['name'] = names[mask]
+                    sanitized.append(new_anno)
+                else:
+                    sanitized.append(anno)
+            return sanitized
+
         eval_det_annos = copy.deepcopy(det_annos)
+        eval_det_annos = _sanitize_det_annos(eval_det_annos)
         eval_gt_annos = [copy.deepcopy(info['annos']) for info in self.kitti_infos]
         ap_result_str, ap_dict = kitti_eval.get_official_eval_result(eval_gt_annos, eval_det_annos, class_names)
 

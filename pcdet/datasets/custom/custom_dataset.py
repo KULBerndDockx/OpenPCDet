@@ -88,7 +88,9 @@ class CustomDataset(DatasetTemplate):
         self.custom_infos = list(custom_infos)
 
         swap_lw = bool(self.dataset_cfg.get('SWAP_LW', False))
+        swap_lw_if_dy_gt_dx = bool(self.dataset_cfg.get('SWAP_LW_IF_DY_GT_DX', False))
         heading_in_degrees_cfg = self.dataset_cfg.get('HEADING_IN_DEGREES', None)
+        heading_offset_deg = float(self.dataset_cfg.get('HEADING_OFFSET_DEG', 0.0))
 
         # Auto-detect degrees if not explicitly configured.
         heading_in_degrees_auto = False
@@ -107,7 +109,22 @@ class CustomDataset(DatasetTemplate):
 
         heading_in_degrees = bool(heading_in_degrees_cfg) if heading_in_degrees_cfg is not None else heading_in_degrees_auto
 
-        if swap_lw or heading_in_degrees:
+        transform_cfg = self.dataset_cfg.get('LIDAR_COORD_TRANSFORM', None)
+
+        def _norm_transform_cfg(cfg):
+            if cfg is None or not bool(cfg.get('ENABLE', False)):
+                return None
+            t = cfg.get('TRANSLATION', [0.0, 0.0, 0.0])
+            return {
+                'ROT_Z_DEG': float(cfg.get('ROT_Z_DEG', 0.0)),
+                'FLIP_X': bool(cfg.get('FLIP_X', False)),
+                'FLIP_Y': bool(cfg.get('FLIP_Y', False)),
+                'TRANSLATION': [float(t[0]), float(t[1]), float(t[2])],
+            }
+
+        desired_tf = _norm_transform_cfg(transform_cfg)
+
+        if swap_lw or swap_lw_if_dy_gt_dx or heading_in_degrees or (abs(heading_offset_deg) > 1e-6):
             for info in self.custom_infos:
                 annos = info.get('annos', None)
                 if annos is None or 'gt_boxes_lidar' not in annos:
@@ -115,16 +132,166 @@ class CustomDataset(DatasetTemplate):
                 gt_boxes = np.asarray(annos['gt_boxes_lidar'])
                 if gt_boxes.size == 0:
                     continue
-                if swap_lw and gt_boxes.shape[1] >= 5:
-                    gt_boxes[:, [3, 4]] = gt_boxes[:, [4, 3]]
+
+                pc_info = info.get('point_cloud', {})
+                applied = pc_info.get('annos_applied', {}) if isinstance(pc_info, dict) else {}
+
+                if gt_boxes.shape[1] >= 5:
+                    if swap_lw:
+                        if not bool(applied.get('swap_lw', False)):
+                            gt_boxes[:, [3, 4]] = gt_boxes[:, [4, 3]]
+                            applied['swap_lw'] = True
+                    elif swap_lw_if_dy_gt_dx:
+                        if not bool(applied.get('swap_lw_if_dy_gt_dx', False)):
+                            mask = gt_boxes[:, 4] > gt_boxes[:, 3]
+                            if np.any(mask):
+                                tmp = gt_boxes[mask, 3].copy()
+                                gt_boxes[mask, 3] = gt_boxes[mask, 4]
+                                gt_boxes[mask, 4] = tmp
+                            applied['swap_lw_if_dy_gt_dx'] = True
                 if heading_in_degrees and gt_boxes.shape[1] >= 7:
-                    gt_boxes[:, 6] = np.deg2rad(gt_boxes[:, 6])
+                    if bool(applied.get('heading_degrees_converted', False)):
+                        pass
+                    else:
+                        gt_boxes[:, 6] = np.deg2rad(gt_boxes[:, 6])
+                        applied['heading_degrees_converted'] = True
+                if abs(heading_offset_deg) > 1e-6 and gt_boxes.shape[1] >= 7:
+                    if 'heading_offset_deg' in applied:
+                        # Already applied during infos generation; changing offset requires regenerating infos.
+                        if float(applied.get('heading_offset_deg')) != float(heading_offset_deg):
+                            raise ValueError(
+                                f"Infos GT boxes already have HEADING_OFFSET_DEG={applied.get('heading_offset_deg')}, "
+                                f"but config requests HEADING_OFFSET_DEG={heading_offset_deg}. Regenerate infos." 
+                            )
+                    else:
+                        gt_boxes[:, 6] = gt_boxes[:, 6] + np.deg2rad(heading_offset_deg)
+                        applied['heading_offset_deg'] = float(heading_offset_deg)
                 annos['gt_boxes_lidar'] = gt_boxes
+
+                if isinstance(pc_info, dict):
+                    pc_info['annos_applied'] = applied
+                    info['point_cloud'] = pc_info
+
+        # Optional coordinate transform applied to GT boxes stored in infos.
+        # This allows evaluating a KITTI-trained checkpoint on a custom dataset
+        # that uses a different LiDAR coordinate frame, without changing model weights.
+        if transform_cfg is not None and bool(transform_cfg.get('ENABLE', False)):
+            for info in self.custom_infos:
+                annos = info.get('annos', None)
+                if annos is None or 'gt_boxes_lidar' not in annos:
+                    continue
+                gt_boxes = np.asarray(annos['gt_boxes_lidar'])
+                if gt_boxes.size == 0:
+                    continue
+
+                pc_info = info.get('point_cloud', {})
+                applied = pc_info.get('annos_applied', {}) if isinstance(pc_info, dict) else {}
+                already_tf = applied.get('lidar_coord_transform', None)
+                if already_tf is not None:
+                    if desired_tf != already_tf:
+                        raise ValueError(
+                            f"Infos GT boxes already have LIDAR_COORD_TRANSFORM={already_tf}, but config requests {desired_tf}. "
+                            f"Regenerate infos."
+                        )
+                    continue
+
+                annos['gt_boxes_lidar'] = self._apply_lidar_coord_transform_to_boxes(gt_boxes)
+                applied['lidar_coord_transform'] = desired_tf
+                if isinstance(pc_info, dict):
+                    pc_info['annos_applied'] = applied
+                    info['point_cloud'] = pc_info
 
         self.logger.info('Total samples for CUSTOM dataset: %d' % (len(custom_infos)))
 
+    def _get_lidar_coord_transform(self):
+        """Return (A, t) where A is a 2x2 matrix for XY, and t is a length-3 translation.
+
+        Config format under DATA_CONFIG:
+          LIDAR_COORD_TRANSFORM:
+            ENABLE: True
+            ROT_Z_DEG: 90
+            FLIP_X: False
+            FLIP_Y: False
+            TRANSLATION: [0.0, 0.0, 0.0]
+
+        Notes:
+        - Rotation is applied first, then flips, then translation.
+        - Flips are reflections across axes in the *rotated* frame.
+        """
+        cfg = self.dataset_cfg.get('LIDAR_COORD_TRANSFORM', None)
+        if cfg is None or not bool(cfg.get('ENABLE', False)):
+            return None
+
+        rot_deg = float(cfg.get('ROT_Z_DEG', 0.0))
+        theta = np.deg2rad(rot_deg)
+        c, s = float(np.cos(theta)), float(np.sin(theta))
+        A = np.array([[c, -s], [s, c]], dtype=np.float32)
+
+        flip_x = bool(cfg.get('FLIP_X', False))
+        flip_y = bool(cfg.get('FLIP_Y', False))
+        F = np.array([
+            [-1.0 if flip_x else 1.0, 0.0],
+            [0.0, -1.0 if flip_y else 1.0],
+        ], dtype=np.float32)
+
+        A = F @ A
+
+        t = cfg.get('TRANSLATION', [0.0, 0.0, 0.0])
+        if not isinstance(t, (list, tuple)) or len(t) != 3:
+            raise ValueError(f"DATA_CONFIG.LIDAR_COORD_TRANSFORM.TRANSLATION must be 3 floats, got: {t}")
+        t = np.asarray(t, dtype=np.float32)
+
+        return A, t
+
+    def _apply_lidar_coord_transform_to_points(self, points: np.ndarray) -> np.ndarray:
+        tf = self._get_lidar_coord_transform()
+        if tf is None:
+            return points
+
+        A, t = tf
+        if points.ndim != 2 or points.shape[1] < 3:
+            return points
+
+        out = points.copy()
+        xy = out[:, 0:2] @ A.T
+        out[:, 0:2] = xy
+        out[:, 0:3] += t.reshape(1, 3)
+        return out
+
+    def _apply_lidar_coord_transform_to_boxes(self, gt_boxes_lidar: np.ndarray) -> np.ndarray:
+        """Apply the same XY transform to box centers and headings.
+
+        Expects boxes in lidar coords: [x, y, z, dx, dy, dz, heading].
+        """
+        tf = self._get_lidar_coord_transform()
+        if tf is None:
+            return gt_boxes_lidar
+
+        A, t = tf
+        if gt_boxes_lidar.ndim != 2 or gt_boxes_lidar.shape[1] < 7:
+            return gt_boxes_lidar
+
+        out = np.asarray(gt_boxes_lidar, dtype=np.float32).copy()
+
+        # Center transform
+        out[:, 0:2] = out[:, 0:2] @ A.T
+        out[:, 0:3] += t.reshape(1, 3)
+
+        # Heading transform: apply A to the unit direction vector and re-atan2.
+        yaw = out[:, 6]
+        u = np.stack([np.cos(yaw), np.sin(yaw)], axis=1).astype(np.float32)
+        u2 = u @ A.T
+        out[:, 6] = np.arctan2(u2[:, 1], u2[:, 0])
+
+        return out
+
     def get_label(self, idx):
-        label_file = self.root_path / 'labels' / ('%s.txt' % idx)
+        label_dir = self.dataset_cfg.get('LABEL_DIR', 'labels')
+        label_dir_path = Path(str(label_dir))
+        if label_dir_path.is_absolute():
+            label_file = label_dir_path / ('%s.txt' % idx)
+        else:
+            label_file = self.root_path / label_dir_path / ('%s.txt' % idx)
         assert label_file.exists()
         with open(label_file, 'r') as f:
             lines = f.readlines()
@@ -132,10 +299,17 @@ class CustomDataset(DatasetTemplate):
         # [N, 8]: (x y z dx dy dz heading_angle category_id)
         gt_boxes = []
         gt_names = []
+        if len(lines) == 0:
+            return np.zeros((0, 7), dtype=np.float32), np.zeros((0,), dtype=str)
         for line in lines:
-            line_list = line.strip().split(' ')
+            line_list = line.strip().split()
+            if len(line_list) == 0:
+                continue
             gt_boxes.append(line_list[:-1])
             gt_names.append(line_list[-1])
+
+        if len(gt_boxes) == 0:
+            return np.zeros((0, 7), dtype=np.float32), np.zeros((0,), dtype=str)
 
         return np.array(gt_boxes, dtype=np.float32), np.array(gt_names)
 
@@ -195,6 +369,7 @@ class CustomDataset(DatasetTemplate):
             frame_id = sample_idx
 
         points = self.get_lidar(sample_idx)
+        points = self._apply_lidar_coord_transform_to_points(points)
         input_dict = {
             'frame_id': frame_id,
             'points': points
@@ -248,12 +423,64 @@ class CustomDataset(DatasetTemplate):
         else:
             eval_gt_annos = [copy.deepcopy(info['annos']) for info in self.custom_infos]
 
+        # Optional: restrict evaluation to the configured POINT_CLOUD_RANGE.
+        # This is useful when evaluating a checkpoint trained with a specific ROI
+        # (e.g., KITTI forward range) on a dataset that includes objects outside it.
+        if bool(self.dataset_cfg.get('FILTER_EVAL_OUTSIDE_RANGE', False)):
+            pc_range = self.dataset_cfg.get('POINT_CLOUD_RANGE', None)
+            if pc_range is None or len(pc_range) != 6:
+                raise ValueError(
+                    f"FILTER_EVAL_OUTSIDE_RANGE=True requires DATA_CONFIG.POINT_CLOUD_RANGE as 6 floats, got: {pc_range}"
+                )
+            pc_range = np.asarray(pc_range, dtype=np.float32)
+            eval_gt_annos = [self._filter_annos_by_pc_range(a, pc_range, boxes_key='gt_boxes_lidar') for a in eval_gt_annos]
+            eval_det_annos = [self._filter_annos_by_pc_range(a, pc_range, boxes_key='boxes_lidar') for a in eval_det_annos]
+
         if kwargs['eval_metric'] == 'kitti':
             ap_result_str, ap_dict = kitti_eval(eval_det_annos, eval_gt_annos, self.map_class_to_kitti)
         else:
             raise NotImplementedError
 
         return ap_result_str, ap_dict
+
+    @staticmethod
+    def _filter_annos_by_pc_range(annos: dict, pc_range: np.ndarray, boxes_key: str) -> dict:
+        """Filter an annotation dict to only entries whose box centers lie within pc_range."""
+        if annos is None or boxes_key not in annos:
+            return annos
+
+        boxes = annos.get(boxes_key, None)
+        if boxes is None:
+            return annos
+        boxes = np.asarray(boxes)
+        if boxes.size == 0:
+            return annos
+        if boxes.ndim != 2 or boxes.shape[1] < 3:
+            return annos
+
+        x0, y0, z0, x1, y1, z1 = pc_range.tolist()
+        centers = boxes[:, 0:3]
+        mask = (
+            (centers[:, 0] >= x0)
+            & (centers[:, 0] <= x1)
+            & (centers[:, 1] >= y0)
+            & (centers[:, 1] <= y1)
+            & (centers[:, 2] >= z0)
+            & (centers[:, 2] <= z1)
+        )
+
+        out = dict(annos)
+        out[boxes_key] = boxes[mask]
+
+        # Common parallel arrays to keep in sync.
+        for k in ['name', 'score', 'pred_labels']:
+            if k in out:
+                try:
+                    out[k] = np.asarray(out[k])[mask]
+                except Exception:
+                    pass
+
+        return out
 
     def get_infos(self, class_names, num_workers=4, has_label=True, sample_id_list=None, num_features=4):
         import concurrent.futures as futures
@@ -267,13 +494,43 @@ class CustomDataset(DatasetTemplate):
             if has_label:
                 annotations = {}
                 gt_boxes_lidar, name = self.get_label(sample_idx)
-                if self.dataset_cfg.get('SWAP_LW', False) and gt_boxes_lidar.shape[1] >= 5:
-                    gt_boxes_lidar[:, [3, 4]] = gt_boxes_lidar[:, [4, 3]]
+                applied = {}
+                if gt_boxes_lidar.shape[1] >= 5:
+                    if self.dataset_cfg.get('SWAP_LW', False):
+                        gt_boxes_lidar[:, [3, 4]] = gt_boxes_lidar[:, [4, 3]]
+                        applied['swap_lw'] = True
+                    elif self.dataset_cfg.get('SWAP_LW_IF_DY_GT_DX', False):
+                        mask = gt_boxes_lidar[:, 4] > gt_boxes_lidar[:, 3]
+                        if np.any(mask):
+                            tmp = gt_boxes_lidar[mask, 3].copy()
+                            gt_boxes_lidar[mask, 3] = gt_boxes_lidar[mask, 4]
+                            gt_boxes_lidar[mask, 4] = tmp
+                        applied['swap_lw_if_dy_gt_dx'] = True
                 if self.dataset_cfg.get('HEADING_IN_DEGREES', False) and gt_boxes_lidar.shape[1] >= 7:
                     gt_boxes_lidar[:, 6] = np.deg2rad(gt_boxes_lidar[:, 6])
+                    applied['heading_degrees_converted'] = True
+                heading_offset_deg = float(self.dataset_cfg.get('HEADING_OFFSET_DEG', 0.0))
+                if abs(heading_offset_deg) > 1e-6 and gt_boxes_lidar.shape[1] >= 7:
+                    gt_boxes_lidar[:, 6] = gt_boxes_lidar[:, 6] + np.deg2rad(heading_offset_deg)
+                    applied['heading_offset_deg'] = float(heading_offset_deg)
+                if self.dataset_cfg.get('LIDAR_COORD_TRANSFORM', None) is not None and bool(
+                    self.dataset_cfg.LIDAR_COORD_TRANSFORM.get('ENABLE', False)
+                ):
+                    gt_boxes_lidar = self._apply_lidar_coord_transform_to_boxes(gt_boxes_lidar)
+                    cfg = self.dataset_cfg.LIDAR_COORD_TRANSFORM
+                    t = cfg.get('TRANSLATION', [0.0, 0.0, 0.0])
+                    applied['lidar_coord_transform'] = {
+                        'ROT_Z_DEG': float(cfg.get('ROT_Z_DEG', 0.0)),
+                        'FLIP_X': bool(cfg.get('FLIP_X', False)),
+                        'FLIP_Y': bool(cfg.get('FLIP_Y', False)),
+                        'TRANSLATION': [float(t[0]), float(t[1]), float(t[2])],
+                    }
                 annotations['name'] = name
                 annotations['gt_boxes_lidar'] = gt_boxes_lidar[:, :7]
                 info['annos'] = annotations
+
+                if isinstance(pc_info, dict):
+                    pc_info['annos_applied'] = applied
 
             return info
 

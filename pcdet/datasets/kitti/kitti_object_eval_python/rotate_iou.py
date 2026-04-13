@@ -43,8 +43,13 @@ def sort_vertex_in_convex_polygon(int_pts, num_of_inter):
             v[0] = int_pts[2 * i] - center[0]
             v[1] = int_pts[2 * i + 1] - center[1]
             d = math.sqrt(v[0] * v[0] + v[1] * v[1])
-            v[0] = v[0] / d
-            v[1] = v[1] / d
+            # Guard against duplicate/degenerate points that make d == 0.
+            if d < 1e-8:
+                v[0] = 0.0
+                v[1] = 0.0
+            else:
+                v[0] = v[0] / d
+                v[1] = v[1] / d
             if v[1] < 0:
                 v[0] = -2 - v[0]
             vs[i] = v[0]
@@ -101,6 +106,9 @@ def line_segment_intersection(pts1, pts2, i, j, temp_pts):
             DH = BA1 * DC0 - BA0 * DC1
             Dx = ABBA * DC0 - BA0 * CDDC
             Dy = ABBA * DC1 - BA1 * CDDC
+            # Parallel/colinear segments can lead to DH == 0.
+            if math.fabs(DH) < 1e-8:
+                return False
             temp_pts[0] = Dx / DH
             temp_pts[1] = Dy / DH
             return True
@@ -188,12 +196,21 @@ def inter(rbbox1, rbbox2):
 def devRotateIoUEval(rbox1, rbox2, criterion=-1):
     area1 = rbox1[2] * rbox1[3]
     area2 = rbox2[2] * rbox2[3]
+    if area1 <= 0 or area2 <= 0:
+        return 0.0
     area_inter = inter(rbox1, rbox2)
     if criterion == -1:
-        return area_inter / (area1 + area2 - area_inter)
+        denom = area1 + area2 - area_inter
+        if denom <= 0:
+            return 0.0
+        return area_inter / denom
     elif criterion == 0:
+        if area1 <= 0:
+            return 0.0
         return area_inter / area1
     elif criterion == 1:
+        if area2 <= 0:
+            return 0.0
         return area_inter / area2
     else:
         return area_inter

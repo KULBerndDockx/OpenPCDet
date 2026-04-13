@@ -1,17 +1,46 @@
 DATASET: 'CustomDataset'
 DATA_PATH: '/OpenPCDet/erod'
 
+# Which label folder to use under DATA_PATH.
+# - 'labels_all': full label set
+# - 'labels': (currently) a filtered subset
+LABEL_DIR: 'labels_all'
+
 # If your labels were exported as (x, y, z, width, length, height, heading)
 # instead of OpenPCDet's expected (x, y, z, length, width, height, heading),
-# set this to True. Default is False.
+# set this to True (unconditionally swaps dx/dy).
 SWAP_LW: False
+
+# Some datasets have mixed conventions. This option swaps dx/dy only when dy > dx.
+SWAP_LW_IF_DY_GT_DX: True
 
 # If heading angles in your label files / infos are in degrees (e.g. 0..360),
 # set this to True so they are converted to radians.
 HEADING_IN_DEGREES: True
 
+# Optional heading axis convention fix (degrees).
+# If your dataset defines heading=0 along a different axis than KITTI/OpenPCDet
+# expects, set this to +/-90, etc.
+HEADING_OFFSET_DEG: -90
+
+# Optional: align this dataset's LiDAR coordinate frame to KITTI-like frame.
+# Rotation is applied first, then flips, then translation.
+LIDAR_COORD_TRANSFORM:
+  ENABLE: True
+  ROT_Z_DEG: 90
+  FLIP_X: False
+  FLIP_Y: False
+  TRANSLATION: [0.0, 0.0, 0.0]
+
+# Optional: when using KITTI eval, ignore GT/dets outside POINT_CLOUD_RANGE.
+FILTER_EVAL_OUTSIDE_RANGE: True
+
 #POINT_CLOUD_RANGE: [-75.2, -75.2, -4, 75.2, 75.2, 4]
-POINT_CLOUD_RANGE: [-64.64, -64.64, -3.0, 64.64, 64.64, 1.0]
+#POINT_CLOUD_RANGE: [-64.64, -64.64, -3.0, 64.64, 64.64, 1.0]
+POINT_CLOUD_RANGE: [0, -39.68, -3, 69.12, 39.68, 1]
+#POINT_CLOUD_RANGE: [-32.64, -39.68, -3, 32.64, 39.68, 1]
+
+
 
 
 MAP_CLASS_TO_KITTI: {
