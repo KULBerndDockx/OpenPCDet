@@ -5,6 +5,7 @@ from .pointpillar import PointPillar
 from .pointpillar_tent import PointPillar_TENT
 from .pv_rcnn import PVRCNN
 from .second_net import SECONDNet
+from .second_net_tent import SECONDNet_TENT
 from .second_net_iou import SECONDNetIoU
 from .caddn import CaDDN
 from .voxel_rcnn import VoxelRCNN
@@ -20,6 +21,7 @@ from .bevfusion import BevFusion
 __all__ = {
     'Detector3DTemplate': Detector3DTemplate,
     'SECONDNet': SECONDNet,
+    'SECONDNet_TENT': SECONDNet_TENT,
     'PartA2Net': PartA2Net,
     'PVRCNN': PVRCNN,
     'PointPillar': PointPillar,

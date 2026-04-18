@@ -39,15 +39,15 @@ class PointPillar_TENT(PointPillar):
         # TENT hyperparameters from config (with sensible defaults)
         tent_cfg = self.model_cfg.get('TENT', None)
         if tent_cfg is not None:
-            self.tent_lr = tent_cfg.get('LR', 0.00001)
-            self.tent_steps = tent_cfg.get('STEPS', 1)
+            self.tent_lr = tent_cfg.get('LR', 0.001)
+            self.tent_steps = tent_cfg.get('STEPS', 10)
             self.tent_episodic = tent_cfg.get('EPISODIC', True)
             self.tent_enabled = tent_cfg.get('ENABLED', True)
             # Which sub-modules to adapt. Default: only backbone_2d
             self.tent_adapt_modules = tent_cfg.get('ADAPT_MODULES', ['backbone_2d'])
         else:
-            self.tent_lr = 0.00001
-            self.tent_steps = 1
+            self.tent_lr = 0.001
+            self.tent_steps = 10
             self.tent_episodic = True
             self.tent_enabled = True
             self.tent_adapt_modules = ['backbone_2d']
@@ -133,18 +133,63 @@ class PointPillar_TENT(PointPillar):
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _softmax_entropy(cls_preds):
+    def _sigmoid_entropy(cls_logits, eps: float = 1e-10):
         """
-        Compute entropy of softmax predictions.
+        Compute Bernoulli (sigmoid) entropy for multi-label logits.
+
+        OpenPCDet PointPillar heads treat each class score independently and
+        apply sigmoid at inference (not softmax). Using Bernoulli entropy keeps
+        the TENT objective consistent with the detector's scoring model.
         
         Args:
-            cls_preds: (B, num_anchors, num_classes) raw logits
+            cls_logits: (B, num_anchors, num_classes) raw logits
+            eps: numerical stability epsilon
         Returns:
-            mean entropy (scalar)
+            entropy per anchor: (B, num_anchors)
         """
-        probs = torch.softmax(cls_preds, dim=-1)
-        entropy = -(probs * torch.log(probs + 1e-10)).sum(dim=-1)
-        return entropy.mean()
+        probs = torch.sigmoid(cls_logits)
+        # H(p) = -p log p - (1-p) log(1-p)
+        ent = -(probs * torch.log(probs + eps) + (1.0 - probs) * torch.log(1.0 - probs + eps))
+        return ent.sum(dim=-1)
+
+    @staticmethod
+    def _select_entropy_anchors(entropy_per_anchor: torch.Tensor,
+                               cls_logits: torch.Tensor,
+                               topk: int = 0,
+                               score_thresh: float = -1.0) -> torch.Tensor:
+        """Select a subset of anchors to compute the entropy loss.
+
+        For dense detectors, computing entropy over all anchors can be dominated by
+        easy background anchors. This selector focuses adaptation on likely-foreground.
+
+        Args:
+            entropy_per_anchor: (B, num_anchors)
+            cls_logits: (B, num_anchors, num_classes)
+            topk: if > 0, keep the top-k anchors per batch item by max sigmoid score
+            score_thresh: if > 0, keep anchors with max sigmoid score > thresh
+
+        Returns:
+            mask: boolean tensor (B, num_anchors)
+        """
+        B, N = entropy_per_anchor.shape
+        with torch.no_grad():
+            max_score = torch.sigmoid(cls_logits).amax(dim=-1)  # (B, N)
+
+            if score_thresh is not None and score_thresh > 0:
+                mask = max_score > float(score_thresh)
+                # If everything is filtered out, fall back to using all anchors.
+                if mask.sum() == 0:
+                    return torch.ones_like(mask, dtype=torch.bool)
+                return mask
+
+            if topk is not None and int(topk) > 0 and int(topk) < N:
+                k = int(topk)
+                _, idx = torch.topk(max_score, k=k, dim=1, largest=True, sorted=False)
+                mask = torch.zeros((B, N), device=entropy_per_anchor.device, dtype=torch.bool)
+                mask.scatter_(1, idx, True)
+                return mask
+
+            return torch.ones((B, N), device=entropy_per_anchor.device, dtype=torch.bool)
 
     # ------------------------------------------------------------------
     # Forward
@@ -192,7 +237,21 @@ class PointPillar_TENT(PointPillar):
 
                     # Compute entropy on the class predictions
                     cls_preds = batch_dict_copy['batch_cls_preds']
-                    entropy_loss = self._softmax_entropy(cls_preds)
+
+                    # batch_cls_preds are raw logits in OpenPCDet unless explicitly normalized
+                    # by an upstream module.
+                    tent_cfg = self.model_cfg.get('TENT', {})
+                    entropy_topk = tent_cfg.get('ENTROPY_TOPK', 0)
+                    entropy_score_thresh = tent_cfg.get('ENTROPY_SCORE_THRESH', -1.0)
+                    entropy_weight = tent_cfg.get('ENTROPY_WEIGHT', 1.0)
+
+                    entropy_per_anchor = self._sigmoid_entropy(cls_preds)
+                    mask = self._select_entropy_anchors(
+                        entropy_per_anchor, cls_preds,
+                        topk=entropy_topk,
+                        score_thresh=entropy_score_thresh,
+                    )
+                    entropy_loss = entropy_per_anchor[mask].mean() * float(entropy_weight)
 
                     # Backward + update BN affine params
                     optimizer.zero_grad()

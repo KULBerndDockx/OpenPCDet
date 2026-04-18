@@ -28,6 +28,8 @@ class KittiDataset(DatasetTemplate):
 
         split_dir = self.root_path / 'ImageSets' / (self.split + '.txt')
         self.sample_id_list = [x.strip() for x in open(split_dir).readlines()] if split_dir.exists() else None
+        if self.sample_id_list is not None:
+            self.sample_id_list = [self._resolve_sample_id(sid) for sid in self.sample_id_list]
 
         self.kitti_infos = []
         self.include_kitti_data(self.mode)
@@ -79,6 +81,44 @@ class KittiDataset(DatasetTemplate):
 
         split_dir = self.root_path / 'ImageSets' / (self.split + '.txt')
         self.sample_id_list = [x.strip() for x in open(split_dir).readlines()] if split_dir.exists() else None
+        if self.sample_id_list is not None:
+            self.sample_id_list = [self._resolve_sample_id(sid) for sid in self.sample_id_list]
+
+    def _resolve_sample_id(self, sample_id) -> str:
+        """Resolve split IDs to match on-disk KITTI filename convention.
+
+        KITTI commonly stores files as 6-digit zero-padded names (e.g., 000218).
+        Some custom ImageSets files may contain unpadded ids (e.g., 218 or 0218).
+        This helper prefers an existing on-disk id by checking common modalities.
+        """
+        sid = str(sample_id).strip()
+        if not sid.isdigit():
+            return sid
+
+        # Prefer keeping the original id if it already exists.
+        sid_int = int(sid)
+        candidates = [
+            sid,
+            f'{sid_int:06d}',
+            f'{sid_int:04d}',
+        ]
+        # Also try simple zero-fill to 6 digits in case sid contains leading zeros.
+        if len(sid) < 6:
+            candidates.insert(1, sid.zfill(6))
+
+        seen = set()
+        for cand in candidates:
+            if cand in seen:
+                continue
+            seen.add(cand)
+            calib_file = self.root_split_path / 'calib' / (f'{cand}.txt')
+            lidar_file = self.root_split_path / 'velodyne' / (f'{cand}.bin')
+            image_file = self.root_split_path / 'image_2' / (f'{cand}.png')
+            if calib_file.exists() or lidar_file.exists() or image_file.exists():
+                return cand
+
+        # Fall back to the standard KITTI convention.
+        return f'{sid_int:06d}'
 
     def get_lidar(self, idx):
         lidar_file = self.root_split_path / 'velodyne' / ('%s.bin' % idx)

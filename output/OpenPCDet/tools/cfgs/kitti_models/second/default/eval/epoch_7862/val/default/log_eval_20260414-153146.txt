@@ -1,0 +1,188 @@
+2026-04-14 15:31:46,132   INFO  **********************Start logging**********************
+2026-04-14 15:31:46,132   INFO  CUDA_VISIBLE_DEVICES=ALL
+2026-04-14 15:31:46,132   INFO  cfg_file         /OpenPCDet/tools/cfgs/kitti_models/second.yaml
+2026-04-14 15:31:46,132   INFO  batch_size       4
+2026-04-14 15:31:46,132   INFO  workers          4
+2026-04-14 15:31:46,132   INFO  extra_tag        default
+2026-04-14 15:31:46,132   INFO  ckpt             /OpenPCDet/pcdet/models/pth/second_7862.pth
+2026-04-14 15:31:46,132   INFO  pretrained_model None
+2026-04-14 15:31:46,132   INFO  launcher         none
+2026-04-14 15:31:46,132   INFO  tcp_port         18888
+2026-04-14 15:31:46,132   INFO  local_rank       None
+2026-04-14 15:31:46,132   INFO  set_cfgs         None
+2026-04-14 15:31:46,132   INFO  max_waiting_mins 30
+2026-04-14 15:31:46,132   INFO  start_epoch      0
+2026-04-14 15:31:46,132   INFO  eval_tag         default
+2026-04-14 15:31:46,132   INFO  eval_all         False
+2026-04-14 15:31:46,132   INFO  ckpt_dir         None
+2026-04-14 15:31:46,133   INFO  save_to_file     False
+2026-04-14 15:31:46,133   INFO  infer_time       False
+2026-04-14 15:31:46,133   INFO  cfg.ROOT_DIR: /OpenPCDet
+2026-04-14 15:31:46,133   INFO  cfg.LOCAL_RANK: 0
+2026-04-14 15:31:46,133   INFO  cfg.CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
+2026-04-14 15:31:46,133   INFO  ----------- DATA_CONFIG -----------
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.DATASET: KittiDataset
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.DATA_PATH: /OpenPCDet/datasets/kitti
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.POINT_CLOUD_RANGE: [0, -32.0, -3, 52.8, 32.0, 1]
+2026-04-14 15:31:46,133   INFO  ----------- DATA_SPLIT -----------
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.DATA_SPLIT.train: train
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.DATA_SPLIT.test: val
+2026-04-14 15:31:46,133   INFO  ----------- INFO_PATH -----------
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.INFO_PATH.train: ['kitti_infos_train.pkl']
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.INFO_PATH.test: ['kitti_infos_val.pkl']
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.GET_ITEM_LIST: ['points']
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.FOV_POINTS_ONLY: False
+2026-04-14 15:31:46,133   INFO  ----------- DATA_AUGMENTOR -----------
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.DISABLE_AUG_LIST: ['placeholder']
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.AUG_CONFIG_LIST: [{'NAME': 'gt_sampling', 'USE_ROAD_PLANE': True, 'DB_INFO_PATH': ['kitti_dbinfos_train.pkl'], 'PREPARE': {'filter_by_min_points': ['Car:5', 'Pedestrian:5', 'Cyclist:5'], 'filter_by_difficulty': [-1]}, 'SAMPLE_GROUPS': ['Car:20', 'Pedestrian:15', 'Cyclist:15'], 'NUM_POINT_FEATURES': 4, 'DATABASE_WITH_FAKELIDAR': False, 'REMOVE_EXTRA_WIDTH': [0.0, 0.0, 0.0], 'LIMIT_WHOLE_SCENE': True}, {'NAME': 'random_world_flip', 'ALONG_AXIS_LIST': ['x']}, {'NAME': 'random_world_rotation', 'WORLD_ROT_ANGLE': [-0.78539816, 0.78539816]}, {'NAME': 'random_world_scaling', 'WORLD_SCALE_RANGE': [0.95, 1.05]}]
+2026-04-14 15:31:46,133   INFO  ----------- POINT_FEATURE_ENCODING -----------
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.encoding_type: absolute_coordinates_encoding
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.used_feature_list: ['x', 'y', 'z', 'intensity']
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.src_feature_list: ['x', 'y', 'z', 'intensity']
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.DATA_PROCESSOR: [{'NAME': 'mask_points_and_boxes_outside_range', 'REMOVE_OUTSIDE_BOXES': True}, {'NAME': 'shuffle_points', 'SHUFFLE_ENABLED': {'train': True, 'test': False}}, {'NAME': 'transform_points_to_voxels', 'VOXEL_SIZE': [0.05, 0.05, 0.1], 'MAX_POINTS_PER_VOXEL': 5, 'MAX_NUMBER_OF_VOXELS': {'train': 16000, 'test': 40000}}]
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG._BASE_CONFIG_: cfgs/dataset_configs/kitti_dataset.yaml
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.VOXEL_SIZE: [0.05, 0.05, 0.1]
+2026-04-14 15:31:46,133   INFO  cfg.DATA_CONFIG.MAX_POINTS_PER_VOXEL: 5
+2026-04-14 15:31:46,133   INFO  ----------- MODEL -----------
+2026-04-14 15:31:46,133   INFO  cfg.MODEL.NAME: SECONDNet
+2026-04-14 15:31:46,133   INFO  ----------- VFE -----------
+2026-04-14 15:31:46,133   INFO  cfg.MODEL.VFE.NAME: MeanVFE
+2026-04-14 15:31:46,133   INFO  ----------- BACKBONE_3D -----------
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.BACKBONE_3D.NAME: VoxelBackBone8x
+2026-04-14 15:31:46,134   INFO  ----------- MAP_TO_BEV -----------
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.MAP_TO_BEV.NAME: HeightCompression
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.MAP_TO_BEV.NUM_BEV_FEATURES: 256
+2026-04-14 15:31:46,134   INFO  ----------- BACKBONE_2D -----------
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.BACKBONE_2D.NAME: BaseBEVBackbone
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.BACKBONE_2D.LAYER_NUMS: [5, 5]
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.BACKBONE_2D.LAYER_STRIDES: [1, 2]
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.BACKBONE_2D.NUM_FILTERS: [128, 256]
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.BACKBONE_2D.UPSAMPLE_STRIDES: [1, 2]
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.BACKBONE_2D.NUM_UPSAMPLE_FILTERS: [256, 256]
+2026-04-14 15:31:46,134   INFO  ----------- DENSE_HEAD -----------
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.NAME: AnchorHeadSingle
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.CLASS_AGNOSTIC: False
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.USE_DIRECTION_CLASSIFIER: True
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.DIR_OFFSET: 0.78539
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.DIR_LIMIT_OFFSET: 0.0
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.NUM_DIR_BINS: 2
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.ANCHOR_GENERATOR_CONFIG: [{'class_name': 'Car', 'anchor_sizes': [[3.9, 1.6, 1.56]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-1.78], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.6, 'unmatched_threshold': 0.45}, {'class_name': 'Pedestrian', 'anchor_sizes': [[0.8, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}, {'class_name': 'Cyclist', 'anchor_sizes': [[1.76, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}]
+2026-04-14 15:31:46,134   INFO  ----------- TARGET_ASSIGNER_CONFIG -----------
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NAME: AxisAlignedTargetAssigner
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.POS_FRACTION: -1.0
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.SAMPLE_SIZE: 512
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NORM_BY_NUM_EXAMPLES: False
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.MATCH_HEIGHT: False
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.BOX_CODER: ResidualCoder
+2026-04-14 15:31:46,134   INFO  ----------- LOSS_CONFIG -----------
+2026-04-14 15:31:46,134   INFO  ----------- LOSS_WEIGHTS -----------
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.cls_weight: 1.0
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.loc_weight: 2.0
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.dir_weight: 0.2
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.code_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-04-14 15:31:46,134   INFO  ----------- POST_PROCESSING -----------
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.POST_PROCESSING.RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
+2026-04-14 15:31:46,134   INFO  cfg.MODEL.POST_PROCESSING.SCORE_THRESH: 0.1
+2026-04-14 15:31:46,135   INFO  cfg.MODEL.POST_PROCESSING.OUTPUT_RAW_SCORE: False
+2026-04-14 15:31:46,135   INFO  cfg.MODEL.POST_PROCESSING.EVAL_METRIC: kitti
+2026-04-14 15:31:46,135   INFO  ----------- NMS_CONFIG -----------
+2026-04-14 15:31:46,135   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.MULTI_CLASSES_NMS: False
+2026-04-14 15:31:46,135   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_TYPE: nms_gpu
+2026-04-14 15:31:46,135   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_THRESH: 0.01
+2026-04-14 15:31:46,135   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_PRE_MAXSIZE: 4096
+2026-04-14 15:31:46,135   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_POST_MAXSIZE: 500
+2026-04-14 15:31:46,135   INFO  ----------- OPTIMIZATION -----------
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.BATCH_SIZE_PER_GPU: 4
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.NUM_EPOCHS: 80
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.OPTIMIZER: adam_onecycle
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.LR: 0.003
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.WEIGHT_DECAY: 0.01
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.MOMENTUM: 0.9
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.MOMS: [0.95, 0.85]
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.PCT_START: 0.4
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.DIV_FACTOR: 10
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.DECAY_STEP_LIST: [35, 45]
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.LR_DECAY: 0.1
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.LR_CLIP: 1e-07
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.LR_WARMUP: False
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.WARMUP_EPOCH: 1
+2026-04-14 15:31:46,135   INFO  cfg.OPTIMIZATION.GRAD_NORM_CLIP: 10
+2026-04-14 15:31:46,135   INFO  cfg.TAG: second
+2026-04-14 15:31:46,135   INFO  cfg.EXP_GROUP_PATH: OpenPCDet/tools/cfgs/kitti_models
+2026-04-14 15:31:46,199   INFO  Loading KITTI dataset
+2026-04-14 15:31:46,288   INFO  Total samples for KITTI dataset: 3769
+2026-04-14 15:31:47,379   INFO  ==> Loading parameters from checkpoint /OpenPCDet/pcdet/models/pth/second_7862.pth to GPU
+2026-04-14 15:31:47,403   INFO  ==> Done (loaded 163/163)
+2026-04-14 15:31:47,412   INFO  *************** EPOCH 7862 EVALUATION *****************
+2026-04-14 15:33:00,689   INFO  *************** Performance of EPOCH 7862 *****************
+2026-04-14 15:33:00,689   INFO  Generate label finished(sec_per_example: 0.0194 second).
+2026-04-14 15:33:00,689   INFO  recall_roi_0.3: 0.000000
+2026-04-14 15:33:00,689   INFO  recall_rcnn_0.3: 0.910810
+2026-04-14 15:33:00,689   INFO  recall_roi_0.5: 0.000000
+2026-04-14 15:33:00,689   INFO  recall_rcnn_0.5: 0.856419
+2026-04-14 15:33:00,689   INFO  recall_roi_0.7: 0.000000
+2026-04-14 15:33:00,689   INFO  recall_rcnn_0.7: 0.651840
+2026-04-14 15:33:00,691   INFO  Average predicted number of objects(3769 samples): 21.140
+2026-04-14 15:34:54,364   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:69.6948, 72.4093, 72.6971
+bev  AP:69.3985, 70.9334, 70.1101
+3d   AP:68.1463, 64.1915, 63.5019
+aos  AP:69.68, 72.31, 72.52
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:70.9251, 74.0407, 73.2569
+bev  AP:69.5670, 70.1921, 70.1120
+3d   AP:68.0106, 63.8096, 61.9543
+aos  AP:70.91, 73.92, 73.06
+Car AP@0.70, 0.50, 0.50:
+bbox AP:69.6948, 72.4093, 72.6971
+bev  AP:70.2532, 73.0338, 73.4607
+3d   AP:70.2521, 72.9933, 73.4021
+aos  AP:69.68, 72.31, 72.52
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:70.9251, 74.0407, 73.2569
+bev  AP:71.6127, 75.1009, 75.5932
+3d   AP:71.6097, 75.0394, 75.4500
+aos  AP:70.91, 73.92, 73.06
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:46.0353, 45.9326, 43.9013
+bev  AP:41.4023, 39.8228, 37.0914
+3d   AP:38.4761, 36.4694, 34.1715
+aos  AP:43.40, 42.77, 40.72
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:44.2276, 43.6480, 41.3046
+bev  AP:38.7223, 36.8685, 34.1184
+3d   AP:35.8530, 33.4986, 30.4892
+aos  AP:41.11, 40.00, 37.65
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:46.0353, 45.9326, 43.9013
+bev  AP:50.2743, 50.9141, 48.7682
+3d   AP:50.2704, 50.8607, 48.6320
+aos  AP:43.40, 42.77, 40.72
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:44.2276, 43.6480, 41.3046
+bev  AP:48.2828, 49.2994, 46.8594
+3d   AP:48.2798, 49.2422, 46.7805
+aos  AP:41.11, 40.00, 37.65
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:60.3448, 55.1325, 53.3377
+bev  AP:57.2407, 49.2113, 46.0489
+3d   AP:53.8017, 43.8151, 41.7333
+aos  AP:60.26, 54.89, 53.12
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:62.0027, 55.9624, 53.4880
+bev  AP:59.2848, 48.8362, 46.3299
+3d   AP:55.0751, 44.2481, 41.7126
+aos  AP:61.91, 55.71, 53.25
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:60.3448, 55.1325, 53.3377
+bev  AP:59.4540, 54.9898, 52.5684
+3d   AP:59.4540, 54.9890, 52.5673
+aos  AP:60.26, 54.89, 53.12
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:62.0027, 55.9624, 53.4880
+bev  AP:61.5131, 55.2135, 52.9300
+3d   AP:61.5131, 55.2133, 52.8175
+aos  AP:61.91, 55.71, 53.25
+
+2026-04-14 15:34:54,369   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second/default/eval/epoch_7862/val/default
+2026-04-14 15:34:54,369   INFO  ****************Evaluation done.*****************

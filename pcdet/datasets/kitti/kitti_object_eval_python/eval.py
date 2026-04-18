@@ -6,25 +6,39 @@ import numpy as np
 from .rotate_iou import rotate_iou_gpu_eval
 
 
-@numba.jit
+@numba.njit
 def get_thresholds(scores: np.ndarray, num_gt, num_sample_pts=41):
-    scores.sort()
-    scores = scores[::-1]
-    current_recall = 0
-    thresholds = []
-    for i, score in enumerate(scores):
+    # NOTE:
+    # - Explicit nopython implementation avoids behavior changes with newer Numba
+    #   where @jit defaults may change.
+    # - Returning an array is fine; callers immediately wrap with np.array().
+    if num_gt <= 0 or scores.size == 0:
+        return np.zeros((0,), dtype=scores.dtype)
+
+    scores = scores.copy()
+    scores.sort()  # ascending
+
+    current_recall = 0.0
+    thresholds = np.empty((num_sample_pts,), dtype=scores.dtype)
+    thresh_count = 0
+
+    n = scores.shape[0]
+    for i in range(n):
+        score = scores[n - 1 - i]  # descending
         l_recall = (i + 1) / num_gt
-        if i < (len(scores) - 1):
+        if i < (n - 1):
             r_recall = (i + 2) / num_gt
         else:
             r_recall = l_recall
         if (((r_recall - current_recall) < (current_recall - l_recall))
-                and (i < (len(scores) - 1))):
+                and (i < (n - 1))):
             continue
-        # recall = l_recall
-        thresholds.append(score)
-        current_recall += 1 / (num_sample_pts - 1.0)
-    return thresholds
+        thresholds[thresh_count] = score
+        thresh_count += 1
+        if thresh_count >= num_sample_pts:
+            break
+        current_recall += 1.0 / (num_sample_pts - 1.0)
+    return thresholds[:thresh_count]
 
 
 def clean_data(gt_anno, dt_anno, current_class, difficulty):
@@ -122,7 +136,7 @@ def bev_box_overlap(boxes, qboxes, criterion=-1):
 def d3_box_overlap_kernel(boxes, qboxes, rinc, criterion=-1):
     # ONLY support overlap in CAMERA, not lider.
     N, K = boxes.shape[0], qboxes.shape[0]
-    for i in range(N):
+    for i in numba.prange(N):
         for j in range(K):
             if rinc[i, j] > 0:
                 # iw = (min(boxes[i, 1] + boxes[i, 4], qboxes[j, 1] +
