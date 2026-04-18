@@ -2,6 +2,7 @@ CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
 
 DATA_CONFIG:
     _BASE_CONFIG_: cfgs/dataset_configs/kitti_dataset.yaml
+    SKIPH: True
     DATA_AUGMENTOR:
         DISABLE_AUG_LIST: ['placeholder']
         AUG_CONFIG_LIST:
@@ -36,7 +37,9 @@ MODEL:
         NAME: MeanVFE
 
     BACKBONE_3D:
-        NAME: VoxelBackBone8x
+        NAME: VoxelBackBone8xFocal
+        MASK_MULTI: True
+        ENLARGE_VOXEL_CHANNELS: 64
 
     MAP_TO_BEV:
         NAME: HeightCompression
