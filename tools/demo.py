@@ -35,7 +35,7 @@ class DemoDataset(DatasetTemplate):
         data_file_list = glob.glob(str(root_path / f'*{self.ext}')) if self.root_path.is_dir() else [self.root_path]
 
         data_file_list.sort()
-        self.sample_file_list = data_file_list
+        self.sample_file_list = data_file_list[174:401]
 
     def __len__(self):
         return len(self.sample_file_list)

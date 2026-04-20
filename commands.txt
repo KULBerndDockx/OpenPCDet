@@ -50,4 +50,19 @@ Labels importeren en omzetten naar KITTI formaat
 
 
 
+
+
 python -m torch.distributed.launch --nproc_per_node=1 ./tools/train.py /OpenPCDet/tools/cfgs/kitti_models/second_focal.yaml --work_dir ./work_dirs/CONFIG
+
+
+
+
+
+SECOND
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth 
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth 
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_20.pth   
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_20.pth   
+
+
+cd /OpenPCDet/tools && python3 demo.py --cfg_file cfgs/kitti_models/second_erod_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_20.pth --data_path /OpenPCDet/erod/points --ext .npy
