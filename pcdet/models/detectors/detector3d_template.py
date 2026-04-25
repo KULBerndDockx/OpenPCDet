@@ -193,6 +193,47 @@ class Detector3DTemplate(nn.Module):
 
         """
         post_process_cfg = self.model_cfg.POST_PROCESSING
+
+        def _resolve_score_thresh_cfg(score_thresh_cfg, class_names, device):
+            """Resolve SCORE_THRESH into one of:
+            - None
+            - float (global threshold)
+            - torch.Tensor of shape (num_class,) (per-class thresholds)
+
+            Supported config formats:
+            - SCORE_THRESH: 0.1
+            - SCORE_THRESH: [0.05, 0.2, 0.2]  # aligned with CLASS_NAMES
+            - SCORE_THRESH: {Car: 0.05, Pedestrian: 0.2, Cyclist: 0.2, default: 0.1}
+            """
+            if score_thresh_cfg is None:
+                return None
+            if isinstance(score_thresh_cfg, (int, float)):
+                return float(score_thresh_cfg)
+
+            if isinstance(score_thresh_cfg, (list, tuple)):
+                if len(score_thresh_cfg) != len(class_names):
+                    raise ValueError(
+                        f"POST_PROCESSING.SCORE_THRESH list must have length {len(class_names)} (CLASS_NAMES), got {len(score_thresh_cfg)}"
+                    )
+                return torch.tensor([float(x) for x in score_thresh_cfg], dtype=torch.float32, device=device)
+
+            # EasyDict / dict-like
+            if hasattr(score_thresh_cfg, 'get') and hasattr(score_thresh_cfg, 'keys'):
+                default = score_thresh_cfg.get('default', None)
+                if default is None:
+                    default = score_thresh_cfg.get('ALL', None)
+                if default is None:
+                    default = 0.0
+                thr = []
+                for name in class_names:
+                    v = score_thresh_cfg.get(name, default)
+                    thr.append(float(v))
+                return torch.tensor(thr, dtype=torch.float32, device=device)
+
+            raise TypeError(
+                f"Unsupported POST_PROCESSING.SCORE_THRESH type: {type(score_thresh_cfg)}. Use float, list, or dict."
+            )
+
         batch_size = batch_dict['batch_size']
         recall_dict = {}
         pred_dicts = []
@@ -206,13 +247,11 @@ class Detector3DTemplate(nn.Module):
 
             box_preds = batch_dict['batch_box_preds'][batch_mask]
             src_box_preds = box_preds
-            
+
             if not isinstance(batch_dict['batch_cls_preds'], list):
                 cls_preds = batch_dict['batch_cls_preds'][batch_mask]
-
                 src_cls_preds = cls_preds
                 assert cls_preds.shape[1] in [1, self.num_class]
-
                 if not batch_dict['cls_preds_normalized']:
                     cls_preds = torch.sigmoid(cls_preds)
             else:
@@ -233,10 +272,17 @@ class Detector3DTemplate(nn.Module):
                 for cur_cls_preds, cur_label_mapping in zip(cls_preds, multihead_label_mapping):
                     assert cur_cls_preds.shape[1] == len(cur_label_mapping)
                     cur_box_preds = box_preds[cur_start_idx: cur_start_idx + cur_cls_preds.shape[0]]
+
+                    score_thresh_resolved = _resolve_score_thresh_cfg(
+                        post_process_cfg.SCORE_THRESH, self.class_names, device=cur_cls_preds.device
+                    )
+                    if torch.is_tensor(score_thresh_resolved):
+                        score_thresh_resolved = score_thresh_resolved[(cur_label_mapping - 1).long()]
+
                     cur_pred_scores, cur_pred_labels, cur_pred_boxes = model_nms_utils.multi_classes_nms(
                         cls_scores=cur_cls_preds, box_preds=cur_box_preds,
                         nms_config=post_process_cfg.NMS_CONFIG,
-                        score_thresh=post_process_cfg.SCORE_THRESH
+                        score_thresh=score_thresh_resolved
                     )
                     cur_pred_labels = cur_label_mapping[cur_pred_labels]
                     pred_scores.append(cur_pred_scores)
@@ -253,26 +299,51 @@ class Detector3DTemplate(nn.Module):
                     label_key = 'roi_labels' if 'roi_labels' in batch_dict else 'batch_pred_labels'
                     label_preds = batch_dict[label_key][index]
                 else:
-                    label_preds = label_preds + 1 
-                selected, selected_scores = model_nms_utils.class_agnostic_nms(
-                    box_scores=cls_preds, box_preds=box_preds,
-                    nms_config=post_process_cfg.NMS_CONFIG,
-                    score_thresh=post_process_cfg.SCORE_THRESH
+                    label_preds = label_preds + 1
+
+                score_thresh_resolved = _resolve_score_thresh_cfg(
+                    post_process_cfg.SCORE_THRESH, self.class_names, device=cls_preds.device
                 )
+
+                if torch.is_tensor(score_thresh_resolved):
+                    per_box_thr = score_thresh_resolved[(label_preds - 1).long()].to(cls_preds.dtype)
+                    scores_mask = (cls_preds >= per_box_thr)
+
+                    cls_preds_nms = cls_preds[scores_mask]
+                    box_preds_nms = box_preds[scores_mask]
+                    label_preds_nms = label_preds[scores_mask]
+
+                    selected, selected_scores = model_nms_utils.class_agnostic_nms(
+                        box_scores=cls_preds_nms, box_preds=box_preds_nms,
+                        nms_config=post_process_cfg.NMS_CONFIG,
+                        score_thresh=None
+                    )
+                else:
+                    scores_mask = None
+                    cls_preds_nms = cls_preds
+                    box_preds_nms = box_preds
+                    label_preds_nms = label_preds
+                    selected, selected_scores = model_nms_utils.class_agnostic_nms(
+                        box_scores=cls_preds, box_preds=box_preds,
+                        nms_config=post_process_cfg.NMS_CONFIG,
+                        score_thresh=score_thresh_resolved
+                    )
 
                 if post_process_cfg.OUTPUT_RAW_SCORE:
                     max_cls_preds, _ = torch.max(src_cls_preds, dim=-1)
+                    if scores_mask is not None:
+                        max_cls_preds = max_cls_preds[scores_mask]
                     selected_scores = max_cls_preds[selected]
 
                 final_scores = selected_scores
-                final_labels = label_preds[selected]
-                final_boxes = box_preds[selected]
-                    
+                final_labels = label_preds_nms[selected]
+                final_boxes = box_preds_nms[selected]
+
             recall_dict = self.generate_recall_record(
                 box_preds=final_boxes if 'rois' not in batch_dict else src_box_preds,
                 recall_dict=recall_dict, batch_index=index, data_dict=batch_dict,
                 thresh_list=post_process_cfg.RECALL_THRESH_LIST
-            )        
+            )
 
             record_dict = {
                 'pred_boxes': final_boxes,

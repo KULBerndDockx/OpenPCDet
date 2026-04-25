@@ -39,7 +39,13 @@ def multi_classes_nms(cls_scores, box_preds, nms_config, score_thresh=None):
     pred_scores, pred_labels, pred_boxes = [], [], []
     for k in range(cls_scores.shape[1]):
         if score_thresh is not None:
-            scores_mask = (cls_scores[:, k] >= score_thresh)
+            cur_thr = score_thresh
+            if isinstance(score_thresh, (list, tuple)):
+                cur_thr = score_thresh[k]
+            elif torch.is_tensor(score_thresh):
+                cur_thr = float(score_thresh[k].item())
+            cur_thr = float(cur_thr)
+            scores_mask = (cls_scores[:, k] >= cur_thr)
             box_scores = cls_scores[scores_mask, k]
             cur_box_preds = box_preds[scores_mask]
         else:
