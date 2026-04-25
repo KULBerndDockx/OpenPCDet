@@ -3,8 +3,8 @@ services:
   openpcdet:
     build: 
       context: .
-      dockerfile: Dockerfile
-    image: openpcdet:latest
+      dockerfile: docker/cu116.Dockerfile
+    image: openpcdetcu116:latest
     container_name: openpcdet_container
     devices:
       - nvidia.com/gpu=all
@@ -12,7 +12,8 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
     volumes:
-      - /home/bd/MP/datasets:/root/second.pytorch/data
+      - /home/bd/MP/datasets:/OpenPCDet/datasets
+      - /home/bd/MP/OpenPCDet/pcdet/models/pth:/OpenPCDet/pcdet/models/pth
 
     shm_size: '8gb'
 
