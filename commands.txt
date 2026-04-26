@@ -75,3 +75,13 @@ cd /OpenPCDet/tools && python3 demo.py --cfg_file cfgs/kitti_models/second_erod_
 python3 -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos \
     --cfg_file tools/cfgs/dataset_configs/nuscenes_dataset.yaml \
     --version v1.0-mini
+
+python3 -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos \
+    --cfg_file tools/cfgs/dataset_configs/nuscenes_dataset.yaml \
+    --version v1.0-trainval
+
+
+
+
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --    _BASE_CONFIG_: cfgs/dataset_configs/kitti_dataset.yaml
+

@@ -420,15 +420,15 @@ if __name__ == '__main__':
         dataset_cfg.VERSION = args.version
         create_nuscenes_info(
             version=dataset_cfg.VERSION,
-            data_path=ROOT_DIR / 'data' / 'nuscenes',
-            save_path=ROOT_DIR / 'data' / 'nuscenes',
+            data_path=ROOT_DIR / 'datasets' / 'nuscenes',
+            save_path=ROOT_DIR / 'datasets' / 'nuscenes',
             max_sweeps=dataset_cfg.MAX_SWEEPS,
             with_cam=args.with_cam
         )
 
         nuscenes_dataset = NuScenesDataset(
             dataset_cfg=dataset_cfg, class_names=None,
-            root_path=ROOT_DIR / 'data' / 'nuscenes',
+            root_path=ROOT_DIR / 'datasets' / 'nuscenes',
             logger=common_utils.create_logger(), training=True
         )
         nuscenes_dataset.create_groundtruth_database(max_sweeps=dataset_cfg.MAX_SWEEPS)

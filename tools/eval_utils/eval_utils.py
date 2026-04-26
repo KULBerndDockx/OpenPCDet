@@ -10,7 +10,7 @@ from pcdet.utils import common_utils
 
 
 def statistics_info(cfg, ret_dict, metric, disp_dict):
-    for cur_thresh in cfg.MODEL.POST_PROCESSING.RECALL_THRESH_LIST:
+    for cur_thresh in cfg.MODEL.POST_PROCESSING.REC ALL_THRESH_LIST:
         metric['recall_roi_%s' % str(cur_thresh)] += ret_dict.get('roi_%s' % str(cur_thresh), 0)
         metric['recall_rcnn_%s' % str(cur_thresh)] += ret_dict.get('rcnn_%s' % str(cur_thresh), 0)
     metric['gt_num'] += ret_dict.get('gt', 0)
