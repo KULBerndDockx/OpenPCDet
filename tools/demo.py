@@ -42,7 +42,15 @@ class DemoDataset(DatasetTemplate):
 
     def __getitem__(self, index):
         if self.ext == '.bin':
-            points = np.fromfile(self.sample_file_list[index], dtype=np.float32).reshape(-1, 4)
+            raw = np.fromfile(self.sample_file_list[index], dtype=np.float32)
+            if raw.size % 5 == 0:
+                points = raw.reshape(-1, 5)
+                # single-frame demo: no sweep time, keep 5th feature neutral
+                points[:, 4] = 0.0
+            elif raw.size % 4 == 0:
+                points = raw.reshape(-1, 4)
+            else:
+                raise ValueError(f"Unexpected point format: {self.sample_file_list[index]}")
         elif self.ext == '.npy':
             points = np.load(self.sample_file_list[index])
             # Normalize intensity to [0, 1] range (KITTI convention)

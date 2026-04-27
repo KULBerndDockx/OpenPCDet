@@ -55,7 +55,7 @@ Labels importeren en omzetten naar KITTI formaat
 
 python -m torch.distributed.launch --nproc_per_node=1 ./tools/train.py /OpenPCDet/tools/cfgs/kitti_models/second_focal.yaml --work_dir ./work_dirs/CONFIG
 
-
+python3 train.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes.yaml --work_dir /OpenPCDet/work_dirs/second_nuscenes
 
 
 
@@ -69,6 +69,8 @@ python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod_focal.
 cd /OpenPCDet/tools && python3 demo.py --cfg_file cfgs/kitti_models/second_erod_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_20.pth --data_path /OpenPCDet/erod/points --ext .npy
 
 
+cd /OpenPCDet/tools && python3 demo.py --cfg_file cfgs/kitti_models/second_nuscenes.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_64.pth --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --ext .bin
+cd /OpenPCDet/tools && python3 visualize_labels.py --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --label_path /OpenPCDet/erod/labels --ext .npy   --z_min -1.0 --z_max 3.0
 
 
 
@@ -80,8 +82,9 @@ python3 -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos
     --cfg_file tools/cfgs/dataset_configs/nuscenes_dataset.yaml \
     --version v1.0-trainval
 
+python3 -m torch.distributed.launch --nproc_per_node=1 ./tools/train.py /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes.yaml --work_dir ./work_dirs/CONFIG
 
 
 
-python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --    _BASE_CONFIG_: cfgs/dataset_configs/kitti_dataset.yaml
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth
 

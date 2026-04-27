@@ -1,0 +1,306 @@
+2026-04-26 20:06:11,826   INFO  **********************Start logging**********************
+2026-04-26 20:06:11,827   INFO  CUDA_VISIBLE_DEVICES=ALL
+2026-04-26 20:06:11,827   INFO  Training with a single process
+2026-04-26 20:06:11,827   INFO  cfg_file         /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes.yaml
+2026-04-26 20:06:11,827   INFO  batch_size       4
+2026-04-26 20:06:11,827   INFO  epochs           80
+2026-04-26 20:06:11,827   INFO  workers          4
+2026-04-26 20:06:11,827   INFO  extra_tag        default
+2026-04-26 20:06:11,827   INFO  ckpt             None
+2026-04-26 20:06:11,827   INFO  pretrained_model /OpenPCDet/pcdet/models/pth/second_7862.pth
+2026-04-26 20:06:11,827   INFO  launcher         none
+2026-04-26 20:06:11,827   INFO  tcp_port         18888
+2026-04-26 20:06:11,827   INFO  sync_bn          False
+2026-04-26 20:06:11,827   INFO  fix_random_seed  False
+2026-04-26 20:06:11,828   INFO  ckpt_save_interval 1
+2026-04-26 20:06:11,828   INFO  local_rank       None
+2026-04-26 20:06:11,828   INFO  max_ckpt_save_num 30
+2026-04-26 20:06:11,828   INFO  merge_all_iters_to_one_epoch False
+2026-04-26 20:06:11,828   INFO  set_cfgs         None
+2026-04-26 20:06:11,828   INFO  max_waiting_mins 0
+2026-04-26 20:06:11,828   INFO  start_epoch      0
+2026-04-26 20:06:11,828   INFO  num_epochs_to_eval 0
+2026-04-26 20:06:11,828   INFO  save_to_file     False
+2026-04-26 20:06:11,828   INFO  use_tqdm_to_record False
+2026-04-26 20:06:11,828   INFO  logger_iter_interval 50
+2026-04-26 20:06:11,828   INFO  ckpt_save_time_interval 300
+2026-04-26 20:06:11,828   INFO  wo_gpu_stat      False
+2026-04-26 20:06:11,828   INFO  use_amp          False
+2026-04-26 20:06:11,829   INFO  cfg.ROOT_DIR: /OpenPCDet
+2026-04-26 20:06:11,829   INFO  cfg.LOCAL_RANK: 0
+2026-04-26 20:06:11,829   INFO  cfg.CLASS_NAMES: ['car', 'pedestrian', 'bicycle']
+2026-04-26 20:06:11,829   INFO  ----------- DATA_CONFIG -----------
+2026-04-26 20:06:11,829   INFO  cfg.DATA_CONFIG.DATASET: NuScenesDataset
+2026-04-26 20:06:11,829   INFO  cfg.DATA_CONFIG.DATA_PATH: /OpenPCDet/datasets/nuscenes
+2026-04-26 20:06:11,829   INFO  cfg.DATA_CONFIG.VERSION: v1.0-mini
+2026-04-26 20:06:11,829   INFO  cfg.DATA_CONFIG.MAX_SWEEPS: 10
+2026-04-26 20:06:11,829   INFO  cfg.DATA_CONFIG.PRED_VELOCITY: True
+2026-04-26 20:06:11,829   INFO  cfg.DATA_CONFIG.SET_NAN_VELOCITY_TO_ZEROS: True
+2026-04-26 20:06:11,829   INFO  cfg.DATA_CONFIG.FILTER_MIN_POINTS_IN_GT: 1
+2026-04-26 20:06:11,829   INFO  ----------- DATA_SPLIT -----------
+2026-04-26 20:06:11,829   INFO  cfg.DATA_CONFIG.DATA_SPLIT.train: train
+2026-04-26 20:06:11,829   INFO  cfg.DATA_CONFIG.DATA_SPLIT.test: val
+2026-04-26 20:06:11,830   INFO  ----------- INFO_PATH -----------
+2026-04-26 20:06:11,830   INFO  cfg.DATA_CONFIG.INFO_PATH.train: ['nuscenes_infos_10sweeps_train.pkl']
+2026-04-26 20:06:11,830   INFO  cfg.DATA_CONFIG.INFO_PATH.test: ['nuscenes_infos_10sweeps_val.pkl']
+2026-04-26 20:06:11,830   INFO  cfg.DATA_CONFIG.POINT_CLOUD_RANGE: [-51.2, -51.2, -5.0, 51.2, 51.2, 3.0]
+2026-04-26 20:06:11,830   INFO  cfg.DATA_CONFIG.BALANCED_RESAMPLING: True
+2026-04-26 20:06:11,830   INFO  ----------- DATA_AUGMENTOR -----------
+2026-04-26 20:06:11,830   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.DISABLE_AUG_LIST: ['placeholder']
+2026-04-26 20:06:11,830   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.AUG_CONFIG_LIST: [{'NAME': 'gt_sampling', 'DB_INFO_PATH': ['nuscenes_dbinfos_10sweeps_withvelo.pkl'], 'PREPARE': {'filter_by_min_points': ['car:5', 'truck:5', 'construction_vehicle:5', 'bus:5', 'trailer:5', 'barrier:5', 'motorcycle:5', 'bicycle:5', 'pedestrian:5', 'traffic_cone:5']}, 'SAMPLE_GROUPS': ['car:2', 'truck:3', 'construction_vehicle:7', 'bus:4', 'trailer:6', 'barrier:2', 'motorcycle:6', 'bicycle:6', 'pedestrian:2', 'traffic_cone:2'], 'NUM_POINT_FEATURES': 5, 'DATABASE_WITH_FAKELIDAR': False, 'REMOVE_EXTRA_WIDTH': [0.0, 0.0, 0.0], 'LIMIT_WHOLE_SCENE': True}, {'NAME': 'random_world_flip', 'ALONG_AXIS_LIST': ['x', 'y']}, {'NAME': 'random_world_rotation', 'WORLD_ROT_ANGLE': [-0.3925, 0.3925]}, {'NAME': 'random_world_scaling', 'WORLD_SCALE_RANGE': [0.95, 1.05]}]
+2026-04-26 20:06:11,830   INFO  ----------- POINT_FEATURE_ENCODING -----------
+2026-04-26 20:06:11,830   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.encoding_type: absolute_coordinates_encoding
+2026-04-26 20:06:11,830   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.used_feature_list: ['x', 'y', 'z', 'intensity', 'timestamp']
+2026-04-26 20:06:11,830   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.src_feature_list: ['x', 'y', 'z', 'intensity', 'timestamp']
+2026-04-26 20:06:11,830   INFO  cfg.DATA_CONFIG.DATA_PROCESSOR: [{'NAME': 'mask_points_and_boxes_outside_range', 'REMOVE_OUTSIDE_BOXES': True}, {'NAME': 'shuffle_points', 'SHUFFLE_ENABLED': {'train': True, 'test': True}}, {'NAME': 'transform_points_to_voxels', 'VOXEL_SIZE': [0.1, 0.1, 0.2], 'MAX_POINTS_PER_VOXEL': 10, 'MAX_NUMBER_OF_VOXELS': {'train': 60000, 'test': 60000}}]
+2026-04-26 20:06:11,831   INFO  cfg.DATA_CONFIG._BASE_CONFIG_: cfgs/dataset_configs/nuscenes_dataset.yaml
+2026-04-26 20:06:11,831   INFO  ----------- MODEL -----------
+2026-04-26 20:06:11,831   INFO  cfg.MODEL.NAME: SECONDNet
+2026-04-26 20:06:11,831   INFO  ----------- VFE -----------
+2026-04-26 20:06:11,831   INFO  cfg.MODEL.VFE.NAME: MeanVFE
+2026-04-26 20:06:11,831   INFO  ----------- BACKBONE_3D -----------
+2026-04-26 20:06:11,831   INFO  cfg.MODEL.BACKBONE_3D.NAME: VoxelBackBone8xSECOND
+2026-04-26 20:06:11,831   INFO  ----------- MAP_TO_BEV -----------
+2026-04-26 20:06:11,831   INFO  cfg.MODEL.MAP_TO_BEV.NAME: HeightCompression
+2026-04-26 20:06:11,831   INFO  cfg.MODEL.MAP_TO_BEV.NUM_BEV_FEATURES: 256
+2026-04-26 20:06:11,831   INFO  ----------- BACKBONE_2D -----------
+2026-04-26 20:06:11,831   INFO  cfg.MODEL.BACKBONE_2D.NAME: BaseBEVBackbone
+2026-04-26 20:06:11,831   INFO  cfg.MODEL.BACKBONE_2D.LAYER_NUMS: [5, 5]
+2026-04-26 20:06:11,831   INFO  cfg.MODEL.BACKBONE_2D.LAYER_STRIDES: [1, 2]
+2026-04-26 20:06:11,832   INFO  cfg.MODEL.BACKBONE_2D.NUM_FILTERS: [128, 256]
+2026-04-26 20:06:11,832   INFO  cfg.MODEL.BACKBONE_2D.UPSAMPLE_STRIDES: [1, 2]
+2026-04-26 20:06:11,832   INFO  cfg.MODEL.BACKBONE_2D.NUM_UPSAMPLE_FILTERS: [256, 256]
+2026-04-26 20:06:11,832   INFO  ----------- DENSE_HEAD -----------
+2026-04-26 20:06:11,832   INFO  cfg.MODEL.DENSE_HEAD.NAME: AnchorHeadSingle
+2026-04-26 20:06:11,832   INFO  cfg.MODEL.DENSE_HEAD.CLASS_AGNOSTIC: False
+2026-04-26 20:06:11,832   INFO  cfg.MODEL.DENSE_HEAD.USE_DIRECTION_CLASSIFIER: True
+2026-04-26 20:06:11,832   INFO  cfg.MODEL.DENSE_HEAD.DIR_OFFSET: 0.78539
+2026-04-26 20:06:11,832   INFO  cfg.MODEL.DENSE_HEAD.DIR_LIMIT_OFFSET: 0.0
+2026-04-26 20:06:11,833   INFO  cfg.MODEL.DENSE_HEAD.NUM_DIR_BINS: 2
+2026-04-26 20:06:11,833   INFO  cfg.MODEL.DENSE_HEAD.ANCHOR_GENERATOR_CONFIG: [{'class_name': 'car', 'anchor_sizes': [[3.9, 1.6, 1.56]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-1.78], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.6, 'unmatched_threshold': 0.45}, {'class_name': 'pedestrian', 'anchor_sizes': [[0.8, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}, {'class_name': 'bicycle', 'anchor_sizes': [[1.76, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}]
+2026-04-26 20:06:11,833   INFO  ----------- TARGET_ASSIGNER_CONFIG -----------
+2026-04-26 20:06:11,833   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NAME: AxisAlignedTargetAssigner
+2026-04-26 20:06:11,833   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.POS_FRACTION: -1.0
+2026-04-26 20:06:11,834   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.SAMPLE_SIZE: 512
+2026-04-26 20:06:11,834   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NORM_BY_NUM_EXAMPLES: False
+2026-04-26 20:06:11,834   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.MATCH_HEIGHT: False
+2026-04-26 20:06:11,834   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.BOX_CODER: ResidualCoder
+2026-04-26 20:06:11,834   INFO  ----------- LOSS_CONFIG -----------
+2026-04-26 20:06:11,834   INFO  ----------- LOSS_WEIGHTS -----------
+2026-04-26 20:06:11,834   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.cls_weight: 1.0
+2026-04-26 20:06:11,834   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.loc_weight: 2.0
+2026-04-26 20:06:11,835   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.dir_weight: 0.2
+2026-04-26 20:06:11,835   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.code_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-04-26 20:06:11,835   INFO  ----------- POST_PROCESSING -----------
+2026-04-26 20:06:11,835   INFO  cfg.MODEL.POST_PROCESSING.RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
+2026-04-26 20:06:11,835   INFO  cfg.MODEL.POST_PROCESSING.SCORE_THRESH: 0.1
+2026-04-26 20:06:11,835   INFO  cfg.MODEL.POST_PROCESSING.OUTPUT_RAW_SCORE: False
+2026-04-26 20:06:11,835   INFO  cfg.MODEL.POST_PROCESSING.EVAL_METRIC: nuscenes
+2026-04-26 20:06:11,835   INFO  ----------- NMS_CONFIG -----------
+2026-04-26 20:06:11,835   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.MULTI_CLASSES_NMS: False
+2026-04-26 20:06:11,836   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_TYPE: nms_gpu
+2026-04-26 20:06:11,836   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_THRESH: 0.01
+2026-04-26 20:06:11,836   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_PRE_MAXSIZE: 4096
+2026-04-26 20:06:11,836   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_POST_MAXSIZE: 500
+2026-04-26 20:06:11,836   INFO  ----------- OPTIMIZATION -----------
+2026-04-26 20:06:11,836   INFO  cfg.OPTIMIZATION.BATCH_SIZE_PER_GPU: 4
+2026-04-26 20:06:11,836   INFO  cfg.OPTIMIZATION.NUM_EPOCHS: 80
+2026-04-26 20:06:11,836   INFO  cfg.OPTIMIZATION.OPTIMIZER: adam_onecycle
+2026-04-26 20:06:11,837   INFO  cfg.OPTIMIZATION.LR: 0.003
+2026-04-26 20:06:11,837   INFO  cfg.OPTIMIZATION.WEIGHT_DECAY: 0.01
+2026-04-26 20:06:11,837   INFO  cfg.OPTIMIZATION.MOMENTUM: 0.9
+2026-04-26 20:06:11,837   INFO  cfg.OPTIMIZATION.MOMS: [0.95, 0.85]
+2026-04-26 20:06:11,837   INFO  cfg.OPTIMIZATION.PCT_START: 0.4
+2026-04-26 20:06:11,837   INFO  cfg.OPTIMIZATION.DIV_FACTOR: 10
+2026-04-26 20:06:11,837   INFO  cfg.OPTIMIZATION.DECAY_STEP_LIST: [35, 45]
+2026-04-26 20:06:11,837   INFO  cfg.OPTIMIZATION.LR_DECAY: 0.1
+2026-04-26 20:06:11,837   INFO  cfg.OPTIMIZATION.LR_CLIP: 1e-07
+2026-04-26 20:06:11,837   INFO  cfg.OPTIMIZATION.LR_WARMUP: False
+2026-04-26 20:06:11,837   INFO  cfg.OPTIMIZATION.WARMUP_EPOCH: 1
+2026-04-26 20:06:11,838   INFO  cfg.OPTIMIZATION.GRAD_NORM_CLIP: 10
+2026-04-26 20:06:11,838   INFO  cfg.TAG: second_nuscenes
+2026-04-26 20:06:11,838   INFO  cfg.EXP_GROUP_PATH: OpenPCDet/tools/cfgs/kitti_models
+2026-04-26 20:06:11,841   INFO  ----------- Create dataloader & network & optimizer -----------
+2026-04-26 20:06:11,873   INFO  Database filter by min points car: 4082 => 3303
+2026-04-26 20:06:11,873   INFO  Database filter by min points bicycle: 147 => 136
+2026-04-26 20:06:11,874   INFO  Database filter by min points pedestrian: 3068 => 2799
+2026-04-26 20:06:11,876   INFO  Loading NuScenes dataset
+2026-04-26 20:06:11,897   INFO  Total samples for NuScenes dataset: 323
+2026-04-26 20:06:11,900   INFO  Total samples after balanced resampling: 667
+2026-04-26 20:06:13,579   INFO  ==> Loading parameters from checkpoint /OpenPCDet/pcdet/models/pth/second_7862.pth to GPU
+2026-04-26 20:06:13,614   INFO  ==> Done (loaded 163/163)
+2026-04-26 20:06:13,615   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_80.pth to GPU
+2026-04-26 20:06:13,677   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_79.pth to GPU
+2026-04-26 20:06:13,725   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_78.pth to GPU
+2026-04-26 20:06:13,770   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_77.pth to GPU
+2026-04-26 20:06:13,814   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_76.pth to GPU
+2026-04-26 20:06:13,860   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_75.pth to GPU
+2026-04-26 20:06:13,906   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_74.pth to GPU
+2026-04-26 20:06:13,953   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_73.pth to GPU
+2026-04-26 20:06:13,996   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_72.pth to GPU
+2026-04-26 20:06:14,040   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_71.pth to GPU
+2026-04-26 20:06:14,108   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_70.pth to GPU
+2026-04-26 20:06:14,323   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_69.pth to GPU
+2026-04-26 20:06:14,412   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_68.pth to GPU
+2026-04-26 20:06:14,479   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_67.pth to GPU
+2026-04-26 20:06:14,548   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_66.pth to GPU
+2026-04-26 20:06:14,617   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_65.pth to GPU
+2026-04-26 20:06:14,688   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_64.pth to GPU
+2026-04-26 20:06:14,763   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_63.pth to GPU
+2026-04-26 20:06:14,902   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_62.pth to GPU
+2026-04-26 20:06:15,035   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_61.pth to GPU
+2026-04-26 20:06:15,101   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_60.pth to GPU
+2026-04-26 20:06:15,168   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_59.pth to GPU
+2026-04-26 20:06:15,235   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_58.pth to GPU
+2026-04-26 20:06:15,302   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_57.pth to GPU
+2026-04-26 20:06:15,374   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_56.pth to GPU
+2026-04-26 20:06:15,453   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_55.pth to GPU
+2026-04-26 20:06:15,533   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_54.pth to GPU
+2026-04-26 20:06:15,675   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_53.pth to GPU
+2026-04-26 20:06:15,849   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_52.pth to GPU
+2026-04-26 20:06:15,941   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_51.pth to GPU
+2026-04-26 20:06:16,031   INFO  ----------- Model SECONDNet created, param count: 5325576 -----------
+2026-04-26 20:06:16,031   INFO  SECONDNet(
+  (vfe): MeanVFE()
+  (backbone_3d): VoxelBackBone8xSECOND(
+    (conv_input): SparseSequential(
+      (0): SubMConv3d(4, 16, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[1, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+      (1): BatchNorm1d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+    (conv1): SparseSequential(
+      (0): SparseSequential(
+        (0): SubMConv3d(16, 16, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+    )
+    (conv2): SparseSequential(
+      (0): SparseSequential(
+        (0): SparseConv3d(16, 32, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[1, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (1): SparseSequential(
+        (0): SubMConv3d(32, 32, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (2): SparseSequential(
+        (0): SubMConv3d(32, 32, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+    )
+    (conv3): SparseSequential(
+      (0): SparseSequential(
+        (0): SparseConv3d(32, 64, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[1, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (1): SparseSequential(
+        (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (2): SparseSequential(
+        (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+    )
+    (conv4): SparseSequential(
+      (0): SparseSequential(
+        (0): SparseConv3d(64, 64, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[0, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (1): SparseSequential(
+        (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (2): SparseSequential(
+        (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+    )
+    (conv_out): SparseSequential(
+      (0): SparseConv3d(64, 128, kernel_size=[3, 1, 1], stride=[2, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+      (1): BatchNorm1d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+  )
+  (map_to_bev_module): HeightCompression()
+  (pfe): None
+  (backbone_2d): BaseBEVBackbone(
+    (blocks): ModuleList(
+      (0): Sequential(
+        (0): ZeroPad2d((1, 1, 1, 1))
+        (1): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), bias=False)
+        (2): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (3): ReLU()
+        (4): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (5): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (6): ReLU()
+        (7): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (8): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (9): ReLU()
+        (10): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (11): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (12): ReLU()
+        (13): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (14): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (15): ReLU()
+        (16): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (17): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (18): ReLU()
+      )
+      (1): Sequential(
+        (0): ZeroPad2d((1, 1, 1, 1))
+        (1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), bias=False)
+        (2): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (3): ReLU()
+        (4): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (5): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (6): ReLU()
+        (7): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (8): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (9): ReLU()
+        (10): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (11): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (12): ReLU()
+        (13): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (14): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (15): ReLU()
+        (16): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (17): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (18): ReLU()
+      )
+    )
+    (deblocks): ModuleList(
+      (0): Sequential(
+        (0): ConvTranspose2d(128, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (1): Sequential(
+        (0): ConvTranspose2d(256, 256, kernel_size=(2, 2), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+    )
+  )
+  (dense_head): AnchorHeadSingle(
+    (cls_loss_func): SigmoidFocalClassificationLoss()
+    (reg_loss_func): WeightedSmoothL1Loss()
+    (dir_loss_func): WeightedCrossEntropyLoss()
+    (conv_cls): Conv2d(512, 18, kernel_size=(1, 1), stride=(1, 1))
+    (conv_box): Conv2d(512, 42, kernel_size=(1, 1), stride=(1, 1))
+    (conv_dir_cls): Conv2d(512, 12, kernel_size=(1, 1), stride=(1, 1))
+  )
+  (point_head): None
+  (roi_head): None
+)
+2026-04-26 20:06:16,033   INFO  **********************Start training OpenPCDet/tools/cfgs/kitti_models/second_nuscenes(default)**********************

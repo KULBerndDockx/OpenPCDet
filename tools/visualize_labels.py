@@ -11,6 +11,7 @@ Usage:
 
 import argparse
 import glob
+from operator import index
 import re
 from pathlib import Path
 from functools import partial
@@ -317,7 +318,15 @@ def _process_one(pc_file, label_dir, output_dir, ext, z_range):
     gt_boxes, gt_names = parse_label_file(label_file)
 
     if ext == '.bin':
-        points = np.fromfile(pc_file, dtype=np.float32).reshape(-1, 4)
+        raw = np.fromfile(pc_file, dtype=np.float32)
+        if raw.size % 5 == 0:
+            points = raw.reshape(-1, 5)
+            # single-frame demo: no sweep time, keep 5th feature neutral
+            points[:, 4] = 0.0
+        elif raw.size % 4 == 0:
+            points = raw.reshape(-1, 4)
+        else:
+            raise ValueError(f"Unexpected point format: {pc_file}")
     elif ext == '.npy':
         points = np.load(pc_file)
     else:
