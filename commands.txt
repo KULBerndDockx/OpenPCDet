@@ -57,6 +57,7 @@ python -m torch.distributed.launch --nproc_per_node=1 ./tools/train.py /OpenPCDe
 
 python3 train.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes.yaml --work_dir /OpenPCDet/work_dirs/second_nuscenes
 
+python3 train.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod.yaml --pretrained_model /OpenPCDet/pcdet/models/pth/second_7862.pth 
 
 
 SECOND
@@ -64,9 +65,11 @@ python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second.yaml --ckpt
 python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth 
 python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_20.pth   
 python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_20.pth   
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_20.pth   
 
 
 cd /OpenPCDet/tools && python3 demo.py --cfg_file cfgs/kitti_models/second_erod_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_20.pth --data_path /OpenPCDet/erod/points --ext .npy
+cd /OpenPCDet/tools && python3 demo.py --cfg_file cfgs/kitti_models/second_erod.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_erod/default/ckpt/checkpoint_epoch_80.pth --data_path /OpenPCDet/erod/points --ext .npy
 
 
 cd /OpenPCDet/tools && python3 demo.py --cfg_file cfgs/kitti_models/second_nuscenes.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_64.pth --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --ext .bin
@@ -87,4 +90,8 @@ python3 -m torch.distributed.launch --nproc_per_node=1 ./tools/train.py /OpenPCD
 
 
 python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth
+
+TODO: train second nuscnes opnieuw
+train nuscenes model op erod.
+
 

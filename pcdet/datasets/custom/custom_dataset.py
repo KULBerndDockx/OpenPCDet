@@ -61,12 +61,13 @@ class CustomDataset(DatasetTemplate):
             self._infos_by_lidar_idx[str(lidar_idx)] = info
 
         if self.sample_id_list is not None:
-            missing_ids = [sid for sid in self.sample_id_list if sid not in self._infos_by_lidar_idx]
-            if missing_ids:
-                raise ValueError(
-                    f"Split file contains {len(self.sample_id_list)} ids, but {len(missing_ids)} ids are missing from infos. "
-                    f"Example missing ids: {missing_ids[:20]} (split={self.split})"
-                )
+            if self.custom_infos:
+                missing_ids = [sid for sid in self.sample_id_list if sid not in self._infos_by_lidar_idx]
+                if missing_ids:
+                    raise ValueError(
+                        f"Split file contains {len(self.sample_id_list)} ids, but {len(missing_ids)} ids are missing from infos. "
+                        f"Example missing ids: {missing_ids[:20]} (split={self.split})"
+                    )
 
             # Keep the full split ordering (do not silently drop ids).
             self._active_sample_id_list = list(self.sample_id_list)

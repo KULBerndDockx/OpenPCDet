@@ -124,6 +124,60 @@ class VoxelBackBone8x(nn.Module):
             'x_conv4': 64
         }
 
+    def forward(self, batch_dict):
+        """
+        Args:
+            batch_dict:
+                batch_size: int
+                vfe_features: (num_voxels, C)
+                voxel_coords: (num_voxels, 4), [batch_idx, z_idx, y_idx, x_idx]
+        Returns:
+            batch_dict:
+                encoded_spconv_tensor: sparse tensor
+        """
+        voxel_features, voxel_coords = batch_dict['voxel_features'], batch_dict['voxel_coords']
+        batch_size = batch_dict['batch_size']
+        input_sp_tensor = spconv.SparseConvTensor(
+            features=voxel_features,
+            indices=voxel_coords.int(),
+            spatial_shape=self.sparse_shape,
+            batch_size=batch_size
+        )
+
+        x = self.conv_input(input_sp_tensor)
+
+        x_conv1 = self.conv1(x)
+        x_conv2 = self.conv2(x_conv1)
+        x_conv3 = self.conv3(x_conv2)
+        x_conv4 = self.conv4(x_conv3)
+
+        # for detection head
+        # [200, 176, 5] -> [200, 176, 2]
+        out = self.conv_out(x_conv4)
+
+        batch_dict.update({
+            'encoded_spconv_tensor': out,
+            'encoded_spconv_tensor_stride': 8
+        })
+        batch_dict.update({
+            'multi_scale_3d_features': {
+                'x_conv1': x_conv1,
+                'x_conv2': x_conv2,
+                'x_conv3': x_conv3,
+                'x_conv4': x_conv4,
+            }
+        })
+        batch_dict.update({
+            'multi_scale_3d_strides': {
+                'x_conv1': 1,
+                'x_conv2': 2,
+                'x_conv3': 4,
+                'x_conv4': 8,
+            }
+        })
+
+        return batch_dict
+
 class VoxelBackBone8xSECOND(nn.Module):
     def __init__(self, model_cfg, input_channels, grid_size, **kwargs):
         super().__init__()

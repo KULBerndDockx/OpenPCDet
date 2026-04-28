@@ -56,12 +56,12 @@ MAP_CLASS_TO_KITTI: {
 
 DATA_SPLIT: {
     'train': train,
-  'test': val_small
+  'test': test
 }
 
 INFO_PATH: {
     'train': [custom_infos_train.pkl],
-    'test': [custom_infos_val.pkl],
+    'test': [custom_infos_test.pkl],
 }
 
 POINT_FEATURE_ENCODING: {

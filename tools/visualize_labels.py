@@ -7,11 +7,18 @@ Usage:
         --data_path /OpenPCDet/erod/points \
         --label_path /OpenPCDet/erod/labels \
         --ext .npy
+
+NuScenes usage (no per-frame .txt labels; uses OpenPCDet info .pkl):
+    python3 visualize_labels.py \
+        --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini \
+        --nuscenes_info /OpenPCDet/datasets/nuscenes/v1.0-mini/nuscenes_infos_10sweeps_val.pkl \
+        --output_dir /OpenPCDet/output/gt_images_nuscenes
 """
 
 import argparse
 import glob
 from operator import index
+import pickle
 import re
 from pathlib import Path
 from functools import partial
@@ -69,7 +76,7 @@ def draw_bev_image(points, gt_boxes, gt_names, save_path,
 
     if z_range is None:
         # Keep front view stable even with outlier points.
-        z_min_plot, z_max_plot = -3.0, 3.0
+        z_min_plot, z_max_plot = -5.0, 5.0
     else:
         z_min_plot, z_max_plot = z_range
 
@@ -321,8 +328,6 @@ def _process_one(pc_file, label_dir, output_dir, ext, z_range):
         raw = np.fromfile(pc_file, dtype=np.float32)
         if raw.size % 5 == 0:
             points = raw.reshape(-1, 5)
-            # single-frame demo: no sweep time, keep 5th feature neutral
-            points[:, 4] = 0.0
         elif raw.size % 4 == 0:
             points = raw.reshape(-1, 4)
         else:
@@ -366,17 +371,121 @@ def _process_one(pc_file, label_dir, output_dir, ext, z_range):
     )
 
 
+def _process_one_nuscenes(sample, output_dir, z_range):
+    """Load one NuScenes point cloud and render GT from an info dict."""
+    pc_file = sample['pc_file']
+    stem = sample['stem']
+    frame_key = sample['frame_key']
+    gt_boxes = sample['gt_boxes']
+    gt_names = sample['gt_names']
+
+    # NuScenes lidar .bin is typically (N, 5) float32.
+    raw = np.fromfile(str(pc_file), dtype=np.float32)
+    if raw.size % 5 == 0:
+        points = raw.reshape(-1, 5)
+    elif raw.size % 4 == 0:
+        points = raw.reshape(-1, 4)
+    else:
+        raise ValueError(f"Unexpected point format: {pc_file}")
+
+    frame_save_path = Path(output_dir) / f'{stem}.png'
+    frame_names = [f'{name} (GT)' for name in gt_names]
+    RENDERER.draw_frame(
+        points=points,
+        boxes=gt_boxes,
+        names=frame_names,
+        save_path=frame_save_path,
+        z_range=z_range,
+        bev_title='BEV (X-Y)  -  Ground Truth',
+        front_title='Front View (X-Z)  -  Ground Truth'
+    )
+
+    instances_dir = Path(output_dir) / 'instances'
+    instances_dir.mkdir(parents=True, exist_ok=True)
+
+    RENDERER.render_instances(
+        points=points,
+        boxes=gt_boxes,
+        names=list(gt_names),
+        frame_key=frame_key,
+        instances_dir=instances_dir
+    )
+
+    return (
+        f'[{stem}]  frame -> {frame_save_path.name}, '
+        f'instances -> {len(gt_boxes)}'
+    )
+
+
+def _load_nuscenes_samples(nuscenes_root: Path, info_path: Path):
+    """Return a lightweight list of {pc_file, gt_boxes, gt_names, ...}.
+
+    Expects `info_path` to be an OpenPCDet-generated `nuscenes_infos_*.pkl`.
+    Each entry contains:
+      - lidar_path (relative)
+      - token
+      - gt_boxes (N, 9) or (N, 7+) with x,y,z,dx,dy,dz,yaw in the first 7
+      - gt_names
+    """
+    with open(info_path, 'rb') as f:
+        infos = pickle.load(f)
+
+    samples = []
+    for info in infos:
+        rel_lidar = info.get('lidar_path', None)
+        if rel_lidar is None:
+            continue
+
+        pc_file = nuscenes_root / rel_lidar
+        if not pc_file.exists():
+            # If the caller passed `data_path` one level higher, try resolving
+            # relative paths against that.
+            alt = nuscenes_root.parent / rel_lidar
+            if alt.exists():
+                pc_file = alt
+            else:
+                continue
+
+        gt_boxes = info.get('gt_boxes', None)
+        if gt_boxes is None:
+            gt_boxes = np.zeros((0, 7), dtype=np.float32)
+        else:
+            gt_boxes = np.asarray(gt_boxes, dtype=np.float32)
+
+        gt_names = info.get('gt_names', None)
+        if gt_names is None:
+            gt_names = []
+        else:
+            gt_names = [str(x) for x in list(gt_names)]
+
+        token = info.get('token', None)
+        stem = Path(rel_lidar).stem
+        frame_key = token if token is not None else stem
+
+        samples.append({
+            'pc_file': str(pc_file),
+            'stem': stem,
+            'frame_key': frame_key,
+            'gt_boxes': gt_boxes,
+            'gt_names': gt_names,
+        })
+
+    return samples
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
     parser = argparse.ArgumentParser(
         description='Visualise ground-truth labels as BEV images')
     parser.add_argument('--data_path', type=str, required=True,
-                        help='Directory containing point cloud files')
-    parser.add_argument('--label_path', type=str, required=True,
-                        help='Directory containing label .txt files')
-    parser.add_argument('--ext', type=str, default='.npy',
-                        help='Point cloud file extension (.npy or .bin)')
+                        help='Point cloud directory (txt-label mode) OR NuScenes root (v1.0-*/ folder)')
+    parser.add_argument('--label_path', type=str, default=None,
+                        help='Directory containing label .txt files (txt-label mode only)')
+    parser.add_argument('--nuscenes_info', type=str, default=None,
+                        help='Path to nuscenes_infos_*.pkl (enables NuScenes mode; ignores --label_path/--ext globbing)')
+    parser.add_argument('--ext', type=str, default=None,
+                        help='Point cloud file extension for txt-label mode (.npy or .bin). Default: .npy')
     parser.add_argument('--output_dir', type=str,
                         default='/OpenPCDet/output/gt_images',
                         help='Where to save the BEV images')
@@ -389,7 +498,7 @@ def main():
     args = parser.parse_args()
 
     data_path = Path(args.data_path)
-    label_path = Path(args.label_path)
+    label_path = Path(args.label_path) if args.label_path is not None else None
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -398,15 +507,42 @@ def main():
         z_range = (args.z_min if args.z_min is not None else -float('inf'),
                    args.z_max if args.z_max is not None else  float('inf'))
 
-    # Gather point cloud files
-    pc_files = sorted(glob.glob(str(data_path / f'*{args.ext}')))
+    if args.nuscenes_info:
+        info_path = Path(args.nuscenes_info)
+        if not info_path.exists():
+            raise FileNotFoundError(f'NuScenes info file not found: {info_path}')
+
+        samples = _load_nuscenes_samples(nuscenes_root=data_path, info_path=info_path)
+        print(f'Loaded {len(samples)} NuScenes samples from {info_path}')
+
+        num_workers = args.workers if args.workers else min(cpu_count(), len(samples), 16)
+        worker_fn = partial(_process_one_nuscenes,
+                            output_dir=str(output_dir),
+                            z_range=z_range)
+
+        done = 0
+        with Pool(processes=num_workers) as pool:
+            for result in pool.imap_unordered(worker_fn, samples):
+                if result is not None:
+                    done += 1
+                    print(result)
+
+        print(f'\nDone. {done} GT images saved to {output_dir}  ({num_workers} workers)')
+        return
+
+    # Default: txt-label mode.
+    if label_path is None:
+        raise ValueError('--label_path is required unless --nuscenes_info is provided')
+    ext = args.ext if args.ext is not None else '.npy'
+
+    pc_files = sorted(glob.glob(str(data_path / f'*{ext}')))
     print(f'Found {len(pc_files)} point cloud files in {data_path}')
 
     num_workers = args.workers if args.workers else min(cpu_count(), len(pc_files), 16)
     worker_fn = partial(_process_one,
                         label_dir=str(label_path),
                         output_dir=str(output_dir),
-                        ext=args.ext,
+                        ext=ext,
                         z_range=z_range)
 
     done = 0
