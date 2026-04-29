@@ -94,4 +94,7 @@ python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second.yaml --ckpt
 TODO: train second nuscnes opnieuw
 train nuscenes model op erod.
 
+test second nuscenes op kitti
+
+
 
