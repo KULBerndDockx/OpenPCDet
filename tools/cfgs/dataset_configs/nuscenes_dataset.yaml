@@ -1,7 +1,8 @@
 DATASET: 'NuScenesDataset'
+#DATASET: 'KittiDataset'
 DATA_PATH: '/OpenPCDet/datasets/nuscenes'
 
-VERSION: 'v1.0-mini'
+VERSION: 'v1.0-trainval'
 MAX_SWEEPS: 1
 PRED_VELOCITY: False
 SET_NAN_VELOCITY_TO_ZEROS: True
@@ -15,7 +16,7 @@ MAP_CLASS_TO_KITTI: {
 
 DATA_SPLIT: {
     'train': train,
-    'test': val
+    'test': test
 }
 
 INFO_PATH: {

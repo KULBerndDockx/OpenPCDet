@@ -14,6 +14,8 @@ MODEL:
 
     BACKBONE_3D:
         NAME: VoxelBackBone8xFocal
+        MASK_MULTI: True
+        ENLARGE_VOXEL_CHANNELS: 64
 
     MAP_TO_BEV:
         NAME: HeightCompression
