@@ -2,7 +2,7 @@ DATASET: 'NuScenesDataset'
 #DATASET: 'KittiDataset'
 DATA_PATH: '/OpenPCDet/datasets/nuscenes'
 
-VERSION: 'v1.0-trainval'
+VERSION: 'v1.0-mini'
 MAX_SWEEPS: 1
 PRED_VELOCITY: False
 SET_NAN_VELOCITY_TO_ZEROS: True

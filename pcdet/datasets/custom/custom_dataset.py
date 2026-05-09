@@ -635,7 +635,16 @@ def create_custom_infos(dataset_cfg, class_names, data_path, save_path, workers=
     )
     with open(val_filename, 'wb') as f:
         pickle.dump(custom_infos_val, f)
-    print('Custom info train file is saved to %s' % val_filename)
+    print('Custom info val file is saved to %s' % val_filename)
+
+    val_all_filename = save_path / 'custom_infos_val_all.pkl'
+    dataset.set_split('val_all')
+    custom_infos_val_all = dataset.get_infos(
+        class_names, num_workers=workers, has_label=True, num_features=num_features
+    )
+    with open(val_all_filename, 'wb') as f:
+        pickle.dump(custom_infos_val_all, f)
+    print('Custom info val_all file is saved to %s' % val_all_filename)
 
     print('------------------------Start create groundtruth database for data augmentation------------------------')
     dataset.set_split(train_split)

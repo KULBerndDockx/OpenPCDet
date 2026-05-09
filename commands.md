@@ -38,6 +38,7 @@ python3 -m pcdet.datasets.kitti.kitti_dataset --func create_kitti_infos --cfg_fi
 - **PointPillar:** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/pointpillar.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth`
 - **PointPillar (TENT):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/pointpillar_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth`
 - **SECOND:** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth`
+- **SECOND(retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_80.pth`
 - **SECOND (FOCAL):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_20.pth`
 - **PointRCNN:** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/pointrcnn.yaml --ckpt /OpenPCDet/pcdet/models/pth/PointRCNN.pth`
 
@@ -47,6 +48,10 @@ python3 -m pcdet.datasets.kitti.kitti_dataset --func create_kitti_infos --cfg_fi
 - **SECOND (FOCAL):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_20.pth`
 
 ### nuScenes
+- **SECOND (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth`
+
+- **SECOND:** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_80.pth`
+
 - **SECOND (FOCAL):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_20.pth`   
 
 ### nuScenes (Converted)
