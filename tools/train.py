@@ -49,7 +49,9 @@ def parse_config():
     parser.add_argument('--ckpt_save_time_interval', type=int, default=300, help='in terms of seconds')
     parser.add_argument('--wo_gpu_stat', action='store_true', help='')
     parser.add_argument('--use_amp', action='store_true', help='use mix precision training')
-    
+    parser.add_argument('--freeze_backbone', action='store_true', default=False, help='freeze the 3d and 2d backbone')
+    parser.add_argument('--freeze_bn', action='store_true', default=False, help='freeze batch norm layers')
+
 
     args = parser.parse_args()
 
@@ -133,6 +135,25 @@ def main():
     if args.sync_bn:
         model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     model.cuda()
+
+    if args.freeze_backbone:
+        logger.info("Freezing 3D and 2D backbone parameters...")
+        for name, param in model.named_parameters():
+            if 'backbone_3d' in name or 'backbone_2d' in name or 'vfe' in name:
+                param.requires_grad = False
+
+    if args.freeze_bn:
+        logger.info("Freezing BatchNorm layers...")
+        for module in model.modules():
+            if isinstance(module, nn.BatchNorm1d) or isinstance(module, nn.BatchNorm2d) or isinstance(module, nn.SyncBatchNorm):
+                module.eval()
+                # Overwrite the train method so it isn't set back to train mode by model.train()
+                module.train = lambda mode=False, m=module: m
+                for param in module.parameters():
+                    param.requires_grad = False
+
+
+
 
     optimizer = build_optimizer(model, cfg.OPTIMIZATION)
 

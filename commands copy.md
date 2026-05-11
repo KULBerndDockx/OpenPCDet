@@ -63,7 +63,7 @@ python3 -m pcdet.datasets.kitti.kitti_dataset --func create_kitti_infos --cfg_fi
 - **Nuscenes (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes_TENT/default/ckpt/checkpoint_epoch_80.pth`
 - **eRod (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_erod_TENT/default/ckpt/checkpoint_epoch_80.pth`
 
-
+root@a1e06a0b30c0:/OpenPCDet/tools# python3 train.py --cfg_file cfgs/kitti_models/second_nuscenes.yaml --pretrained_model /OpenPCDet/pcdet/models/pth/second_7862.pth  --extra_tag frozen_backbone_8 --freeze_backbone 
 
 
 

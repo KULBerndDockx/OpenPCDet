@@ -24,7 +24,7 @@ INFO_PATH: {
     'test': [nuscenes_infos_10sweeps_val.pkl],
 }
 
-POINT_CLOUD_RANGE: [0, -51.2, -5.0, 51.2, 51.2, 3.0]
+POINT_CLOUD_RANGE: [0, -32.0, -3.0, 52.8, 32.0, 1.0]
 
 BALANCED_RESAMPLING: True 
 
@@ -79,7 +79,7 @@ DATA_PROCESSOR:
       }
 
     - NAME: transform_points_to_voxels
-      VOXEL_SIZE: [0.1, 0.1, 0.2]
+      VOXEL_SIZE: [0.05, 0.05, 0.1]
       MAX_POINTS_PER_VOXEL: 45
       MAX_NUMBER_OF_VOXELS: {
         'train': 60000,
