@@ -24,7 +24,7 @@ INFO_PATH: {
     'test': [nuscenes_infos_10sweeps_val.pkl],
 }
 
-POINT_CLOUD_RANGE: [0, -32.0, -3.0, 52.8, 32.0, 1.0]
+POINT_CLOUD_RANGE: [0, -32.0, -3.0, 51.2, 32.0, 1.0]
 
 BALANCED_RESAMPLING: True 
 
