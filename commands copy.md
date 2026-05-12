@@ -34,8 +34,7 @@ python3 -m pcdet.datasets.kitti.kitti_dataset --func create_kitti_infos --cfg_fi
 
 
 ### PointPillar
-
-- **Nuscenes (Fine-tune):** `python3 train.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/pointpillar_nuscenes.yaml --pretrained_model /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --extra_tag frozen_backbone_0 --freeze_backbone`
+- **Nuscenes (Fine-tune):** `python3 train.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes.yaml --pretrained_model /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --extra_tag frozen_backbone_0 --freeze_backbone`
 
 - **KITTI (Focal):** `python3 train.py --cfg_file cfgs/kitti_models/pointpillar_focal.yaml` 
 - **Nuscenes (Focal) (Fine-tune):** `python3 train.py --cfg_file cfgs/kitti_models/pointpillar_nuscenes_focal.yaml --pretrained_model /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/pointpillar_focal/default/ckpt/checkpoint_epoch_40.pth`
