@@ -93,9 +93,9 @@ tools/cfgs/custom_models/pointpillar/TENT/
 - **Nuscenes (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_nuscenes_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --extra_tag POINTPILLAR_nuscenes_TENT_non_retrained`
 - **eRod (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_erod_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --extra_tag POINTPILLAR_eRod_TENT_non_retrained`
 
-- **KITTI (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_nuscenes_TENT/default/ckpt/checkpoint_epoch_80.pth --extra_tag POINTPILLAR_KITTI_TENT_retrained`
-- **Nuscenes (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_nuscenes_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_nuscenes_TENT/default/ckpt/checkpoint_epoch_80.pth --extra_tag POINTPILLAR_nuscenes_TENT_retrained`
-- **eRod (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_erod_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_nuscenes_TENT/default/ckpt/checkpoint_epoch_80.pth --extra_tag POINTPILLAR_eRod_TENT_retrained`
+- **KITTI (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes/frozen_backbone_1/ckpt/checkpoint_epoch_40.pth --extra_tag POINTPILLAR_KITTI_TENT_retrained`
+- **Nuscenes (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_nuscenes_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes/frozen_backbone_1/ckpt/checkpoint_epoch_40.pth --extra_tag POINTPILLAR_nuscenes_TENT_retrained`
+- **eRod (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_erod_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes/frozen_backbone_1/ckpt/checkpoint_epoch_40.pth --extra_tag POINTPILLAR_eRod_TENT_retrained`
 
 
 
