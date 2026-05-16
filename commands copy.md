@@ -27,7 +27,7 @@ python3 -m pcdet.datasets.kitti.kitti_dataset --func create_kitti_infos --cfg_fi
 
 ### SECOND
 
-- **nuScenes (Fine-tune):** `python3 train.py --cfg_file cfgs/kitti_models/second_nuscenes.yaml --pretrained_model /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag frozen_backbone_0 --freeze_backbone`
+- **nuScenes (Fine-tune):** `python3 train.py --cfg_file cfgs/kitti_models/second_nuscenes.yaml --pretrained_model /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag frozen_backbone_9 --freeze_backbone`
 
 - **KITTI (Focal):** `python3 train.py --cfg_file cfgs/kitti_models/second_focal.yaml` 
 - **Nuscenes (Focal) (Fine-tune):** `python3 train.py --cfg_file cfgs/kitti_models/second_nuscenes_focal.yaml --pretrained_model /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_40.pth`
@@ -72,9 +72,9 @@ custom_models/second/default/
 - **Nuscenes (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/TENT/second_nuscenes_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_nuscenes_TENT_non_retrained`
 - **eRod (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_eRod_TENT_non_retrained`
 
-- **KITTI (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes_TENT/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_KITTI_TENT_retrained`
-- **Nuscenes (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/TENT/second_nuscenes_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/second/TENT/second_nuscenes/default/ckpt_2/checkpoint_epoch_80.pth --extra_tag SECOND_nuscenes_TENT_retrained`
-- **eRod (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_erod_TENT/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_eRod_TENT_retrained`
+- **KITTI (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_TENT.yaml --ckpt /OpenPCDet/output/kitti_models/second_nuscenes/frozen_backbone_8/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_KITTI_TENT_retrained`
+- **Nuscenes (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/TENT/second_nuscenes_TENT.yaml --ckpt /OpenPCDet/output/kitti_models/second_nuscenes/frozen_backbone_8/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_nuscenes_TENT_retrained`
+- **eRod (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod_TENT.yaml --ckpt /OpenPCDet/output/kitti_models/second_nuscenes/frozen_backbone_8/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_eRod_TENT_retrained`
 
 ### POINTPILLAR (DEFAULT)
 tools/cfgs/custom_models/pointpillar/TENT/
