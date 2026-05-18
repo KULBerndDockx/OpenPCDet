@@ -58,9 +58,9 @@ custom_models/second/default/
 
 ### SECOND (FOCAL)
 
-- **KITTI (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_20.pth --extra_tag SECOND_KITTI_focal_non_retrained`
-- **Nuscenes (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes_focal/default/ckpt/checkpoint_epoch_20.pth --extra_tag SECOND_nuscenes_focal_non_retrained`
-- **eRod (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_focal/default/ckpt/checkpoint_epoch_20.pth --extra_tag SECOND_eRod_focal_non_retrained`
+- **KITTI (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_focal.yaml --ckpt /OpenPCDet/output/custom_models/second/focal/second_focal/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_KITTI_focal_non_retrained`
+- **Nuscenes (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes_focal.yaml --ckpt /OpenPCDet/output/custom_models/second/focal/second_focal/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_nuscenes_focal_non_retrained`
+- **eRod (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod_focal.yaml --ckpt /OpenPCDet/output/custom_models/second/focal/second_focal/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_eRod_focal_non_retrained`
 
 - **KITTI (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/pointpillar_nuscenes/default/ckpt/checkpoint_epoch_38.pth --extra_tag SECOND_KITTI_focal_retrained`
 - **Nuscenes (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/pointpillar_nuscenes/default/ckpt/checkpoint_epoch_38.pth --extra_tag SECOND_nuscenes_focal_retrained`
