@@ -71,7 +71,7 @@ python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/focal/seco
 
 ### SECOND (TENT)
 
-- **KITTI (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_KITTI_TENT_non_retrained`
+- **KITTI (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/TENT/second_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_KITTI_TENT_non_retrained`
 - **Nuscenes (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/TENT/second_nuscenes_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_nuscenes_TENT_non_retrained`
 - **eRod (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_eRod_TENT_non_retrained`
 
@@ -122,10 +122,70 @@ tools/cfgs/custom_models/pointpillar/TENT/
 
 ### nuScenes
 
-- **SECOND:** `cd /OpenPCDet/tools && python3 demo.py --cfg_file cfgs/kitti_models/second_nuscenes.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_64.pth --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --ext .bin`
+- **SECOND:** `cd /OpenPCDet/tools && python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/default/second_nuscenes.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_nuscenes_non_retrained --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --ext .bin`
+
+
+- **SECOND:** `cd /OpenPCDet/tools && python3 demo.py --cfg_file cfgs/kitti_models/second_nuscenes.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt_2/checkpoint_epoch_80.pth --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --ext .bin`
+
+- **SECOND (retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/focal/second_nuscenes_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/second/focal/second_nuscenes_focal/default/ckpt/checkpoint_epoch_40.pth --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --ext .bin--extra_tag SECOND_nuscenes_focal_retrained`
 
 
 
+- **SECOND FOCAL (retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/focal/second_nuscenes_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/second/focal/second_nuscenes_focal/default/ckpt/checkpoint_epoch_40.pth --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --ext .bin--extra_tag SECOND_nuscenes_focal_retrained`
+
+### SECOND (DEFAULT)
+custom_models/second/default/
+- **KITTI (non-retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/default/second_nuscenes.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_nuscenes_non_retrained --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --ext .bin`
+- **Nuscenes (non-retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/default/second_nuscenes.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_nuscenes_non_retrained `
+- **eRod (non-retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/default/second_erod.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_eRod_non_retrained --data_path /OpenPCDet/erod/points --ext .npy`
+
+- **KITTI (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_KITTI_retrained`
+- **Nuscenes (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_nuscenes_retrained`
+- **eRod (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_erod/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_eRod_retrained`
+
+### SECOND (FOCAL)
+
+- **KITTI (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/focal/second_focal.yaml --ckpt /OpenPCDet/output/custom_models/second/focal/second_focal/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_KITTI_focal_non_retrained_1`
+- **Nuscenes (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/focal/second_nuscenes_focal.yaml --ckpt /OpenPCDet/output/custom_models/second/focal/second_focal/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_nuscenes_focal_non_retrained_1`
+- **eRod (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/focal/second_erod_focal.yaml --ckpt /OpenPCDet/output/custom_models/second/focal/second_focal/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_eRod_focal_non_retrained_1`
+
+- **KITTI (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/focal/second_focal.yaml --ckpt output/OpenPCDet/tools/cfgs/custom_models/second/focal/second_nuscenes_focal/default/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_KITTI_focal_retrained_1`
+
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/focal/second_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/second/focal/second_nuscenes_focal/default/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_KITTI_focal_retrained_1
+
+- **Nuscenes (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/focal/second_nuscenes_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/second/focal/second_nuscenes_focal/default/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_nuscenes_focal_retrained`
+- **eRod (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/focal/second_erod_focal.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/second/focal/second_nuscenes_focal/default/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_eRod_focal_retrained`
+
+### SECOND (TENT)
+
+- **KITTI (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/TENT/second_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_KITTI_TENT_non_retrained`
+- **Nuscenes (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/TENT/second_nuscenes_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_nuscenes_TENT_non_retrained`
+- **eRod (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_eRod_TENT_non_retrained`
+
+- **KITTI (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/TENT/second_TENT.yaml --ckpt /OpenPCDet/output/kitti_models/second_nuscenes/frozen_backbone_8/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_KITTI_TENT_retrained`
+- **Nuscenes (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/TENT/second_nuscenes_TENT.yaml --ckpt /OpenPCDet/output/kitti_models/second_nuscenes/frozen_backbone_8/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_nuscenes_TENT_retrained`
+- **eRod (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod_TENT.yaml --ckpt /OpenPCDet/output/kitti_models/second_nuscenes/frozen_backbone_8/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_eRod_TENT_retrained`
+
+### POINTPILLAR (DEFAULT)
+tools/cfgs/custom_models/pointpillar/TENT/
+- **KITTI (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --extra_tag POINTPILLAR_KITTI_default_non_retrained`
+- **Nuscenes (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --extra_tag POINTPILLAR_nuscenes_default_non_retrained`
+- **eRod (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_erod.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --extra_tag POINTPILLAR_eRod_default_non_retrained`
+
+- **KITTI (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes/frozen_backbone_1/ckpt/checkpoint_epoch_40.pth --extra_tag POINTPILLAR_KITTI_default_retrained`
+- **Nuscenes (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes/frozen_backbone_1/ckpt/checkpoint_epoch_40.pth --extra_tag POINTPILLAR_nuscenes_default_retrained`
+- **eRod (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_erod.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes/frozen_backbone_1/ckpt/checkpoint_epoch_40.pth --extra_tag POINTPILLAR_eRod_default_retrained`
+
+
+### POINTPILLAR (TENT)
+tools/cfgs/custom_models/pointpillar/TENT/
+- **KITTI (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --extra_tag POINTPILLAR_KITTI_TENT_non_retrained`
+- **Nuscenes (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_nuscenes_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --extra_tag POINTPILLAR_nuscenes_TENT_non_retrained`
+- **eRod (non-retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_erod_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --extra_tag POINTPILLAR_eRod_TENT_non_retrained`
+
+- **KITTI (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes/frozen_backbone_1/ckpt/checkpoint_epoch_40.pth --extra_tag POINTPILLAR_KITTI_TENT_retrained`
+- **Nuscenes (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_nuscenes_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes/frozen_backbone_1/ckpt/checkpoint_epoch_40.pth --extra_tag POINTPILLAR_nuscenes_TENT_retrained`
+- **eRod (retrained):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_erod_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes/frozen_backbone_1/ckpt/checkpoint_epoch_40.pth --extra_tag POINTPILLAR_eRod_TENT_retrained`
 
 
 

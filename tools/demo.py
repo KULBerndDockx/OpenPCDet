@@ -188,26 +188,27 @@ def _render_prediction_outputs(points, boxes, scores, labels, class_names, sampl
         front_title='Front View (X-Z)  -  Predictions'
     )
 
-    instances_dir = Path(output_dir) / 'instances_pred'
+    """instances_dir = Path(output_dir) / 'instances_pred'
     renderer.render_instances(
         points=points,
         boxes=boxes,
         names=pred_class_names,
         frame_key=sample_name,
         instances_dir=instances_dir
-    )
+    )"""
 
     return sample_name
 
 
 def parse_config():
     parser = argparse.ArgumentParser(description='arg parser')
-    parser.add_argument('--cfg_file', type=str, default='cfgs/kitti_models/second.yaml',
+    parser.add_argument('--cfg_file', type=str, default=None,
                         help='specify the config for demo')
     parser.add_argument('--data_path', type=str, default='demo_data',
                         help='specify the point cloud data file or directory')
     parser.add_argument('--ckpt', type=str, default=None, help='specify the pretrained model')
     parser.add_argument('--ext', type=str, default='.bin', help='specify the extension of your point cloud data file')
+    parser.add_argument('--extra_tag', type=str, default='default', help='extra tag for this experiment')
     parser.add_argument('--realtime', action='store_true', default=False,
                         help='show BEV images in realtime instead of saving to png')
     parser.add_argument('--workers', type=int, default=4,
@@ -222,6 +223,8 @@ def parse_config():
     args = parser.parse_args()
 
     cfg_from_yaml_file(args.cfg_file, cfg)
+    cfg.TAG = Path(args.cfg_file).stem
+    cfg.EXP_GROUP_PATH = '/'.join(args.cfg_file.split('/')[1:-1])
 
     return args, cfg
 
@@ -251,7 +254,7 @@ def main():
     model.cuda()
     model.eval()
 
-    output_dir = Path('/OpenPCDet/output/demo_images')
+    output_dir = cfg.ROOT_DIR / 'output' / 'demo_images' / args.extra_tag
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Use DataLoader for parallel point cloud loading
