@@ -150,7 +150,10 @@ class PointPillar_TENT(PointPillar):
         probs = torch.sigmoid(cls_logits)
         # H(p) = -p log p - (1-p) log(1-p)
         ent = -(probs * torch.log(probs + eps) + (1.0 - probs) * torch.log(1.0 - probs + eps))
-        return ent.sum(dim=-1)
+
+        # Shannon entropy
+        # ent = -sum[(prob)*log(prob)]
+        #return torch.sum(torch._nested_tensor_from_tensor_list((prob)*torch.log(prob) for prob in probs))
 
     @staticmethod
     def _select_entropy_anchors(entropy_per_anchor: torch.Tensor,

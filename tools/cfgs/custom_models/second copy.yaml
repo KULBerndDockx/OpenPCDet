@@ -1,8 +1,11 @@
-CLASS_NAMES: ['car', 'pedestrian', 'bicycle']
+CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
 
 DATA_CONFIG: 
-    _BASE_CONFIG_: cfgs/dataset_configs/nuscenes_dataset.yaml
-
+    _BASE_CONFIG_: cfgs/dataset_configs/kitti_dataset.yaml
+    
+    POINT_CLOUD_RANGE: [0, -32.0, -3, 52.8, 32.0, 1]
+    VOXEL_SIZE: [0.4, 0.2, 0.2]
+    MAX_POINTS_PER_VOXEL: 45
 
 MODEL:
     NAME: SECONDNet
@@ -37,7 +40,7 @@ MODEL:
 
         ANCHOR_GENERATOR_CONFIG: [
             {
-                'class_name': 'car',
+                'class_name': 'Car',
                 'anchor_sizes': [[3.9, 1.6, 1.56]],
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-1.78],
@@ -47,7 +50,7 @@ MODEL:
                 'unmatched_threshold': 0.45
             },
             {
-                'class_name': 'pedestrian',
+                'class_name': 'Pedestrian',
                 'anchor_sizes': [[0.8, 0.6, 1.73]],
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-0.6],
@@ -57,7 +60,7 @@ MODEL:
                 'unmatched_threshold': 0.35
             },
             {
-                'class_name': 'bicycle',
+                'class_name': 'Cyclist',
                 'anchor_sizes': [[1.76, 0.6, 1.73]],
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-0.6],
@@ -86,22 +89,22 @@ MODEL:
 
     POST_PROCESSING:
         RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
-        SCORE_THRESH: 0.2
+        SCORE_THRESH: 0.1
         OUTPUT_RAW_SCORE: False
 
-        EVAL_METRIC: nuscenes
+        EVAL_METRIC: kitti
 
         NMS_CONFIG:
             MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.005
+            NMS_THRESH: 0.01
             NMS_PRE_MAXSIZE: 4096
-            NMS_POST_MAXSIZE: 200
+            NMS_POST_MAXSIZE: 500
 
 
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 4
-    NUM_EPOCHS: 40
+    BATCH_SIZE_PER_GPU: 2
+    NUM_EPOCHS: 45
 
     OPTIMIZER: adam_onecycle
     LR: 0.0003
@@ -109,13 +112,13 @@ OPTIMIZATION:
     MOMENTUM: 0.9
 
     MOMS: [0.95, 0.85]
-    PCT_START: 0.2
+    PCT_START: 0.4
     DIV_FACTOR: 10
-    DECAY_STEP_LIST: [25, 35]
+    DECAY_STEP_LIST: [35, 45]
     LR_DECAY: 0.1
     LR_CLIP: 0.0000001
 
     LR_WARMUP: False
     WARMUP_EPOCH: 1
-    
+
     GRAD_NORM_CLIP: 10

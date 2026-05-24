@@ -8,7 +8,9 @@ DATA_CONFIG:
     
     # KITTI checkpoint was trained with this ROI; keep it to preserve voxel/grid alignment.
     #POINT_CLOUD_RANGE: [0, -39.68, -3, 69.12, 39.68, 1]
-    POINT_CLOUD_RANGE: [0, -39.68, -3, 69.12, 39.68, 1]
+    #POINT_CLOUD_RANGE: [0, -39.68, -3, 69.12, 39.68, 1]
+    #POINT_CLOUD_RANGE: [-32.8, -40.00, -3, 32.80, 40.00, 1]
+
     # Align EROD's LiDAR frame to KITTI-like frame without retraining.
     # Suggested by tools/find_best_lidar_transform.py on GT labels.
     LIDAR_COORD_TRANSFORM:

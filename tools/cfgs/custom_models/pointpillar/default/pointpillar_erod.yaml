@@ -4,10 +4,12 @@ DATA_CONFIG:
     _BASE_CONFIG_: cfgs/dataset_configs/custom_dataset.yaml
 
     # Important: EROD point clouds contain both positive and negative Y.
-    # If you set Y to [0, ...] you will mask away ~half the points at inference time.
+    # If you set Y to [0,#...] you will mask away ~half the points at inference time.
     
     # KITTI checkpoint was trained with this ROI; keep it to preserve voxel/grid alignment.
-    POINT_CLOUD_RANGE: [0, -39.68, -3, 69.12, 39.68, 1]
+    #POINT_CLOUD_RANGE: [0, -39.68, -3, 69.12, 39.68, 1]
+    #POINT_CLOUD_RANGE: [-32.8, -40.00, -3, 32.80, 40.00, 1]
+
     #POINT_CLOUD_RANGE: [-32.64, -39.68, -3, 32.64, 39.68, 1]
     # Align EROD's LiDAR frame to KITTI-like frame without retraining.
     # Suggested by tools/find_best_lidar_transform.py on GT labels.

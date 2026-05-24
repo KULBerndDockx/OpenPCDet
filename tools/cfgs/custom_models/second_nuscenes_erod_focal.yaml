@@ -1,7 +1,42 @@
-CLASS_NAMES: ['car', 'pedestrian', 'bicycle']
+CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
 
 DATA_CONFIG: 
-    _BASE_CONFIG_: cfgs/dataset_configs/nuscenes_dataset.yaml
+    _BASE_CONFIG_: cfgs/dataset_configs/custom_dataset.yaml
+    SKIPH: True
+
+        
+    # Make XY grid divisible by stride=8 when using VOXEL_SIZE=[0.1, 0.1, 0.1].
+    # 129.6 / 0.1 = 1296 -> 1296 / 8 = 162 (matches backbone feature map).
+    # POINT_CLOUD_RANGE: [-64.8, -64.8, -3.0, 64.8, 64.8, 1.0]
+    #POINT_CLOUD_RANGE: [0, -32.0, -3, 52.8, 32.0, 1]
+    #POINT_CLOUD_RANGE: [-32.8, -40.00, -3, 32.80, 40.00, 1]
+    POINT_CLOUD_RANGE: [-32.8, -40.00, -3, 4.00, 40.00, 1]
+
+
+    VOXEL_SIZE: [0.4, 0.2, 0.2]
+    MAX_POINTS_PER_VOXEL: 45
+
+    # NOTE: SECONDNet's voxel backbone expects enough Z bins so that after downsampling
+    # the encoded tensor has depth D=2. If Z resolution is too coarse, depth collapses
+    # to D=1 and HeightCompression produces 128 channels instead of 256, causing a
+    # runtime channel mismatch in BACKBONE_2D.
+    DATA_PROCESSOR:
+        - NAME: mask_points_and_boxes_outside_range
+          REMOVE_OUTSIDE_BOXES: True
+
+        - NAME: shuffle_points
+          SHUFFLE_ENABLED: {
+            'train': True,
+            'test': False
+            }
+
+        - NAME: transform_points_to_voxels
+          VOXEL_SIZE: [0.05, 0.05, 0.1]
+          MAX_POINTS_PER_VOXEL: 45
+          MAX_NUMBER_OF_VOXELS: {
+            'train': 160000,
+            'test': 4000000
+          }
 
 
 MODEL:
@@ -11,7 +46,10 @@ MODEL:
         NAME: MeanVFE
 
     BACKBONE_3D:
-        NAME: VoxelBackBone8x
+        NAME: VoxelBackBone8xFocal
+        MASK_MULTI: True
+        SKIP_MASK_KERNEL: True
+        ENLARGE_VOXEL_CHANNELS: 64
 
     MAP_TO_BEV:
         NAME: HeightCompression
@@ -37,7 +75,7 @@ MODEL:
 
         ANCHOR_GENERATOR_CONFIG: [
             {
-                'class_name': 'car',
+                'class_name': 'Car',
                 'anchor_sizes': [[3.9, 1.6, 1.56]],
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-1.78],
@@ -47,7 +85,7 @@ MODEL:
                 'unmatched_threshold': 0.45
             },
             {
-                'class_name': 'pedestrian',
+                'class_name': 'Pedestrian',
                 'anchor_sizes': [[0.8, 0.6, 1.73]],
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-0.6],
@@ -57,7 +95,7 @@ MODEL:
                 'unmatched_threshold': 0.35
             },
             {
-                'class_name': 'bicycle',
+                'class_name': 'Cyclist',
                 'anchor_sizes': [[1.76, 0.6, 1.73]],
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-0.6],
@@ -86,36 +124,36 @@ MODEL:
 
     POST_PROCESSING:
         RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
-        SCORE_THRESH: 0.2
+        SCORE_THRESH: 0.1
         OUTPUT_RAW_SCORE: False
 
-        EVAL_METRIC: nuscenes
+        EVAL_METRIC: kitti
 
         NMS_CONFIG:
             MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.005
+            NMS_THRESH: 0.01
             NMS_PRE_MAXSIZE: 4096
-            NMS_POST_MAXSIZE: 200
+            NMS_POST_MAXSIZE: 500
 
 
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 4
-    NUM_EPOCHS: 40
+    BATCH_SIZE_PER_GPU: 1
+    NUM_EPOCHS: 20
 
     OPTIMIZER: adam_onecycle
-    LR: 0.0003
+    LR: 0.003
     WEIGHT_DECAY: 0.01
     MOMENTUM: 0.9
 
     MOMS: [0.95, 0.85]
-    PCT_START: 0.2
+    PCT_START: 0.4
     DIV_FACTOR: 10
-    DECAY_STEP_LIST: [25, 35]
+    DECAY_STEP_LIST: [35, 45]
     LR_DECAY: 0.1
     LR_CLIP: 0.0000001
 
     LR_WARMUP: False
     WARMUP_EPOCH: 1
-    
+
     GRAD_NORM_CLIP: 10

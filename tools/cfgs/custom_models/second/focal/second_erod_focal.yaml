@@ -9,7 +9,7 @@ DATA_CONFIG:
     # 129.6 / 0.1 = 1296 -> 1296 / 8 = 162 (matches backbone feature map).
     # POINT_CLOUD_RANGE: [-64.8, -64.8, -3.0, 64.8, 64.8, 1.0]
     #POINT_CLOUD_RANGE: [0, -32.0, -3, 52.8, 32.0, 1]
-    POINT_CLOUD_RANGE: [-32.8, -40.00, -3, 32.80, 40.00, 1]
+    #POINT_CLOUD_RANGE: [-32.8, -40.00, -3, 32.80, 40.00, 1]
     #POINT_CLOUD_RANGE: [-32.8, -40.00, -3, 4.00, 40.00, 1]
 
 
@@ -34,8 +34,8 @@ DATA_CONFIG:
           VOXEL_SIZE: [0.05, 0.05, 0.1]
           MAX_POINTS_PER_VOXEL: 45
           MAX_NUMBER_OF_VOXELS: {
-            'train': 160000,
-            'test': 4000000
+            'train': 16000,
+            'test': 40000
           }
 
 
