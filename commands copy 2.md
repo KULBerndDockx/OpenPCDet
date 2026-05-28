@@ -193,8 +193,68 @@ tools/cfgs/custom_models/pointpillar/TENT/
 
 
 
+## 5. vis
+
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/second/focal/second_focal/SECOND_KITTI_focal_non_retrained_1/eval/epoch_80/val/default/result.pkl 
+
+
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second/default/eval/epoch_7862/val/default/result.pkl 
+
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second/default/eval/epoch_40/val/default/result.pkl 
+
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/second/focal/second_focal/SECOND_KITTI_focal_non_retrained_1/eval/epoch_80/val/default/result.pkl 
+
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/second/focal/second_focal/SECOND_KITTI_focal_retrained_1/eval/epoch_40/val/default/result.pkl 
+
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/second/TENT/second_TENT/SECOND_KITTI_TENT_non_retrained/eval/epoch_7862/val/default/result.pkl 
+
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/second/TENT/second_TENT/SECOND_KITTI_TENT_retrained/eval/epoch_40/val/default/result.pkl 
+
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar/POINTPILLAR_KITTI_default_non_retrained/eval/epoch_7728/val/default/result.pkl 
+
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar/POINTPILLAR_KITTI_default_retrained/eval/epoch_40/val/default/result.pkl 
+
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_TENT/POINTPILLAR_KITTI_TENT_non_retrained/eval/epoch_7728/val/default/result.pkl 
+
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_TENT/POINTPILLAR_KITTI_TENT_retrained/eval/epoch_40/val/default/result.pkl 
 
 
 
 
+### SECOND (DEFAULT)
+custom_models/second/default/
+- **KITTI (non-retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/default/second_nuscenes.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_nuscenes_non_retrained --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --ext .bin`
+
+
+- **KITTI (retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_KITTI_retrained`
+
+
+### SECOND (FOCAL)
+
+- **KITTI (non-retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/focal/second_focal.yaml --ckpt /OpenPCDet/output/custom_models/second/focal/second_focal/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_KITTI_focal_non_retrained_1`
+
+
+- **KITTI (retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/focal/second_focal.yaml --ckpt output/OpenPCDet/tools/cfgs/custom_models/second/focal/second_nuscenes_focal/default/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_KITTI_focal_retrained_1`
+
+### SECOND (TENT)
+
+- **KITTI (non-retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/TENT/second_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_KITTI_TENT_non_retrained`
+
+
+- **KITTI (retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/TENT/second_TENT.yaml --ckpt /OpenPCDet/output/kitti_models/second_nuscenes/frozen_backbone_8/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_KITTI_TENT_retrained`
+
+### POINTPILLAR (DEFAULT)
+tools/cfgs/custom_models/pointpillar/TENT/
+- **KITTI (non-retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --extra_tag POINTPILLAR_KITTI_default_non_retrained`
+
+
+- **KITTI (retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes/frozen_backbone_1/ckpt/checkpoint_epoch_40.pth --extra_tag POINTPILLAR_KITTI_default_retrained`
+
+
+### POINTPILLAR (TENT)
+tools/cfgs/custom_models/pointpillar/TENT/
+- **KITTI (non-retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_TENT.yaml --ckpt /OpenPCDet/pcdet/models/pth/pointpillar_7728.pth --extra_tag POINTPILLAR_KITTI_TENT_non_retrained`
+
+
+- **KITTI (retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_TENT.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes/frozen_backbone_1/ckpt/checkpoint_epoch_40.pth --extra_tag POINTPILLAR_KITTI_TENT_retrained`
 

@@ -29,7 +29,7 @@ class MultiViewRenderer:
             z_min_plot, z_max_plot = z_range
 
         ax_bev.scatter(points[:, 1], points[:, 0], s=0.1, c='white', alpha=0.5)
-        ax_front.scatter(points[:, 0], points[:, 2], s=0.1, c='white', alpha=0.5)
+        #ax_front.scatter(points[:, 0], points[:, 2], s=0.1, c='white', alpha=0.5)
 
         for i, box in enumerate(boxes):
             x, y, z, dx, dy, dz, heading = box[:7]
@@ -46,8 +46,8 @@ class MultiViewRenderer:
             x0 = x - half_x_extent
             z0 = z - dz / 2.0
             rect = plt.Rectangle((x0, z0), 2.0 * half_x_extent, dz, fill=False, edgecolor=color, linewidth=1.5)
-            ax_front.add_patch(rect)
-            ax_front.text(x, z + dz / 2.0, name, color=color, fontsize=5, ha='center', va='bottom')
+            #ax_front.add_patch(rect)
+            #ax_front.text(x, z + dz / 2.0, name, color=color, fontsize=5, ha='center', va='bottom')
 
         ax_bev.set_xlim(point_range[1], point_range[3])
         ax_bev.set_ylim(point_range[0], point_range[2])
@@ -57,13 +57,13 @@ class MultiViewRenderer:
         ax_bev.set_ylabel('X (m)')
         ax_bev.set_title(bev_title)
 
-        ax_front.set_xlim(point_range[0], point_range[2])
-        ax_front.set_ylim(z_min_plot, z_max_plot)
-        ax_front.set_facecolor('black')
-        ax_front.set_aspect('auto')
-        ax_front.set_xlabel('X (m)')
-        ax_front.set_ylabel('Z (m)')
-        ax_front.set_title(front_title)
+        #ax_front.set_xlim(point_range[0], point_range[2])
+        #ax_front.set_ylim(z_min_plot, z_max_plot)
+        #ax_front.set_facecolor('black')
+        #ax_front.set_aspect('auto')
+        #ax_front.set_xlabel('X (m)')
+        #ax_front.set_ylabel('Z (m)')
+        #ax_front.set_title(front_title)
 
     @staticmethod
     def get_box_corners_2d(cx, cy, dx, dy, heading):
@@ -87,7 +87,7 @@ class MultiViewRenderer:
 
     def draw_frame(self, points, boxes, names, save_path, point_range=(-50, -50, 50, 50),
                    z_range=None, bev_title='BEV (X-Y)', front_title='Front View (X-Z)'):
-        fig, (ax_bev, ax_front) = plt.subplots(1, 2, figsize=(18, 9), dpi=150)
+        fig, (ax_bev, ax_front) = plt.subplots(1, 2, figsize=(18, 9), dpi=300)
         self._draw_frame_axes(ax_bev, ax_front, points, boxes, names, point_range, z_range, bev_title, front_title)
 
         fig.tight_layout()
@@ -97,7 +97,7 @@ class MultiViewRenderer:
     def draw_compare_frame(self, points, gt_boxes, gt_names, pred_boxes, pred_names, save_path,
                            point_range=(-50, -50, 50, 50), z_range=None,
                            gt_title='Ground Truth', pred_title='Detections'):
-        fig, axes = plt.subplots(2, 2, figsize=(20, 16), dpi=150)
+        fig, axes = plt.subplots(2, 2, figsize=(20, 16), dpi=300)
         self._draw_frame_axes(
             axes[0, 0], axes[1, 0], points, gt_boxes, gt_names, point_range, z_range,
             bev_title=f'BEV (X-Y) — {gt_title}', front_title=f'Front View (X-Z) — {gt_title}'

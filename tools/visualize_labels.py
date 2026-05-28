@@ -34,6 +34,8 @@ from visual_utils.multiview_renderer import MultiViewRenderer
 
 RENDERER = MultiViewRenderer()
 
+KITTI_SINGLE_IMAGE_ID = '000422'
+
 
 # ── BEV drawing (same as demo.py) ────────────────────────────────────────────
 
@@ -683,6 +685,8 @@ def main():
                         help='Where to save the BEV images')
     parser.add_argument('--result_pkl', type=str, default=None,
                         help='Optional OpenPCDet result.pkl with detections for GT-vs-detection comparison')
+    parser.add_argument('--single-image', action='store_true',
+                        help='Only render the hardcoded KITTI frame defined in KITTI_SINGLE_IMAGE_ID')
     parser.add_argument('--z_min', type=float, default=None,
                         help='Min height (Z) of points to plot')
     parser.add_argument('--z_max', type=float, default=None,
@@ -702,6 +706,8 @@ def main():
                    args.z_max if args.z_max is not None else  float('inf'))
 
     if args.nuscenes_info:
+        if args.single_image:
+            raise ValueError('--single-image is only supported in KITTI txt-label mode')
         info_path = Path(args.nuscenes_info)
         if not info_path.exists():
             raise FileNotFoundError(f'NuScenes info file not found: {info_path}')
@@ -739,6 +745,14 @@ def main():
 
     pc_files = sorted(glob.glob(str(data_path / f'*{ext}')))
     print(f'Found {len(pc_files)} point cloud files in {data_path}')
+
+    if args.single_image:
+        pc_files = [pc_file for pc_file in pc_files if Path(pc_file).stem == KITTI_SINGLE_IMAGE_ID]
+        if not pc_files:
+            raise FileNotFoundError(
+                f'No point cloud found for KITTI_SINGLE_IMAGE_ID={KITTI_SINGLE_IMAGE_ID} in {data_path}'
+            )
+        print(f'Single-image mode enabled, rendering only {Path(pc_files[0]).name}')
 
     num_workers = args.workers if args.workers else min(cpu_count(), len(pc_files), 16)
     if det_by_frame is None:
