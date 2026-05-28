@@ -148,12 +148,11 @@ class PointPillar_TENT(PointPillar):
             entropy per anchor: (B, num_anchors)
         """
         probs = torch.sigmoid(cls_logits)
-        # H(p) = -p log p - (1-p) log(1-p)
+        # H(p) = -p log p - (1-p) log(1-p)  -> per-class entropy
         ent = -(probs * torch.log(probs + eps) + (1.0 - probs) * torch.log(1.0 - probs + eps))
 
-        # Shannon entropy
-        # ent = -sum[(prob)*log(prob)]
-        #return torch.sum(torch._nested_tensor_from_tensor_list((prob)*torch.log(prob) for prob in probs))
+        # Sum over class dimension to get entropy per anchor: (B, num_anchors)
+        return ent.sum(dim=-1)
 
     @staticmethod
     def _select_entropy_anchors(entropy_per_anchor: torch.Tensor,
@@ -249,6 +248,7 @@ class PointPillar_TENT(PointPillar):
                     entropy_weight = tent_cfg.get('ENTROPY_WEIGHT', 1.0)
 
                     entropy_per_anchor = self._sigmoid_entropy(cls_preds)
+                    
                     mask = self._select_entropy_anchors(
                         entropy_per_anchor, cls_preds,
                         topk=entropy_topk,

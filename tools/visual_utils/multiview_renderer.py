@@ -15,28 +15,8 @@ class MultiViewRenderer:
         }
         self.default_color = 'magenta'
 
-    @staticmethod
-    def get_box_corners_2d(cx, cy, dx, dy, heading):
-        cos_h = np.cos(heading)
-        sin_h = np.sin(heading)
-        half_dx = dx / 2
-        half_dy = dy / 2
-
-        corners = np.array([
-            [-half_dx, -half_dy],
-            [half_dx, -half_dy],
-            [half_dx, half_dy],
-            [-half_dx, half_dy],
-        ])
-
-        rot = np.array([[cos_h, -sin_h], [sin_h, cos_h]])
-        corners = corners @ rot.T
-        corners[:, 0] += cx
-        corners[:, 1] += cy
-        return corners
-
-    def draw_frame(self, points, boxes, names, save_path, point_range=(-50, -50, 50, 50),
-                   z_range=None, bev_title='BEV (X-Y)', front_title='Front View (X-Z)'):
+    def _draw_frame_axes(self, ax_bev, ax_front, points, boxes, names, point_range, z_range,
+                         bev_title, front_title):
         mask = ((points[:, 0] > point_range[0]) & (points[:, 0] < point_range[2]) &
                 (points[:, 1] > point_range[1]) & (points[:, 1] < point_range[3]))
         if z_range is not None:
@@ -47,8 +27,6 @@ class MultiViewRenderer:
             z_min_plot, z_max_plot = -3.0, 3.0
         else:
             z_min_plot, z_max_plot = z_range
-
-        fig, (ax_bev, ax_front) = plt.subplots(1, 2, figsize=(18, 9), dpi=150)
 
         ax_bev.scatter(points[:, 1], points[:, 0], s=0.1, c='white', alpha=0.5)
         ax_front.scatter(points[:, 0], points[:, 2], s=0.1, c='white', alpha=0.5)
@@ -87,6 +65,47 @@ class MultiViewRenderer:
         ax_front.set_ylabel('Z (m)')
         ax_front.set_title(front_title)
 
+    @staticmethod
+    def get_box_corners_2d(cx, cy, dx, dy, heading):
+        cos_h = np.cos(heading)
+        sin_h = np.sin(heading)
+        half_dx = dx / 2
+        half_dy = dy / 2
+
+        corners = np.array([
+            [-half_dx, -half_dy],
+            [half_dx, -half_dy],
+            [half_dx, half_dy],
+            [-half_dx, half_dy],
+        ])
+
+        rot = np.array([[cos_h, -sin_h], [sin_h, cos_h]])
+        corners = corners @ rot.T
+        corners[:, 0] += cx
+        corners[:, 1] += cy
+        return corners
+
+    def draw_frame(self, points, boxes, names, save_path, point_range=(-50, -50, 50, 50),
+                   z_range=None, bev_title='BEV (X-Y)', front_title='Front View (X-Z)'):
+        fig, (ax_bev, ax_front) = plt.subplots(1, 2, figsize=(18, 9), dpi=150)
+        self._draw_frame_axes(ax_bev, ax_front, points, boxes, names, point_range, z_range, bev_title, front_title)
+
+        fig.tight_layout()
+        fig.savefig(str(save_path), facecolor='black')
+        plt.close(fig)
+
+    def draw_compare_frame(self, points, gt_boxes, gt_names, pred_boxes, pred_names, save_path,
+                           point_range=(-50, -50, 50, 50), z_range=None,
+                           gt_title='Ground Truth', pred_title='Detections'):
+        fig, axes = plt.subplots(2, 2, figsize=(20, 16), dpi=150)
+        self._draw_frame_axes(
+            axes[0, 0], axes[1, 0], points, gt_boxes, gt_names, point_range, z_range,
+            bev_title=f'BEV (X-Y) — {gt_title}', front_title=f'Front View (X-Z) — {gt_title}'
+        )
+        self._draw_frame_axes(
+            axes[0, 1], axes[1, 1], points, pred_boxes, pred_names, point_range, z_range,
+            bev_title=f'BEV (X-Y) — {pred_title}', front_title=f'Front View (X-Z) — {pred_title}'
+        )
         fig.tight_layout()
         fig.savefig(str(save_path), facecolor='black')
         plt.close(fig)

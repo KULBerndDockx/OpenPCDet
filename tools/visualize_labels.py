@@ -237,11 +237,10 @@ def draw_instance_views(local_points, box, class_name, save_path):
 
 # ── Label parsing ────────────────────────────────────────────────────────────
 
-def parse_label_file(label_path):
+def parse_custom_label_file(label_path):
     """
-    Parse a label file in either format:
-      • Custom (8 cols):  x y z dx dy dz heading ClassName
-      • KITTI  (15 cols): ClassName trunc occ alpha bb1 bb2 bb3 bb4 h w l x y z ry
+    Parse LiDAR-native labels in the current EROD-style format:
+      x y z dx dy dz heading ClassName
     Returns:
         gt_boxes  : np.ndarray  (N, 7) — x y z dx dy dz heading
         gt_names  : list[str]
@@ -255,7 +254,6 @@ def parse_label_file(label_path):
             if len(parts) == 0:
                 continue
 
-            # Detect format by checking whether the first token is a number
             first_is_number = True
             try:
                 float(parts[0])
@@ -263,17 +261,13 @@ def parse_label_file(label_path):
                 first_is_number = False
 
             if first_is_number and len(parts) == 8:
-                # Custom format: x y z dx dy dz heading ClassName
                 x, y, z, dx, dy, dz, heading = [float(v) for v in parts[:7]]
                 name = parts[7]
-            elif not first_is_number and len(parts) >= 15:
-                # KITTI format: class trunc occ alpha bb(4) h w l x y z ry
-                name = parts[0]
-                h, w, l = float(parts[8]), float(parts[9]), float(parts[10])
-                x, y, z = float(parts[11]), float(parts[12]), float(parts[13])
-                heading = float(parts[14])
-                dx, dy, dz = l, w, h  # KITTI h/w/l → dx/dy/dz
-            else:
+            else:            python3 visualize_labels.py \
+              --data_path /OpenPCDet/datasets/kitti/training/velodyne \
+              --label_path /OpenPCDet/datasets/kitti/training/label_2 \
+              --result_pkl /path/to/model/result.pkl \
+              --ext .bin
                 print(f'  [WARN] Skipping unrecognised label line: {line.strip()}')
                 continue
 
@@ -283,6 +277,76 @@ def parse_label_file(label_path):
     if gt_boxes:
         return np.array(gt_boxes, dtype=np.float32), gt_names
     return np.zeros((0, 7), dtype=np.float32), []
+
+
+def _load_kitti_calibration(calib_path):
+    """Load KITTI calibration matrices needed for camera-to-LiDAR conversion."""
+    with open(calib_path, 'r') as f:
+        lines = f.readlines()
+
+    r0 = np.array(lines[4].strip().split(' ')[1:], dtype=np.float32).reshape(3, 3)
+    v2c = np.array(lines[5].strip().split(' ')[1:], dtype=np.float32).reshape(3, 4)
+    return r0, v2c
+
+
+def _rect_to_lidar(pts_rect, r0, v2c):
+    pts_rect_hom = np.hstack((pts_rect, np.ones((pts_rect.shape[0], 1), dtype=np.float32)))
+    r0_ext = np.hstack((r0, np.zeros((3, 1), dtype=np.float32)))
+    r0_ext = np.vstack((r0_ext, np.zeros((1, 4), dtype=np.float32)))
+    r0_ext[3, 3] = 1.0
+
+    v2c_ext = np.vstack((v2c, np.zeros((1, 4), dtype=np.float32)))
+    v2c_ext[3, 3] = 1.0
+
+    pts_lidar = np.dot(pts_rect_hom, np.linalg.inv(np.dot(r0_ext, v2c_ext).T))
+    return pts_lidar[:, :3]
+
+
+def parse_kitti_label_file(label_path, calib_path):
+    """
+    Parse raw KITTI `label_2` files and convert boxes to LiDAR coordinates.
+    Returns:
+        gt_boxes  : np.ndarray  (N, 7) — x y z dx dy dz heading
+        gt_names  : list[str]
+    """
+    r0, v2c = _load_kitti_calibration(calib_path)
+
+    gt_boxes = []
+    gt_names = []
+
+    with open(label_path, 'r') as f:
+        for line in f:
+            parts = line.strip().split()
+            if len(parts) == 0:
+                continue
+
+            name = parts[0]
+            if name == 'DontCare' or len(parts) < 15:
+                continue
+
+            h = float(parts[8])
+            w = float(parts[9])
+            l = float(parts[10])
+            x = float(parts[11])
+            y = float(parts[12])
+            z = float(parts[13])
+            heading = float(parts[14])
+
+            loc_lidar = _rect_to_lidar(np.array([[x, y, z]], dtype=np.float32), r0, v2c)[0]
+            loc_lidar[2] += h / 2.0
+            box_heading = -(np.pi / 2.0 + heading)
+
+            gt_boxes.append([loc_lidar[0], loc_lidar[1], loc_lidar[2], l, w, h, box_heading])
+            gt_names.append(name)
+
+    if gt_boxes:
+        return np.array(gt_boxes, dtype=np.float32), gt_names
+    return np.zeros((0, 7), dtype=np.float32), []
+
+
+def parse_label_file(label_path):
+    """Backward-compatible alias for the current EROD-style label format."""
+    return parse_custom_label_file(label_path)
 
 
 # ── Filename → label matching ────────────────────────────────────────────────
@@ -322,7 +386,30 @@ def _process_one(pc_file, label_dir, output_dir, ext, z_range):
     if label_file is None or not label_file.exists():
         return None  # skip silently
 
-    gt_boxes, gt_names = parse_label_file(label_file)
+    first_line = None
+    with open(label_file, 'r') as f:
+        for line in f:
+            if line.strip():
+                first_line = line.strip().split()
+                break
+
+    if first_line is None:
+        return None
+
+    first_is_number = True
+    try:
+        float(first_line[0])
+    except ValueError:
+        first_is_number = False
+
+    if first_is_number:
+        gt_boxes, gt_names = parse_custom_label_file(label_file)
+    else:
+        calib_file = Path(label_dir).parent / 'calib' / f'{frame_id}.txt'
+        if not calib_file.exists():
+            print(f'  [WARN] Missing KITTI calib file: {calib_file}')
+            return None
+        gt_boxes, gt_names = parse_kitti_label_file(label_file, calib_file)
 
     if ext == '.bin':
         raw = np.fromfile(pc_file, dtype=np.float32)
@@ -356,13 +443,13 @@ def _process_one(pc_file, label_dir, output_dir, ext, z_range):
     instance_count = 0
     frame_key = frame_id if frame_id is not None else stem
 
-    RENDERER.render_instances(
+    """RENDERER.render_instances(
         points=points,
         boxes=gt_boxes,
         names=list(gt_names),
         frame_key=frame_key,
         instances_dir=instances_dir
-    )
+    )"""
     instance_count = len(gt_boxes)
 
     return (
@@ -473,6 +560,115 @@ def _load_nuscenes_samples(nuscenes_root: Path, info_path: Path):
     return samples
 
 
+def _load_detection_results(result_path: Path):
+    """Load an OpenPCDet `result.pkl` file into a frame_id -> detection dict map."""
+    with open(result_path, 'rb') as f:
+        det_annos = pickle.load(f)
+
+    if not isinstance(det_annos, list):
+        raise ValueError(f'Unexpected result.pkl content: {type(det_annos)}')
+
+    det_by_frame = {}
+    for det in det_annos:
+        frame_id = det.get('frame_id', None)
+        if frame_id is None:
+            continue
+        det_by_frame[str(frame_id)] = det
+
+    return det_by_frame
+
+
+def _parse_prediction_anno(det_anno):
+    """Convert one detection record to box and label arrays for rendering."""
+    boxes = np.asarray(det_anno.get('boxes_lidar', np.zeros((0, 7))), dtype=np.float32)
+    names = np.asarray(det_anno.get('name', []), dtype=object).astype(str)
+    scores = np.asarray(det_anno.get('score', []), dtype=np.float32)
+
+    if boxes.ndim != 2:
+        boxes = np.zeros((0, 7), dtype=np.float32)
+
+    display_names = []
+    for idx, name in enumerate(names[:len(boxes)]):
+        if idx < len(scores):
+            display_names.append(f'{name} {scores[idx]:.2f}')
+        else:
+            display_names.append(str(name))
+
+    return boxes, display_names
+
+
+def _process_one_compare(pc_file, label_dir, output_dir, ext, z_range, det_by_frame):
+    """Load one point cloud, ground truth, and detections, then render a comparison."""
+    stem = Path(pc_file).stem
+    frame_id = extract_frame_id(stem)
+
+    label_file = Path(label_dir) / f'{frame_id}.txt' if frame_id else None
+    if label_file is None or not label_file.exists():
+        return None
+
+    first_line = None
+    with open(label_file, 'r') as f:
+        for line in f:
+            if line.strip():
+                first_line = line.strip().split()
+                break
+
+    if first_line is None:
+        return None
+
+    first_is_number = True
+    try:
+        float(first_line[0])
+    except ValueError:
+        first_is_number = False
+
+    if first_is_number:
+        gt_boxes, gt_names = parse_custom_label_file(label_file)
+    else:
+        calib_file = Path(label_dir).parent / 'calib' / f'{frame_id}.txt'
+        if not calib_file.exists():
+            print(f'  [WARN] Missing KITTI calib file: {calib_file}')
+            return None
+        gt_boxes, gt_names = parse_kitti_label_file(label_file, calib_file)
+
+    if ext == '.bin':
+        raw = np.fromfile(pc_file, dtype=np.float32)
+        if raw.size % 5 == 0:
+            points = raw.reshape(-1, 5)
+        elif raw.size % 4 == 0:
+            points = raw.reshape(-1, 4)
+        else:
+            raise ValueError(f"Unexpected point format: {pc_file}")
+    elif ext == '.npy':
+        points = np.load(pc_file)
+    else:
+        raise ValueError(f'Unsupported extension: {ext}')
+
+    det_anno = det_by_frame.get(str(frame_id), None)
+    if det_anno is None:
+        return None
+
+    pred_boxes, pred_names = _parse_prediction_anno(det_anno)
+
+    compare_dir = Path(output_dir) / 'compare'
+    compare_dir.mkdir(parents=True, exist_ok=True)
+    compare_save_path = compare_dir / f'{stem}.png'
+
+    RENDERER.draw_compare_frame(
+        points=points,
+        gt_boxes=gt_boxes,
+        gt_names=[f'{name} (GT)' for name in gt_names],
+        pred_boxes=pred_boxes,
+        pred_names=pred_names,
+        save_path=compare_save_path,
+        z_range=z_range,
+        gt_title='Ground Truth',
+        pred_title='Detections'
+    )
+
+    return f'[{stem}]  compare -> {compare_save_path.name}'
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -489,6 +685,8 @@ def main():
     parser.add_argument('--output_dir', type=str,
                         default='/OpenPCDet/output/gt_images',
                         help='Where to save the BEV images')
+    parser.add_argument('--result_pkl', type=str, default=None,
+                        help='Optional OpenPCDet result.pkl with detections for GT-vs-detection comparison')
     parser.add_argument('--z_min', type=float, default=None,
                         help='Min height (Z) of points to plot')
     parser.add_argument('--z_max', type=float, default=None,
@@ -530,6 +728,14 @@ def main():
         print(f'\nDone. {done} GT images saved to {output_dir}  ({num_workers} workers)')
         return
 
+    det_by_frame = None
+    if args.result_pkl is not None:
+        result_path = Path(args.result_pkl)
+        if not result_path.exists():
+            raise FileNotFoundError(f'Detection result file not found: {result_path}')
+        det_by_frame = _load_detection_results(result_path)
+        print(f'Loaded {len(det_by_frame)} detection frames from {result_path}')
+
     # Default: txt-label mode.
     if label_path is None:
         raise ValueError('--label_path is required unless --nuscenes_info is provided')
@@ -539,11 +745,19 @@ def main():
     print(f'Found {len(pc_files)} point cloud files in {data_path}')
 
     num_workers = args.workers if args.workers else min(cpu_count(), len(pc_files), 16)
-    worker_fn = partial(_process_one,
-                        label_dir=str(label_path),
-                        output_dir=str(output_dir),
-                        ext=ext,
-                        z_range=z_range)
+    if det_by_frame is None:
+        worker_fn = partial(_process_one,
+                            label_dir=str(label_path),
+                            output_dir=str(output_dir),
+                            ext=ext,
+                            z_range=z_range)
+    else:
+        worker_fn = partial(_process_one_compare,
+                            label_dir=str(label_path),
+                            output_dir=str(output_dir),
+                            ext=ext,
+                            z_range=z_range,
+                            det_by_frame=det_by_frame)
 
     done = 0
     with Pool(processes=num_workers) as pool:
@@ -552,7 +766,10 @@ def main():
                 done += 1
                 print(result)
 
-    print(f'\nDone. {done} GT images saved to {output_dir}  ({num_workers} workers)')
+    if det_by_frame is None:
+        print(f'\nDone. {done} GT images saved to {output_dir}  ({num_workers} workers)')
+    else:
+        print(f'\nDone. {done} comparison images saved to {output_dir}  ({num_workers} workers)')
 
 
 if __name__ == '__main__':

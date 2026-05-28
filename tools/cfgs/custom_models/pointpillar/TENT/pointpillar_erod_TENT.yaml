@@ -10,6 +10,7 @@ DATA_CONFIG:
     #POINT_CLOUD_RANGE: [0, -39.68, -3, 69.12, 39.68, 1]
     #POINT_CLOUD_RANGE: [0, -39.68, -3, 69.12, 39.68, 1]
     #POINT_CLOUD_RANGE: [-32.8, -40.00, -3, 32.80, 40.00, 1]
+    POINT_CLOUD_RANGE: [-32.64, -39.68, -3, 32.64, 39.68, 1]
 
     # Align EROD's LiDAR frame to KITTI-like frame without retraining.
     # Suggested by tools/find_best_lidar_transform.py on GT labels.
@@ -41,7 +42,7 @@ DATA_CONFIG:
 
         - NAME: transform_points_to_voxels
           VOXEL_SIZE: [0.16, 0.16, 4]
-          MAX_POINTS_PER_VOXEL: 25
+          MAX_POINTS_PER_VOXEL: 100
           MAX_NUMBER_OF_VOXELS: {
             'train': 12000,
             'test': 12000

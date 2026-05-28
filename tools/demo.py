@@ -32,6 +32,7 @@ class DemoDataset(DatasetTemplate):
         )
         self.root_path = root_path
         self.ext = ext
+        self.expected_num_features = len(dataset_cfg.POINT_FEATURE_ENCODING.src_feature_list)
         data_file_list = glob.glob(str(root_path / f'*{self.ext}')) if self.root_path.is_dir() else [self.root_path]
 
         data_file_list.sort()
@@ -43,14 +44,13 @@ class DemoDataset(DatasetTemplate):
     def __getitem__(self, index):
         if self.ext == '.bin':
             raw = np.fromfile(self.sample_file_list[index], dtype=np.float32)
-            if raw.size % 5 == 0:
-                points = raw.reshape(-1, 5)
-                # single-frame demo: no sweep time, keep 5th feature neutral
-                points[:, 4] = 0.0
-            elif raw.size % 4 == 0:
-                points = raw.reshape(-1, 4)
-            else:
-                raise ValueError(f"Unexpected point format: {self.sample_file_list[index]}")
+            if raw.size % self.expected_num_features != 0:
+                raise ValueError(
+                    f"Unexpected point format in {self.sample_file_list[index]}: "
+                    f"{raw.size} floats is not divisible by configured feature count "
+                    f"{self.expected_num_features}"
+                )
+            points = raw.reshape(-1, self.expected_num_features)
         elif self.ext == '.npy':
             points = np.load(self.sample_file_list[index])
             # Normalize intensity to [0, 1] range (KITTI convention)
