@@ -263,11 +263,7 @@ def parse_custom_label_file(label_path):
             if first_is_number and len(parts) == 8:
                 x, y, z, dx, dy, dz, heading = [float(v) for v in parts[:7]]
                 name = parts[7]
-            else:            python3 visualize_labels.py \
-              --data_path /OpenPCDet/datasets/kitti/training/velodyne \
-              --label_path /OpenPCDet/datasets/kitti/training/label_2 \
-              --result_pkl /path/to/model/result.pkl \
-              --ext .bin
+            else:            
                 print(f'  [WARN] Skipping unrecognised label line: {line.strip()}')
                 continue
 
