@@ -13,6 +13,10 @@ NuScenes usage (no per-frame .txt labels; uses OpenPCDet info .pkl):
         --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini \
         --nuscenes_info /OpenPCDet/datasets/nuscenes/v1.0-mini/nuscenes_infos_10sweeps_val.pkl \
         --output_dir /OpenPCDet/output/gt_images_nuscenes
+
+
+NuScenes usage (no per-frame .txt labels; uses OpenPCDet info .pkl):
+    python3 visualize_labels.py --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini --nuscenes_info /OpenPCDet/datasets/nuscenes/v1.0-mini/nuscenes_infos_10sweeps_val.pkl --output_dir /OpenPCDet/output/gt_images_nuscenes_000
 """
 
 import argparse
@@ -35,6 +39,8 @@ from visual_utils.multiview_renderer import MultiViewRenderer
 RENDERER = MultiViewRenderer()
 
 KITTI_SINGLE_IMAGE_ID = '000422'
+NUSCENES_SINGLE_IMAGE_STEM = 'n008-2018-08-01-15-16-36-0400__LIDAR_TOP__1533151609547766.pcd'
+KITTI_SINGLE_IMAGE_ID = 'n008-2018-08-01-15-16-36-0400__LIDAR_TOP__1533151609547766.pcd'
 
 
 # ── BEV drawing (same as demo.py) ────────────────────────────────────────────
@@ -686,7 +692,7 @@ def main():
     parser.add_argument('--result_pkl', type=str, default=None,
                         help='Optional OpenPCDet result.pkl with detections for GT-vs-detection comparison')
     parser.add_argument('--single-image', action='store_true',
-                        help='Only render the hardcoded KITTI frame defined in KITTI_SINGLE_IMAGE_ID')
+                        help='Only render the hardcoded KITTI or NuScenes frame defined in the script')
     parser.add_argument('--z_min', type=float, default=None,
                         help='Min height (Z) of points to plot')
     parser.add_argument('--z_max', type=float, default=None,
@@ -706,14 +712,20 @@ def main():
                    args.z_max if args.z_max is not None else  float('inf'))
 
     if args.nuscenes_info:
-        if args.single_image:
-            raise ValueError('--single-image is only supported in KITTI txt-label mode')
         info_path = Path(args.nuscenes_info)
         if not info_path.exists():
             raise FileNotFoundError(f'NuScenes info file not found: {info_path}')
 
         samples = _load_nuscenes_samples(nuscenes_root=data_path, info_path=info_path)
         print(f'Loaded {len(samples)} NuScenes samples from {info_path}')
+
+        if args.single_image:
+            samples = [sample for sample in samples if sample['stem'] == NUSCENES_SINGLE_IMAGE_STEM]
+            if not samples:
+                raise FileNotFoundError(
+                    f'No NuScenes sample found for NUSCENES_SINGLE_IMAGE_STEM={NUSCENES_SINGLE_IMAGE_STEM}'
+                )
+            print(f'Single-image mode enabled, rendering only {samples[0]["stem"]}.png')
 
         num_workers = args.workers if args.workers else min(cpu_count(), len(samples), 16)
         worker_fn = partial(_process_one_nuscenes,
