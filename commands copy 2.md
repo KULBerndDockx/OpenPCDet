@@ -139,9 +139,9 @@ custom_models/second/default/
 - **Nuscenes (non-retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/default/second_nuscenes.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_nuscenes_non_retrained `
 - **eRod (non-retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/default/second_erod.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag SECOND_eRod_non_retrained --data_path /OpenPCDet/erod/points --ext .npy`
 
-- **KITTI (retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_KITTI_retrained`
-- **Nuscenes (retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_nuscenes.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_nuscenes/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_nuscenes_retrained`
-- **eRod (retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/kitti_models/second_erod.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/kitti_models/second_erod/default/ckpt/checkpoint_epoch_80.pth --extra_tag SECOND_eRod_retrained`
+- **KITTI (retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/default/second.yaml --ckpt /OpenPCDet/output/kitti_models/second_nuscenes/frozen_backbone_8/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_KITTI_retrained --data_path /OpenPCDet/datasets/kitti/testing/velodyne --ext .bin`
+- **Nuscenes (retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/default/second_nuscenes.yaml --ckpt /OpenPCDet/output/kitti_models/second_nuscenes/frozen_backbone_8/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_nuscenes_retrained --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --ext .bin`
+- **eRod (retrained):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/custom_models/second/default/second_erod.yaml --ckpt /OpenPCDet/output/kitti_models/second_nuscenes/frozen_backbone_8/ckpt/checkpoint_epoch_40.pth --extra_tag SECOND_eRod_retrained --data_path /OpenPCDet/erod/points --ext .npy`
 
 ### SECOND (FOCAL)
 
@@ -218,7 +218,10 @@ python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velod
 
 python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/TENT/pointpillar_TENT/POINTPILLAR_KITTI_TENT_retrained/eval/epoch_40/val/default/result.pkl 
 
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --label_path /OpenPCDet/erod/labels --ext .npy  --ext .bin --single-image  --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/custom_models/pointpillar/default/pointpillar_nuscenes/POINTPILLAR_nuscenes_default_non_retrained/eval/epoch_7728/test/default/result.pkl
 
+
+--z_min -1.0 --z_max 3.0`
 
 
 ### SECOND (DEFAULT)
