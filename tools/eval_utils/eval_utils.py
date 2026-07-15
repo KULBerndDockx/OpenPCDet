@@ -55,6 +55,7 @@ def eval_one_epoch(cfg, args, model, dataloader, epoch_id, logger, dist_test=Fal
     if cfg.LOCAL_RANK == 0:
         progress_bar = tqdm.tqdm(total=len(dataloader), leave=True, desc='eval', dynamic_ncols=True)
     start_time = time.time()
+    printed = True
     for i, batch_dict in enumerate(dataloader):
         load_data_to_gpu(batch_dict)
 
@@ -63,6 +64,17 @@ def eval_one_epoch(cfg, args, model, dataloader, epoch_id, logger, dist_test=Fal
 
         with torch.no_grad():
             pred_dicts, ret_dict = model(batch_dict)
+        if not printed:
+            print("PREDICTION BOXES")
+            print(pred_dicts[0]['pred_boxes'][:5].cpu().numpy())
+
+            print("PRED LABELS")
+            print(pred_dicts[0]['pred_labels'][:20].cpu().numpy())
+
+            print("GT BOXES")
+            print(batch_dict['gt_boxes'][0][:5].cpu().numpy())
+            printed = True
+
 
         disp_dict = {}
 

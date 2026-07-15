@@ -1,10 +1,11 @@
 from pathlib import Path
 from collections import Counter
 
-base = Path('erod')
-pts_dir = base / 'points'
-lbl_dir = base / 'labels'
-img_sets_dir = base / 'ImageSets'
+#base = Path('erod')
+#pts_dir = base / 'points'
+#lbl_dir = base / 'labels'
+#img_sets_dir = base / 'ImageSets'
+
 
 
 def count_objects_by_class(label_dir: Path, image_set_file: Path = None) -> Counter:

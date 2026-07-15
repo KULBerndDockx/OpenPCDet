@@ -1,7 +1,19 @@
-CLASS_NAMES: ['car', 'pedestrian', 'bicycle']
+CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
+
+MAP_CLASS_TO_KITTI:
+    car: Car
+    pedestrian: Pedestrian
+    bicycle: Cyclist
 
 DATA_CONFIG: 
     _BASE_CONFIG_: cfgs/dataset_configs/nuscenes_dataset.yaml
+
+    #POINT_CLOUD_RANGE: [0, -32.0, -5, 52.8, 32.0, 3]
+    #VOXEL_SIZE: [0.4, 0.2, 0.2]
+    #MAX_POINTS_PER_VOXEL: 45
+
+    VOXEL_SIZE: [0.1, 0.1, 0.2]
+    MAX_POINTS_PER_VOXEL: 45
 
 
 MODEL:
@@ -37,7 +49,7 @@ MODEL:
 
         ANCHOR_GENERATOR_CONFIG: [
             {
-                'class_name': 'car',
+                'class_name': 'Car',
                 'anchor_sizes': [[3.9, 1.6, 1.56]],
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-1.78],
@@ -47,7 +59,7 @@ MODEL:
                 'unmatched_threshold': 0.45
             },
             {
-                'class_name': 'pedestrian',
+                'class_name': 'Pedestrian',
                 'anchor_sizes': [[0.8, 0.6, 1.73]],
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-0.6],
@@ -57,7 +69,7 @@ MODEL:
                 'unmatched_threshold': 0.35
             },
             {
-                'class_name': 'bicycle',
+                'class_name': 'Cyclist',
                 'anchor_sizes': [[1.76, 0.6, 1.73]],
                 'anchor_rotations': [0, 1.57],
                 'anchor_bottom_heights': [-0.6],
@@ -66,6 +78,7 @@ MODEL:
                 'matched_threshold': 0.5,
                 'unmatched_threshold': 0.35
             }
+
         ]
 
         TARGET_ASSIGNER_CONFIG:
@@ -86,17 +99,17 @@ MODEL:
 
     POST_PROCESSING:
         RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
-        SCORE_THRESH: 0.2
+        SCORE_THRESH: 0.1
         OUTPUT_RAW_SCORE: False
 
-        EVAL_METRIC: nuscenes
+        EVAL_METRIC: kitti
 
         NMS_CONFIG:
             MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.005
-            NMS_PRE_MAXSIZE: 4096
-            NMS_POST_MAXSIZE: 200
+            NMS_THRESH: 0.2
+            NMS_PRE_MAXSIZE: 1000
+            NMS_POST_MAXSIZE: 83
 
 
 OPTIMIZATION:

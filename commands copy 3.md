@@ -2,15 +2,23 @@
 
 ## 1. Data Preparation & Utilities
 
+
+
+python3 nuscenes2kitti.py --nuscenes_dir <nuscenes_directory> --output_dir <output_directory>
+python3 ns2kitti.py --nuscenes_dir /OpenPCDet/datasets/v1.0-trainval --output_dir /OpenPCDet/datasets/nsc
+
+
 *Commands for generating infos and visualizing ground truth.*
 
 ### Info Generation
 
 - **KITT:** `cd /OpenPCDet && python3 -m pcdet.datasets.kitti.kitti_dataset create_kitti_infos tools/cfgs/dataset_configs/kitti_dataset.yaml && cd tools`
 - **EROD:** `cd /OpenPCDet && python3 -m pcdet.datasets.custom.custom_dataset create_custom_infos tools/cfgs/dataset_configs/custom_dataset.yaml && cd tools`
-- **nuSc (Mini):** `python3 -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_N_infos --cfg_file tools/cfgs/dataset_configs/nuscenes_dataset.yaml --version v1.0-mini`
-- **nuSc (Trainval):** `python3 -m pcdet.datasets.kitti.kitti_dataset create_kitti_infos tools/cfgs/dataset_configs/nuscenes_converted.yaml`
+- **nuSc (Mini):**           `python3 -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_N_infos --cfg_file tools/cfgs/dataset_configs/nuscenes_dataset.yaml --version v1.0-mini`
+- **nuSc (Trainval):**       `python3 -m pcdet.datasets.kitti.kitti_dataset create_kitti_infos tools/cfgs/dataset_configs/nuscenes_converted.yaml`
+- **Nusc:** `cd /OpenPCDet && python3 -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_N_infos --cfg_file tools/cfgs/dataset_configs/nuscenes_converted.yaml && cd tools`
 
+python3 -m pcdet.datasets.nuscenes.nuscenes_dataset --func create_nuscenes_infos --cfg_file tools/cfgs/dataset_configs/nuscenes_dataset.yaml --version v1.0-trainval
 python3 -m pcdet.datasets.kitti.kitti_dataset --func create_kitti_infos --cfg_file tools/cfgs/dataset_configs/nuscenes_converted.yaml --version v1.0-trainval
 
 ### Visualization
@@ -47,6 +55,8 @@ python3 -m pcdet.datasets.kitti.kitti_dataset --func create_kitti_infos --cfg_fi
 - **KITT(def):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_K.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag S_D_K_def`
 - **nuSc(def):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_N.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag S_D_N_def`
 - **eRod(def):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_E.yaml --ckpt /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag S_D_E_def`
+
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_N.yaml --ckpt /OpenPCDet/output/models/S/D/S_D_K/S_K/ckpt/checkpoint_epoch_80.pth --extra_tag S_D_N_def
 
 - **KITT(ftd):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_K.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S_N/default/ckpt/checkpoint_epoch_80.pth --extra_tag S_F_ftd`
 - **nuSc(ftd):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_N.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S_N/default/ckpt/checkpoint_epoch_80.pth --extra_tag S_F_ftd`

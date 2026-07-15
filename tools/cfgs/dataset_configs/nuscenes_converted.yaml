@@ -1,5 +1,5 @@
 DATASET: 'KittiDataset'
-DATA_PATH: '/OpenPCDet/datasets_converted/nuscenes/v1.0-trainval_kitti_format'
+DATA_PATH: '/OpenPCDet/datasets/nsc'
 
 # The converted data uses nuScenes LIDAR_TOP coordinate conventions and (typically) a wider XY range than KITTI.
 POINT_CLOUD_RANGE: [0, -51.2, -5.0, 51.2, 51.2, 3.0]

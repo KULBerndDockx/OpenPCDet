@@ -81,6 +81,67 @@ class NuScenesDataset(DatasetTemplate):
         cls_dist_new = {k: len(v) / len(sampled_infos) for k, v in cls_infos_new.items()}
 
         return sampled_infos
+    
+    def generate_prediction_dicts(self, batch_dict, pred_dicts, class_names, output_path=None):
+        """
+        Args:
+            batch_dict:
+                frame_id:
+            pred_dicts: list of pred_dicts
+                pred_boxes: (N, 7 or 9), Tensor
+                pred_scores: (N), Tensor
+                pred_labels: (N), Tensor
+            class_names:
+            output_path:
+
+        Returns:
+
+        """
+        
+        def get_template_prediction(num_samples):
+            box_dim = 9 if self.dataset_cfg.get('TRAIN_WITH_SPEED', False) else 7
+            ret_dict = {
+                'name': np.zeros(num_samples), 'score': np.zeros(num_samples),
+                'boxes_lidar': np.zeros([num_samples, box_dim]), 'pred_labels': np.zeros(num_samples)
+            }
+            return ret_dict
+
+        def generate_single_sample_dict(box_dict):
+            pred_scores = box_dict['pred_scores'].cpu().numpy()
+            pred_boxes = box_dict['pred_boxes'].cpu().numpy()
+            pred_labels = box_dict['pred_labels'].cpu().numpy()
+            pred_dict = get_template_prediction(pred_scores.shape[0])
+            if pred_scores.shape[0] == 0:
+                return pred_dict
+
+            pred_dict['name'] = np.array(class_names)[pred_labels - 1]
+            #print(pred_dict['name'])
+            mapping = {
+                'Car': 'car',
+                'Pedestrian': 'pedestrian',
+                'Cyclist': 'bicycle'
+            }
+
+            pred_dict['name'] = np.array([
+                mapping.get(name, name)
+                for name in pred_dict['name']
+            ])
+
+            pred_dict['score'] = pred_scores
+            pred_dict['boxes_lidar'] = pred_boxes
+            pred_dict['pred_labels'] = pred_labels
+
+            return pred_dict
+
+        annos = []
+        for index, box_dict in enumerate(pred_dicts):
+            single_pred_dict = generate_single_sample_dict(box_dict)
+            single_pred_dict['frame_id'] = batch_dict['frame_id'][index]
+            if 'metadata' in batch_dict:
+                single_pred_dict['metadata'] = batch_dict['metadata'][index]
+            annos.append(single_pred_dict)
+
+        return annos
 
     def get_sweep(self, sweep_info):
         def remove_ego_points(points, center_radius=1.0):
@@ -241,6 +302,7 @@ class NuScenesDataset(DatasetTemplate):
         if self.use_camera:
             input_dict = self.load_camera_info(input_dict, info)
 
+        input_dict['points'] = input_dict['points'][:, :4]
         data_dict = self.prepare_data(data_dict=input_dict)
 
         if self.dataset_cfg.get('SET_NAN_VELOCITY_TO_ZEROS', False) and 'gt_boxes' in info:

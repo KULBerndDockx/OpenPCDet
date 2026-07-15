@@ -517,12 +517,22 @@ def transform_det_annos_to_nusc_annos(det_annos, nusc):
     for det in det_annos:
         annos = []
         box_list = boxes_lidar_to_nusenes(det)
+        #print("BEFORE GLOBAL")
+        #print(box_list[0].center)
         box_list = lidar_nusc_box_to_global(
             nusc=nusc, boxes=box_list, sample_token=det['metadata']['token']
         )
-
+        #print("AFTER GLOBAL")
+        #print(box_list[0].center)
         for k, box in enumerate(box_list):
             name = det['name'][k]
+            KITTI_TO_NUSC = {
+                'Car': 'car',
+                'Pedestrian': 'pedestrian',
+                'Cyclist': 'bicycle',
+            }
+
+            name = KITTI_TO_NUSC.get(name, name)
             if np.sqrt(box.velocity[0] ** 2 + box.velocity[1] ** 2) > 0.2:
                 if name in ['car', 'construction_vehicle', 'bus', 'truck', 'trailer']:
                     attr = 'vehicle.moving'
@@ -558,17 +568,28 @@ def transform_det_annos_to_nusc_annos(det_annos, nusc):
 
 def format_nuscene_results(metrics, class_names, version='default'):
     result = '----------------Nuscene %s results-----------------\n' % version
+    KITTI_TO_NUSC = {
+        'Car': 'car',
+        'Pedestrian': 'pedestrian',
+        'Cyclist': 'bicycle',
+    }
+
     for name in class_names:
-        threshs = ', '.join(list(metrics['label_aps'][name].keys()))
-        ap_list = list(metrics['label_aps'][name].values())
+        eval_name = KITTI_TO_NUSC.get(name, name)
 
-        err_name =', '.join([x.split('_')[0] for x in list(metrics['label_tp_errors'][name].keys())])
-        error_list = list(metrics['label_tp_errors'][name].values())
+        threshs = ', '.join(metrics['label_aps'][eval_name].keys())
+        ap_list = list(metrics['label_aps'][eval_name].values())
 
-        result += f'***{name} error@{err_name} | AP@{threshs}\n'
+        err_name = ', '.join(
+            x.split('_')[0]
+            for x in metrics['label_tp_errors'][eval_name].keys()
+        )
+        error_list = list(metrics['label_tp_errors'][eval_name].values())
+
+        result += f'***{name} ({eval_name}) error@{err_name} | AP@{threshs}\n'
         result += ', '.join(['%.2f' % x for x in error_list]) + ' | '
         result += ', '.join(['%.2f' % (x * 100) for x in ap_list])
-        result += f" | mean AP: {metrics['mean_dist_aps'][name]}"
+        result += f" | mean AP: {metrics['mean_dist_aps'][eval_name]}"
         result += '\n'
 
     result += '--------------average performance-------------\n'
