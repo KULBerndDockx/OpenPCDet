@@ -22,3 +22,4 @@ datasets/
 datasets_converted/
 tools/kitti_style_gt/**
 tools/kitti_style_predictions/**
+*.tfevents.*
