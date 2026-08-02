@@ -41,7 +41,7 @@ class AxisAlignedTargetAssigner(object):
         Returns:
 
         """
-
+        print(f"[DEBUG] target assigner class_names: {self.class_names}")
         bbox_targets = []
         cls_labels = []
         reg_weights = []
@@ -127,6 +127,9 @@ class AxisAlignedTargetAssigner(object):
             'reg_weights': reg_weights
 
         }
+        #num_pos = (cls_labels > 0).sum().item()
+        #num_total = cls_labels.numel()
+        #print(f"[DEBUG] positive anchors: {num_pos} / {num_total}")
         return all_targets_dict
 
     def assign_targets_single(self, anchors, gt_boxes, gt_classes, matched_threshold=0.6, unmatched_threshold=0.45):

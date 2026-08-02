@@ -13,12 +13,7 @@ DATA_CONFIG:
     POINT_CLOUD_RANGE: [-32.64, -39.68, -3, 32.64, 39.68, 1]
     # Align EROD's LiDAR frame to KITTI-like frame without retraining.
     # Suggested by tools/find_best_lidar_transform.py on GT labels.
-    LIDAR_COORD_TRANSFORM:
-      ENABLE: True
-      ROT_Z_DEG: 90
-      FLIP_X: False
-      FLIP_Y: False
-      TRANSLATION: [0.0, 0.0, 0.0]
+
 
     # If EROD defines heading=0 along a different axis, shift GT heading here (degrees).
     # Try -90 / +90 if Car IoU stays near-zero.
@@ -44,7 +39,7 @@ DATA_CONFIG:
           MAX_POINTS_PER_VOXEL: 100
           MAX_NUMBER_OF_VOXELS: {
             'train': 12000,
-            'test': 120000
+            'test': 12000
           }
     DATA_AUGMENTOR:
         DISABLE_AUG_LIST: ['placeholder']
@@ -166,31 +161,32 @@ MODEL:
 
         EVAL_METRIC: kitti
 
+
         NMS_CONFIG:
             MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.01
-            NMS_PRE_MAXSIZE: 4096
-            NMS_POST_MAXSIZE: 500
+            NMS_THRESH: 0.2
+            NMS_PRE_MAXSIZE: 1000
+            NMS_POST_MAXSIZE: 83
 
 
 OPTIMIZATION:
     BATCH_SIZE_PER_GPU: 4
-    NUM_EPOCHS: 40
+    NUM_EPOCHS: 20
 
     OPTIMIZER: adam_onecycle
-    LR: 0.003
+    LR: 0.0003
     WEIGHT_DECAY: 0.01
     MOMENTUM: 0.9
 
     MOMS: [0.95, 0.85]
-    PCT_START: 0.4
+    PCT_START: 0.2
     DIV_FACTOR: 10
-    DECAY_STEP_LIST: [35, 45]
+    DECAY_STEP_LIST: [25, 35]
     LR_DECAY: 0.1
     LR_CLIP: 0.0000001
 
     LR_WARMUP: False
     WARMUP_EPOCH: 1
-
+    
     GRAD_NORM_CLIP: 10

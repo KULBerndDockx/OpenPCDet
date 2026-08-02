@@ -35,14 +35,14 @@ python3 -m pcdet.datasets.kitti.kitti_dataset --func create_kitti_infos --cfg_fi
 
 ### SECOND
 
-- **nuSc (Fine-tune):** `python3 train.py --cfg_file cfgs/models/S_N.yaml --pretrained_model /OpenPCDet/pcdet/models/pth/S_7862.pth --extra_tag frozen_backbone_1_9 --freeze_backbone`
+- **nuSc (Fine-tune):** `python3 train.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_N.yaml --pretrained_model /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag unfrozen_backbone_1_93 --freeze_backbone`
 
 - **KITT (Focal):** `python3 train.py --cfg_file cfgs/models/S_F.yaml` done
 - **nuSc (Focal) (Fine-tune):** `python3 train.py --cfg_file /OpenPCDet/tools/cfgs/models/S/F/S_F_N.yaml --pretrained_model /OpenPCDet/output/custom_models/S/F/S_F/default/ckpt/checkpoint_epoch_80.pth`
 
 
 ### PointPillar
-- **nuSc (Fine-tune):** `python3 train.py --cfg_file /OpenPCDet/tools/cfgs/models/P/D/P_N.yaml --pretrained_model /OpenPCDet/pcdet/models/pth/P_7728.pth --extra_tag frozen_backbone_0 --freeze_backbone`
+- **nuSc (Fine-tune):** `python3 train.py --cfg_file /OpenPCDet/tools/cfgs/models/P/D/P_D_N.yaml --pretrained_model /OpenPCDet/pcdet/models/pth/pointpillars_7728.pth --extra_tag unfrozen_backbone_0 --freeze_backbone`
 
 - **KITT (Focal):** `python3 train.py --cfg_file cfgs/models/P_F.yaml` 
 - **nuSc (Focal) (Fine-tune):** `python3 train.py --cfg_file cfgs/models/P_F_N.yaml --pretrained_model /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P_F/default/ckpt/checkpoint_epoch_40.pth`
@@ -60,7 +60,7 @@ python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_N.yaml --ckpt /O
 
 - **KITT(ftd):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_K.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S_N/default/ckpt/checkpoint_epoch_80.pth --extra_tag S_F_ftd`
 - **nuSc(ftd):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_N.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S_N/default/ckpt/checkpoint_epoch_80.pth --extra_tag S_F_ftd`
-- **eRod(ftd):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_E.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S_E/default/ckpt/checkpoint_epoch_80.pth --extra_tag S_F_ftd`
+- **eRod(ftd):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_E.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_92/ckpt/checkpoint_epoch_40.pth`
 
 ### SECOND (FOCAL)
 - **KITT(def):** `python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/S/F/S_F_K.yaml --ckpt /OpenPCDet/output/custom_models/S/F/S_F/default/ckpt/checkpoint_epoch_80.pth --extra_tag S_F_K_def`
@@ -257,3 +257,8 @@ tools/cfgs/models/P/T/
 
 - **KITT(ftd):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/models/P/T/P_T.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_N/frozen_backbone_1/ckpt/checkpoint_epoch_40.pth --extra_tag P_T_K_ftd`
 
+##/OpenPCDet/tools/cfgs/models/P/D/P_D_N.yaml
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/P/D/P_D_N.yaml --ckpt_dir /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt --eval_all
+
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/P/D/P_D_E.yaml --ckpt_dir /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt --eval_all
+/OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt

@@ -14,7 +14,7 @@ DATA_CONFIG:
 
 
 
-    VOXEL_SIZE: [0.05, 0.05, 0.1]
+    VOXEL_SIZE: [0.1, 0.1, 0.2]
     MAX_POINTS_PER_VOXEL: 45
 
     # NOTE: SECONDNet's VoxelBackBone8x expects enough Z bins so that after downsampling
@@ -122,7 +122,7 @@ MODEL:
 
     POST_PROCESSING:
         RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
-        SCORE_THRESH: 0.38
+        SCORE_THRESH: 0.2
         OUTPUT_RAW_SCORE: False
 
         EVAL_METRIC: kitti
@@ -130,14 +130,14 @@ MODEL:
         NMS_CONFIG:
             MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.01
-            NMS_PRE_MAXSIZE: 4096
-            NMS_POST_MAXSIZE: 500
+            NMS_THRESH: 0.1
+            NMS_PRE_MAXSIZE: 1000
+            NMS_POST_MAXSIZE: 83
 
 
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 4
-    NUM_EPOCHS: 80
+    BATCH_SIZE_PER_GPU: 6
+    NUM_EPOCHS: 40
 
     OPTIMIZER: adam_onecycle
     LR: 0.003

@@ -2,8 +2,8 @@ DATASET: 'NuScenesDataset'
 DATA_PATH: '../datasets/nuscenes'
 
 VERSION: 'v1.0-trainval'
-MAX_SWEEPS: 10
-PRED_VELOCITY: True
+MAX_SWEEPS: 1
+PRED_VELOCITY: False
 SET_NAN_VELOCITY_TO_ZEROS: True
 FILTER_MIN_POINTS_IN_GT: 1
 
@@ -22,8 +22,8 @@ DATA_SPLIT: {
 
 
 INFO_PATH: {
-    'train': [nuscenes_infos_10sweeps_train.pkl],
-    'test': [nuscenes_infos_10sweeps_val.pkl],
+    'train': [nuscenes_infos_1sweeps_train.pkl],
+    'test': [nuscenes_infos_1sweeps_val.pkl],
 }
 
 POINT_CLOUD_RANGE: [-51.2, -51.2, -5.0, 51.2, 51.2, 3.0]
@@ -31,10 +31,14 @@ POINT_CLOUD_RANGE: [-51.2, -51.2, -5.0, 51.2, 51.2, 3.0]
 BALANCED_RESAMPLING: True 
 
 DATA_AUGMENTOR:
-    DISABLE_AUG_LIST: ['placeholder']
+
+    
+    DISABLE_AUG_LIST:
+    - gt_sampling
+
     AUG_CONFIG_LIST:
         - NAME: gt_sampling
-          DB_INFO_PATH: nuscenes_dbinfos_10sweeps_withvelo.pkl
+          DB_INFO_PATH: ['nuscenes_dbinfos_1sweeps_withvelo.pkl']
 
           PREPARE: {
              filter_by_min_points: [

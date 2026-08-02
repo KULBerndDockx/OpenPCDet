@@ -35,6 +35,11 @@ class NuScenesDataset(DatasetTemplate):
         nuscenes_infos = []
 
         for info_path in self.dataset_cfg.INFO_PATH[mode]:
+            
+            print("MODE =", mode)
+            print("ROOT_PATH =", self.root_path)
+            print("INFO_PATHS =", self.dataset_cfg.INFO_PATH[mode])
+
             info_path = self.root_path / info_path
             if not info_path.exists():
                 continue
@@ -57,6 +62,14 @@ class NuScenesDataset(DatasetTemplate):
             for name in set(info['gt_names']):
                 if name in self.class_names:
                     cls_infos[name].append(info)
+
+        all_gt_names = set()
+        for info in infos:
+            all_gt_names.update(info['gt_names'])
+        #print(f"[DEBUG] self.class_names: {self.class_names}")
+        #print(f"[DEBUG] actual gt_names found in dataset: {all_gt_names}")
+
+        duplicated_samples = sum([len(v) for v in cls_infos.values()])
 
         duplicated_samples = sum([len(v) for _, v in cls_infos.items()])
         cls_dist = {k: len(v) / duplicated_samples for k, v in cls_infos.items()}
@@ -386,7 +399,8 @@ class NuScenesDataset(DatasetTemplate):
             points = self.get_lidar_with_sweeps(idx, max_sweeps=max_sweeps)
             gt_boxes = info['gt_boxes']
             gt_names = info['gt_names']
-
+            import numpy as np
+            print(f"[DEBUG] gt_names sample: {np.unique(gt_names)}")
             box_idxs_of_pts = roiaware_pool3d_utils.points_in_boxes_gpu(
                 torch.from_numpy(points[:, 0:3]).unsqueeze(dim=0).float().cuda(),
                 torch.from_numpy(gt_boxes[:, 0:7]).unsqueeze(dim=0).float().cuda()
@@ -488,9 +502,10 @@ if __name__ == '__main__':
             with_cam=args.with_cam
         )
 
-        nuscenes_dataset = NuScenesDataset(
-            dataset_cfg=dataset_cfg, class_names=None,
-            root_path=ROOT_DIR / 'datasets' / 'nuscenes',
-            logger=common_utils.create_logger(), training=True
-        )
-        nuscenes_dataset.create_groundtruth_database(max_sweeps=dataset_cfg.MAX_SWEEPS)
+        if dataset_cfg.VERSION != 'v1.0-test':
+            nuscenes_dataset = NuScenesDataset(
+                dataset_cfg=dataset_cfg, class_names=None,
+                root_path=ROOT_DIR / 'datasets' / 'nuscenes',
+                logger=common_utils.create_logger(), training=True
+            )
+            nuscenes_dataset.create_groundtruth_database(max_sweeps=dataset_cfg.MAX_SWEEPS)
