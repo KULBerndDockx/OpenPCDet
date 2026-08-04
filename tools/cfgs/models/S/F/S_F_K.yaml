@@ -3,9 +3,9 @@ CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
 DATA_CONFIG: 
     _BASE_CONFIG_: cfgs/dataset_configs/kitti_dataset.yaml
     SKIPH: True
-    POINT_CLOUD_RANGE: [0, -32.0, -3, 52.8, 32.0, 1]
-    VOXEL_SIZE: [0.4, 0.2, 0.2]
-    MAX_POINTS_PER_VOXEL: 45
+    #POINT_CLOUD_RANGE: [0, -32.0, -3, 52.8, 32.0, 1]
+    #VOXEL_SIZE: [0.4, 0.2, 0.2]
+    #MAX_POINTS_PER_VOXEL: 45
 
 MODEL:
     NAME: SECONDNet
@@ -99,14 +99,14 @@ MODEL:
         NMS_CONFIG:
             MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.01
-            NMS_PRE_MAXSIZE: 4096
-            NMS_POST_MAXSIZE: 500
+            NMS_THRESH: 0.2
+            NMS_PRE_MAXSIZE: 1000
+            NMS_POST_MAXSIZE: 83
 
 
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 4
-    NUM_EPOCHS: 80
+    BATCH_SIZE_PER_GPU: 1
+    NUM_EPOCHS: 30
 
     OPTIMIZER: adam_onecycle
     LR: 0.003

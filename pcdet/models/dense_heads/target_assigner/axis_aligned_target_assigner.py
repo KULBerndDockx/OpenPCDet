@@ -41,7 +41,7 @@ class AxisAlignedTargetAssigner(object):
         Returns:
 
         """
-        print(f"[DEBUG] target assigner class_names: {self.class_names}")
+        #print(f"[DEBUG] target assigner class_names: {self.class_names}")
         bbox_targets = []
         cls_labels = []
         reg_weights = []

@@ -757,6 +757,18 @@ def get_official_eval_result(gt_annos, dt_annos, current_classes, PR_detail_dict
                 ret_dict['%s_image/moderate_R40' % class_to_name[curcls]] = mAPbbox_R40[j, 1, 0]
                 ret_dict['%s_image/hard_R40' % class_to_name[curcls]] = mAPbbox_R40[j, 2, 0]
 
+
+            elif i == 1:
+                ret_dict['%s_3d_relaxed/easy_R40' % class_to_name[curcls]] = mAP3d_R40[j, 0, 1]
+                ret_dict['%s_3d_relaxed/moderate_R40' % class_to_name[curcls]] = mAP3d_R40[j, 1, 1]
+                ret_dict['%s_3d_relaxed/hard_R40' % class_to_name[curcls]] = mAP3d_R40[j, 2, 1]
+                ret_dict['%s_bev_relaxed/easy_R40' % class_to_name[curcls]] = mAPbev_R40[j, 0, 1]
+                ret_dict['%s_bev_relaxed/moderate_R40' % class_to_name[curcls]] = mAPbev_R40[j, 1, 1]
+                ret_dict['%s_bev_relaxed/hard_R40' % class_to_name[curcls]] = mAPbev_R40[j, 2, 1]
+                ret_dict['%s_image_relaxed/easy_R40' % class_to_name[curcls]] = mAPbbox_R40[j, 0, 1]
+                ret_dict['%s_image_relaxed/moderate_R40' % class_to_name[curcls]] = mAPbbox_R40[j, 1, 1]
+                ret_dict['%s_image_relaxed/hard_R40' % class_to_name[curcls]] = mAPbbox_R40[j, 2, 1]
+
     return result, ret_dict
 
 

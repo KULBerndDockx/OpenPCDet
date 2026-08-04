@@ -37,7 +37,7 @@ python3 -m pcdet.datasets.kitti.kitti_dataset --func create_kitti_infos --cfg_fi
 
 - **nuSc (Fine-tune):** `python3 train.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_N.yaml --pretrained_model /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag unfrozen_backbone_1_93 --freeze_backbone`
 
-- **KITT (Focal):** `python3 train.py --cfg_file cfgs/models/S_F.yaml` done
+- **KITT (Focal):** `python3 train.py --cfg_file tools/cfgs/models/S/F/S_F_K.yaml` done
 - **nuSc (Focal) (Fine-tune):** `python3 train.py --cfg_file /OpenPCDet/tools/cfgs/models/S/F/S_F_N.yaml --pretrained_model /OpenPCDet/output/custom_models/S/F/S_F/default/ckpt/checkpoint_epoch_80.pth`
 
 
@@ -247,7 +247,7 @@ tools/cfgs/models/P/T/
 - **KITT(def):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/models/P/D/P.yaml --ckpt /OpenPCDet/pcdet/models/pth/P_7728.pth --extra_tag P_K_default_def`
 
 
-- **KITT(ftd):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/models/P/D/P.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_N/frozen_backbone_1/ckpt/checkpoint_epoch_40.pth --extra_tag P_K_default_ftd`
+- **KITT(ftd):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/models/P/D/P_D_E.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_30.pth --extra_tag P_K_default_ftd`
 
 
 ### POINTPILLAR (TENT)
@@ -262,3 +262,10 @@ python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/P/D/P_D_N.yaml --ckpt_di
 
 python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/P/D/P_D_E.yaml --ckpt_dir /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt --eval_all
 /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt
+
+
+python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/P/D/P_D_K.yaml --ckpt_dir /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt --eval_all
+
+/OpenPCDet/tools/cfgs/models/S/F/S_F_K.yaml
+
+t/tools# python3 test.py --cfg_file /OpenPCDet/tools/cfgs/models/S/F/S_F_K.yaml --ckpt_dir /OpenPCDet/output/cfgs/models/S/F/S_F_K/default/ckpt --eval_all
