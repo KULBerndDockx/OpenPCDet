@@ -17,7 +17,7 @@ DATA_CONFIG:
 
     # If EROD defines heading=0 along a different axis, shift GT heading here (degrees).
     # Try -90 / +90 if Car IoU stays near-zero.
-    HEADING_OFFSET_DEG: -90
+    #sHEADING_OFFSET_DEG: -90
 
     # Restrict eval to the configured ROI to avoid penalizing detections for GT outside KITTI range.
     FILTER_EVAL_OUTSIDE_RANGE: True
@@ -165,9 +165,9 @@ MODEL:
         NMS_CONFIG:
             MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.2
+            NMS_THRESH: 0.05
             NMS_PRE_MAXSIZE: 1000
-            NMS_POST_MAXSIZE: 83
+            NMS_POST_MAXSIZE: 100
 
 
 OPTIMIZATION:

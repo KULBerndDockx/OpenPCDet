@@ -1,0 +1,2433 @@
+2026-08-06 15:01:26,387   INFO  **********************Start logging**********************
+2026-08-06 15:01:26,387   INFO  CUDA_VISIBLE_DEVICES=ALL
+2026-08-06 15:01:26,387   INFO  cfg_file         /OpenPCDet/tools/cfgs/models/P/D/P_D_E.yaml
+2026-08-06 15:01:26,387   INFO  batch_size       4
+2026-08-06 15:01:26,387   INFO  workers          4
+2026-08-06 15:01:26,387   INFO  extra_tag        default
+2026-08-06 15:01:26,387   INFO  ckpt             None
+2026-08-06 15:01:26,387   INFO  pretrained_model None
+2026-08-06 15:01:26,387   INFO  launcher         none
+2026-08-06 15:01:26,387   INFO  tcp_port         18888
+2026-08-06 15:01:26,387   INFO  local_rank       None
+2026-08-06 15:01:26,387   INFO  set_cfgs         None
+2026-08-06 15:01:26,387   INFO  max_waiting_mins 1
+2026-08-06 15:01:26,387   INFO  start_epoch      0
+2026-08-06 15:01:26,387   INFO  eval_tag         default
+2026-08-06 15:01:26,387   INFO  eval_all         True
+2026-08-06 15:01:26,387   INFO  ckpt_dir         /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt
+2026-08-06 15:01:26,387   INFO  save_to_file     False
+2026-08-06 15:01:26,388   INFO  infer_time       False
+2026-08-06 15:01:26,388   INFO  cfg.ROOT_DIR: /OpenPCDet
+2026-08-06 15:01:26,388   INFO  cfg.LOCAL_RANK: 0
+2026-08-06 15:01:26,388   INFO  cfg.CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
+2026-08-06 15:01:26,388   INFO  ----------- DATA_CONFIG -----------
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.DATASET: CustomDataset
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.DATA_PATH: /OpenPCDet/erod
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.LABEL_DIR: labels
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.SWAP_LW: False
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.SWAP_LW_IF_DY_GT_DX: False
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.HEADING_IN_DEGREES: None
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.FILTER_EVAL_OUTSIDE_RANGE: True
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.POINT_CLOUD_RANGE: [-32.64, -39.68, -3, 32.64, 39.68, 1]
+2026-08-06 15:01:26,388   INFO  ----------- MAP_CLASS_TO_KITTI -----------
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.Vehicle: Car
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.Car: Car
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.Pedestrian: Pedestrian
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.Cyclist: Cyclist
+2026-08-06 15:01:26,388   INFO  ----------- DATA_SPLIT -----------
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.DATA_SPLIT.train: train
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.DATA_SPLIT.val: val
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.DATA_SPLIT.test: val_all
+2026-08-06 15:01:26,388   INFO  ----------- INFO_PATH -----------
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.INFO_PATH.train: ['custom_infos_train.pkl']
+2026-08-06 15:01:26,388   INFO  cfg.DATA_CONFIG.INFO_PATH.val: ['custom_infos_val.pkl']
+2026-08-06 15:01:26,389   INFO  cfg.DATA_CONFIG.INFO_PATH.test: ['custom_infos_val_all.pkl']
+2026-08-06 15:01:26,389   INFO  ----------- POINT_FEATURE_ENCODING -----------
+2026-08-06 15:01:26,389   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.encoding_type: absolute_coordinates_encoding
+2026-08-06 15:01:26,389   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.used_feature_list: ['x', 'y', 'z', 'intensity']
+2026-08-06 15:01:26,389   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.src_feature_list: ['x', 'y', 'z', 'intensity']
+2026-08-06 15:01:26,389   INFO  ----------- DATA_AUGMENTOR -----------
+2026-08-06 15:01:26,389   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.DISABLE_AUG_LIST: ['placeholder']
+2026-08-06 15:01:26,389   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.AUG_CONFIG_LIST: [{'NAME': 'gt_sampling', 'USE_ROAD_PLANE': True, 'DB_INFO_PATH': ['custom_dbinfos_train.pkl'], 'PREPARE': {'filter_by_min_points': ['Car:5', 'Pedestrian:5', 'Cyclist:5'], 'filter_by_difficulty': [-1]}, 'SAMPLE_GROUPS': ['Car:15', 'Pedestrian:15', 'Cyclist:15'], 'NUM_POINT_FEATURES': 4, 'DATABASE_WITH_FAKELIDAR': False, 'REMOVE_EXTRA_WIDTH': [0.0, 0.0, 0.0], 'LIMIT_WHOLE_SCENE': False}, {'NAME': 'random_world_flip', 'ALONG_AXIS_LIST': ['x']}, {'NAME': 'random_world_rotation', 'WORLD_ROT_ANGLE': [-0.78539816, 0.78539816]}, {'NAME': 'random_world_scaling', 'WORLD_SCALE_RANGE': [0.95, 1.05]}]
+2026-08-06 15:01:26,389   INFO  cfg.DATA_CONFIG.DATA_PROCESSOR: [{'NAME': 'mask_points_and_boxes_outside_range', 'REMOVE_OUTSIDE_BOXES': True}, {'NAME': 'shuffle_points', 'SHUFFLE_ENABLED': {'train': True, 'test': False}}, {'NAME': 'transform_points_to_voxels', 'VOXEL_SIZE': [0.16, 0.16, 4], 'MAX_POINTS_PER_VOXEL': 100, 'MAX_NUMBER_OF_VOXELS': {'train': 12000, 'test': 12000}}]
+2026-08-06 15:01:26,389   INFO  cfg.DATA_CONFIG._BASE_CONFIG_: cfgs/dataset_configs/custom_dataset.yaml
+2026-08-06 15:01:26,389   INFO  ----------- MODEL -----------
+2026-08-06 15:01:26,389   INFO  cfg.MODEL.NAME: PointPillar
+2026-08-06 15:01:26,389   INFO  ----------- VFE -----------
+2026-08-06 15:01:26,389   INFO  cfg.MODEL.VFE.NAME: PillarVFE
+2026-08-06 15:01:26,389   INFO  cfg.MODEL.VFE.WITH_DISTANCE: False
+2026-08-06 15:01:26,389   INFO  cfg.MODEL.VFE.USE_ABSLOTE_XYZ: True
+2026-08-06 15:01:26,389   INFO  cfg.MODEL.VFE.USE_NORM: True
+2026-08-06 15:01:26,389   INFO  cfg.MODEL.VFE.NUM_FILTERS: [64]
+2026-08-06 15:01:26,389   INFO  ----------- MAP_TO_BEV -----------
+2026-08-06 15:01:26,389   INFO  cfg.MODEL.MAP_TO_BEV.NAME: PointPillarScatter
+2026-08-06 15:01:26,389   INFO  cfg.MODEL.MAP_TO_BEV.NUM_BEV_FEATURES: 64
+2026-08-06 15:01:26,389   INFO  ----------- BACKBONE_2D -----------
+2026-08-06 15:01:26,389   INFO  cfg.MODEL.BACKBONE_2D.NAME: BaseBEVBackbone
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.BACKBONE_2D.LAYER_NUMS: [3, 5, 5]
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.BACKBONE_2D.LAYER_STRIDES: [2, 2, 2]
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.BACKBONE_2D.NUM_FILTERS: [64, 128, 256]
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.BACKBONE_2D.UPSAMPLE_STRIDES: [1, 2, 4]
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.BACKBONE_2D.NUM_UPSAMPLE_FILTERS: [128, 128, 128]
+2026-08-06 15:01:26,390   INFO  ----------- DENSE_HEAD -----------
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.NAME: AnchorHeadSingle
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.CLASS_AGNOSTIC: False
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.USE_DIRECTION_CLASSIFIER: True
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.DIR_OFFSET: 0.78539
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.DIR_LIMIT_OFFSET: 0.0
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.NUM_DIR_BINS: 2
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.ANCHOR_GENERATOR_CONFIG: [{'class_name': 'Car', 'anchor_sizes': [[3.9, 1.6, 1.56]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-1.78], 'align_center': False, 'feature_map_stride': 2, 'matched_threshold': 0.6, 'unmatched_threshold': 0.45}, {'class_name': 'Pedestrian', 'anchor_sizes': [[0.8, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 2, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}, {'class_name': 'Cyclist', 'anchor_sizes': [[1.76, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 2, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}]
+2026-08-06 15:01:26,390   INFO  ----------- TARGET_ASSIGNER_CONFIG -----------
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NAME: AxisAlignedTargetAssigner
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.POS_FRACTION: -1.0
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.SAMPLE_SIZE: 512
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NORM_BY_NUM_EXAMPLES: False
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.MATCH_HEIGHT: False
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.BOX_CODER: ResidualCoder
+2026-08-06 15:01:26,390   INFO  ----------- LOSS_CONFIG -----------
+2026-08-06 15:01:26,390   INFO  ----------- LOSS_WEIGHTS -----------
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.cls_weight: 1.0
+2026-08-06 15:01:26,390   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.loc_weight: 2.0
+2026-08-06 15:01:26,391   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.dir_weight: 0.2
+2026-08-06 15:01:26,391   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.code_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-06 15:01:26,391   INFO  ----------- POST_PROCESSING -----------
+2026-08-06 15:01:26,391   INFO  cfg.MODEL.POST_PROCESSING.RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
+2026-08-06 15:01:26,391   INFO  cfg.MODEL.POST_PROCESSING.SCORE_THRESH: 0.1
+2026-08-06 15:01:26,391   INFO  cfg.MODEL.POST_PROCESSING.OUTPUT_RAW_SCORE: False
+2026-08-06 15:01:26,391   INFO  cfg.MODEL.POST_PROCESSING.EVAL_METRIC: kitti
+2026-08-06 15:01:26,391   INFO  ----------- NMS_CONFIG -----------
+2026-08-06 15:01:26,391   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.MULTI_CLASSES_NMS: False
+2026-08-06 15:01:26,391   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_TYPE: nms_gpu
+2026-08-06 15:01:26,391   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_THRESH: 0.05
+2026-08-06 15:01:26,391   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_PRE_MAXSIZE: 1000
+2026-08-06 15:01:26,391   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_POST_MAXSIZE: 100
+2026-08-06 15:01:26,391   INFO  ----------- OPTIMIZATION -----------
+2026-08-06 15:01:26,391   INFO  cfg.OPTIMIZATION.BATCH_SIZE_PER_GPU: 4
+2026-08-06 15:01:26,391   INFO  cfg.OPTIMIZATION.NUM_EPOCHS: 20
+2026-08-06 15:01:26,391   INFO  cfg.OPTIMIZATION.OPTIMIZER: adam_onecycle
+2026-08-06 15:01:26,391   INFO  cfg.OPTIMIZATION.LR: 0.0003
+2026-08-06 15:01:26,391   INFO  cfg.OPTIMIZATION.WEIGHT_DECAY: 0.01
+2026-08-06 15:01:26,391   INFO  cfg.OPTIMIZATION.MOMENTUM: 0.9
+2026-08-06 15:01:26,391   INFO  cfg.OPTIMIZATION.MOMS: [0.95, 0.85]
+2026-08-06 15:01:26,391   INFO  cfg.OPTIMIZATION.PCT_START: 0.2
+2026-08-06 15:01:26,391   INFO  cfg.OPTIMIZATION.DIV_FACTOR: 10
+2026-08-06 15:01:26,391   INFO  cfg.OPTIMIZATION.DECAY_STEP_LIST: [25, 35]
+2026-08-06 15:01:26,392   INFO  cfg.OPTIMIZATION.LR_DECAY: 0.1
+2026-08-06 15:01:26,392   INFO  cfg.OPTIMIZATION.LR_CLIP: 1e-07
+2026-08-06 15:01:26,392   INFO  cfg.OPTIMIZATION.LR_WARMUP: False
+2026-08-06 15:01:26,392   INFO  cfg.OPTIMIZATION.WARMUP_EPOCH: 1
+2026-08-06 15:01:26,392   INFO  cfg.OPTIMIZATION.GRAD_NORM_CLIP: 10
+2026-08-06 15:01:26,392   INFO  cfg.TAG: P_D_E
+2026-08-06 15:01:26,392   INFO  cfg.EXP_GROUP_PATH: OpenPCDet/tools/cfgs/models/P/D
+2026-08-06 15:01:26,392   INFO  Loading Custom dataset.
+2026-08-06 15:01:26,394   INFO  Total samples for CUSTOM dataset: 226
+2026-08-06 15:01:27,986   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_1.pth to GPU
+2026-08-06 15:01:28,042   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:01:28,051   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:01:28,058   INFO  *************** EPOCH 1 EVALUATION *****************
+2026-08-06 15:01:36,235   INFO  *************** Performance of EPOCH 1 *****************
+2026-08-06 15:01:36,236   INFO  Generate label finished(sec_per_example: 0.0362 second).
+2026-08-06 15:01:36,236   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:01:36,236   INFO  recall_rcnn_0.3: 0.471358
+2026-08-06 15:01:36,236   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:01:36,236   INFO  recall_rcnn_0.5: 0.378069
+2026-08-06 15:01:36,236   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:01:36,236   INFO  recall_rcnn_0.7: 0.121113
+2026-08-06 15:01:36,236   INFO  Average predicted number of objects(226 samples): 43.628
+2026-08-06 15:01:44,458   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:74.6800, 74.6800, 74.6800
+bev  AP:27.6248, 27.6248, 27.6248
+3d   AP:3.0698, 3.0698, 3.0698
+aos  AP:48.33, 48.33, 48.33
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:75.8466, 75.8466, 75.8466
+bev  AP:24.3486, 24.3486, 24.3486
+3d   AP:2.3941, 2.3941, 2.3941
+aos  AP:48.79, 48.79, 48.79
+Car AP@0.70, 0.50, 0.50:
+bbox AP:74.6800, 74.6800, 74.6800
+bev  AP:36.6487, 36.6487, 36.6487
+3d   AP:34.1968, 34.1968, 34.1968
+aos  AP:48.33, 48.33, 48.33
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:75.8466, 75.8466, 75.8466
+bev  AP:34.2074, 34.2074, 34.2074
+3d   AP:31.9406, 31.9406, 31.9406
+aos  AP:48.79, 48.79, 48.79
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:23.9272, 23.9272, 23.9272
+bev  AP:4.5455, 4.5455, 4.5455
+3d   AP:4.5455, 4.5455, 4.5455
+aos  AP:10.67, 10.67, 10.67
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:18.9849, 18.9849, 18.9849
+bev  AP:1.7204, 1.7204, 1.7204
+3d   AP:0.2174, 0.2174, 0.2174
+aos  AP:8.81, 8.81, 8.81
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:23.9272, 23.9272, 23.9272
+bev  AP:7.1805, 7.1805, 7.1805
+3d   AP:7.1805, 7.1805, 7.1805
+aos  AP:10.67, 10.67, 10.67
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:18.9849, 18.9849, 18.9849
+bev  AP:3.0230, 3.0230, 3.0230
+3d   AP:3.0230, 3.0230, 3.0230
+aos  AP:8.81, 8.81, 8.81
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:35.7771, 35.7771, 35.7771
+bev  AP:35.4404, 35.4404, 35.4404
+3d   AP:15.5844, 15.5844, 15.5844
+aos  AP:30.46, 30.46, 30.46
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:29.5968, 29.5968, 29.5968
+bev  AP:29.3996, 29.3996, 29.3996
+3d   AP:11.9488, 11.9488, 11.9488
+aos  AP:24.27, 24.27, 24.27
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:35.7771, 35.7771, 35.7771
+bev  AP:35.4404, 35.4404, 35.4404
+3d   AP:35.4404, 35.4404, 35.4404
+aos  AP:30.46, 30.46, 30.46
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:29.5968, 29.5968, 29.5968
+bev  AP:29.3996, 29.3996, 29.3996
+3d   AP:29.3996, 29.3996, 29.3996
+aos  AP:24.27, 24.27, 24.27
+
+2026-08-06 15:01:44,458   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_1/val_all
+2026-08-06 15:01:44,458   INFO  ****************Evaluation done.*****************
+2026-08-06 15:01:44,466   INFO  Epoch 1 has been evaluated
+2026-08-06 15:01:44,467   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_2.pth to GPU
+2026-08-06 15:01:44,520   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:01:44,522   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:01:44,523   INFO  *************** EPOCH 2 EVALUATION *****************
+2026-08-06 15:01:51,068   INFO  *************** Performance of EPOCH 2 *****************
+2026-08-06 15:01:51,068   INFO  Generate label finished(sec_per_example: 0.0290 second).
+2026-08-06 15:01:51,068   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:01:51,068   INFO  recall_rcnn_0.3: 0.715221
+2026-08-06 15:01:51,068   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:01:51,068   INFO  recall_rcnn_0.5: 0.558101
+2026-08-06 15:01:51,068   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:01:51,068   INFO  recall_rcnn_0.7: 0.189853
+2026-08-06 15:01:51,068   INFO  Average predicted number of objects(226 samples): 32.757
+2026-08-06 15:01:52,708   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:78.7544, 78.7544, 78.7544
+bev  AP:49.1915, 49.1915, 49.1915
+3d   AP:15.4662, 15.4662, 15.4662
+aos  AP:62.36, 62.36, 62.36
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:80.0400, 80.0400, 80.0400
+bev  AP:47.7285, 47.7285, 47.7285
+3d   AP:14.4857, 14.4857, 14.4857
+aos  AP:63.41, 63.41, 63.41
+Car AP@0.70, 0.50, 0.50:
+bbox AP:78.7544, 78.7544, 78.7544
+bev  AP:60.7169, 60.7169, 60.7169
+3d   AP:56.3672, 56.3672, 56.3672
+aos  AP:62.36, 62.36, 62.36
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:80.0400, 80.0400, 80.0400
+bev  AP:60.2164, 60.2164, 60.2164
+3d   AP:55.3372, 55.3372, 55.3372
+aos  AP:63.41, 63.41, 63.41
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:54.0758, 54.0758, 54.0758
+bev  AP:19.7960, 19.7960, 19.7960
+3d   AP:16.2350, 16.2350, 16.2350
+aos  AP:27.58, 27.58, 27.58
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:52.1826, 52.1826, 52.1826
+bev  AP:20.2832, 20.2832, 20.2832
+3d   AP:14.4535, 14.4535, 14.4535
+aos  AP:26.89, 26.89, 26.89
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:54.0758, 54.0758, 54.0758
+bev  AP:27.5401, 27.5401, 27.5401
+3d   AP:27.5401, 27.5401, 27.5401
+aos  AP:27.58, 27.58, 27.58
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:52.1826, 52.1826, 52.1826
+bev  AP:28.6616, 28.6616, 28.6616
+3d   AP:28.6539, 28.6539, 28.6539
+aos  AP:26.89, 26.89, 26.89
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:61.0206, 61.0206, 61.0206
+bev  AP:41.3424, 41.3424, 41.3424
+3d   AP:11.7998, 11.7998, 11.7998
+aos  AP:36.70, 36.70, 36.70
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:58.1872, 58.1872, 58.1872
+bev  AP:37.9313, 37.9313, 37.9313
+3d   AP:8.7320, 8.7320, 8.7320
+aos  AP:34.72, 34.72, 34.72
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:61.0206, 61.0206, 61.0206
+bev  AP:43.3883, 43.3883, 43.3883
+3d   AP:43.3883, 43.3883, 43.3883
+aos  AP:36.70, 36.70, 36.70
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:58.1872, 58.1872, 58.1872
+bev  AP:44.3423, 44.3423, 44.3423
+3d   AP:44.3423, 44.3423, 44.3423
+aos  AP:34.72, 34.72, 34.72
+
+2026-08-06 15:01:52,709   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_2/val_all
+2026-08-06 15:01:52,709   INFO  ****************Evaluation done.*****************
+2026-08-06 15:01:52,715   INFO  Epoch 2 has been evaluated
+2026-08-06 15:01:52,715   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_3.pth to GPU
+2026-08-06 15:01:52,770   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:01:52,773   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:01:52,774   INFO  *************** EPOCH 3 EVALUATION *****************
+2026-08-06 15:01:59,349   INFO  *************** Performance of EPOCH 3 *****************
+2026-08-06 15:01:59,350   INFO  Generate label finished(sec_per_example: 0.0291 second).
+2026-08-06 15:01:59,350   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:01:59,350   INFO  recall_rcnn_0.3: 0.479542
+2026-08-06 15:01:59,350   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:01:59,350   INFO  recall_rcnn_0.5: 0.364975
+2026-08-06 15:01:59,350   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:01:59,350   INFO  recall_rcnn_0.7: 0.129296
+2026-08-06 15:01:59,350   INFO  Average predicted number of objects(226 samples): 32.677
+2026-08-06 15:02:00,651   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:82.2332, 82.2332, 82.2332
+bev  AP:46.1123, 46.1123, 46.1123
+3d   AP:10.8558, 10.8558, 10.8558
+aos  AP:64.26, 64.26, 64.26
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:83.7618, 83.7618, 83.7618
+bev  AP:43.8333, 43.8333, 43.8333
+3d   AP:10.5193, 10.5193, 10.5193
+aos  AP:65.20, 65.20, 65.20
+Car AP@0.70, 0.50, 0.50:
+bbox AP:82.2332, 82.2332, 82.2332
+bev  AP:59.3320, 59.3320, 59.3320
+3d   AP:53.3582, 53.3582, 53.3582
+aos  AP:64.26, 64.26, 64.26
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:83.7618, 83.7618, 83.7618
+bev  AP:58.2409, 58.2409, 58.2409
+3d   AP:52.1206, 52.1206, 52.1206
+aos  AP:65.20, 65.20, 65.20
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:26.9481, 26.9481, 26.9481
+bev  AP:7.7441, 7.7441, 7.7441
+3d   AP:2.7444, 2.7444, 2.7444
+aos  AP:12.55, 12.55, 12.55
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:22.1664, 22.1664, 22.1664
+bev  AP:4.2593, 4.2593, 4.2593
+3d   AP:2.2642, 2.2642, 2.2642
+aos  AP:9.71, 9.71, 9.71
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:26.9481, 26.9481, 26.9481
+bev  AP:7.7922, 7.7922, 7.7922
+3d   AP:7.7922, 7.7922, 7.7922
+aos  AP:12.55, 12.55, 12.55
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:22.1664, 22.1664, 22.1664
+bev  AP:4.2857, 4.2857, 4.2857
+3d   AP:4.2857, 4.2857, 4.2857
+aos  AP:9.71, 9.71, 9.71
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:53.3356, 53.3356, 53.3356
+bev  AP:37.9593, 37.9593, 37.9593
+3d   AP:12.2257, 12.2257, 12.2257
+aos  AP:48.81, 48.81, 48.81
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:54.6398, 54.6398, 54.6398
+bev  AP:35.3107, 35.3107, 35.3107
+3d   AP:4.7840, 4.7840, 4.7840
+aos  AP:49.12, 49.12, 49.12
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:53.3356, 53.3356, 53.3356
+bev  AP:39.7286, 39.7286, 39.7286
+3d   AP:39.7286, 39.7286, 39.7286
+aos  AP:48.81, 48.81, 48.81
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:54.6398, 54.6398, 54.6398
+bev  AP:36.4234, 36.4234, 36.4234
+3d   AP:36.4234, 36.4234, 36.4234
+aos  AP:49.12, 49.12, 49.12
+
+2026-08-06 15:02:00,651   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_3/val_all
+2026-08-06 15:02:00,651   INFO  ****************Evaluation done.*****************
+2026-08-06 15:02:00,657   INFO  Epoch 3 has been evaluated
+2026-08-06 15:02:00,657   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_4.pth to GPU
+2026-08-06 15:02:00,713   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:02:00,716   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:02:00,717   INFO  *************** EPOCH 4 EVALUATION *****************
+2026-08-06 15:02:07,411   INFO  *************** Performance of EPOCH 4 *****************
+2026-08-06 15:02:07,411   INFO  Generate label finished(sec_per_example: 0.0296 second).
+2026-08-06 15:02:07,411   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:02:07,411   INFO  recall_rcnn_0.3: 0.569558
+2026-08-06 15:02:07,411   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:02:07,411   INFO  recall_rcnn_0.5: 0.445172
+2026-08-06 15:02:07,411   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:02:07,411   INFO  recall_rcnn_0.7: 0.214403
+2026-08-06 15:02:07,411   INFO  Average predicted number of objects(226 samples): 38.796
+2026-08-06 15:02:09,216   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:82.2450, 82.2450, 82.2450
+bev  AP:53.2328, 53.2328, 53.2328
+3d   AP:22.6755, 22.6755, 22.6755
+aos  AP:67.36, 67.36, 67.36
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:83.8397, 83.8397, 83.8397
+bev  AP:52.7631, 52.7631, 52.7631
+3d   AP:21.4524, 21.4524, 21.4524
+aos  AP:66.97, 66.97, 66.97
+Car AP@0.70, 0.50, 0.50:
+bbox AP:82.2450, 82.2450, 82.2450
+bev  AP:63.7644, 63.7644, 63.7644
+3d   AP:60.8112, 60.8112, 60.8112
+aos  AP:67.36, 67.36, 67.36
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:83.8397, 83.8397, 83.8397
+bev  AP:63.6779, 63.6779, 63.6779
+3d   AP:59.7475, 59.7475, 59.7475
+aos  AP:66.97, 66.97, 66.97
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:32.3489, 32.3489, 32.3489
+bev  AP:5.0042, 5.0042, 5.0042
+3d   AP:3.3361, 3.3361, 3.3361
+aos  AP:13.84, 13.84, 13.84
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:28.2794, 28.2794, 28.2794
+bev  AP:3.4404, 3.4404, 3.4404
+3d   AP:1.8349, 1.8349, 1.8349
+aos  AP:11.80, 11.80, 11.80
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:32.3489, 32.3489, 32.3489
+bev  AP:5.6714, 5.6714, 5.6714
+3d   AP:5.6714, 5.6714, 5.6714
+aos  AP:13.84, 13.84, 13.84
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:28.2794, 28.2794, 28.2794
+bev  AP:4.6789, 4.6789, 4.6789
+3d   AP:4.6789, 4.6789, 4.6789
+aos  AP:11.80, 11.80, 11.80
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:74.4171, 74.4171, 74.4171
+bev  AP:49.6832, 49.6832, 49.6832
+3d   AP:6.2517, 6.2517, 6.2517
+aos  AP:59.95, 59.95, 59.95
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:75.0996, 75.0996, 75.0996
+bev  AP:47.3000, 47.3000, 47.3000
+3d   AP:5.2203, 5.2203, 5.2203
+aos  AP:59.59, 59.59, 59.59
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:74.4171, 74.4171, 74.4171
+bev  AP:54.9930, 54.9930, 54.9930
+3d   AP:54.9930, 54.9930, 54.9930
+aos  AP:59.95, 59.95, 59.95
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:75.0996, 75.0996, 75.0996
+bev  AP:55.2342, 55.2342, 55.2342
+3d   AP:55.2342, 55.2342, 55.2342
+aos  AP:59.59, 59.59, 59.59
+
+2026-08-06 15:02:09,216   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_4/val_all
+2026-08-06 15:02:09,216   INFO  ****************Evaluation done.*****************
+2026-08-06 15:02:09,223   INFO  Epoch 4 has been evaluated
+2026-08-06 15:02:09,224   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_5.pth to GPU
+2026-08-06 15:02:09,278   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:02:09,281   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:02:09,283   INFO  *************** EPOCH 5 EVALUATION *****************
+2026-08-06 15:02:16,767   INFO  *************** Performance of EPOCH 5 *****************
+2026-08-06 15:02:16,767   INFO  Generate label finished(sec_per_example: 0.0331 second).
+2026-08-06 15:02:16,768   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:02:16,768   INFO  recall_rcnn_0.3: 0.558101
+2026-08-06 15:02:16,768   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:02:16,768   INFO  recall_rcnn_0.5: 0.464812
+2026-08-06 15:02:16,768   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:02:16,768   INFO  recall_rcnn_0.7: 0.175123
+2026-08-06 15:02:16,768   INFO  Average predicted number of objects(226 samples): 3.996
+2026-08-06 15:02:18,817   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:90.0643, 90.0643, 90.0643
+bev  AP:63.6720, 63.6720, 63.6720
+3d   AP:25.1977, 25.1977, 25.1977
+aos  AP:75.10, 75.10, 75.10
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:91.3508, 91.3508, 91.3508
+bev  AP:63.3098, 63.3098, 63.3098
+3d   AP:23.2991, 23.2991, 23.2991
+aos  AP:76.14, 76.14, 76.14
+Car AP@0.70, 0.50, 0.50:
+bbox AP:90.0643, 90.0643, 90.0643
+bev  AP:73.9836, 73.9836, 73.9836
+3d   AP:70.9977, 70.9977, 70.9977
+aos  AP:75.10, 75.10, 75.10
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:91.3508, 91.3508, 91.3508
+bev  AP:75.1830, 75.1830, 75.1830
+3d   AP:71.3844, 71.3844, 71.3844
+aos  AP:76.14, 76.14, 76.14
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:27.1044, 27.1044, 27.1044
+bev  AP:14.4781, 14.4781, 14.4781
+3d   AP:12.4579, 12.4579, 12.4579
+aos  AP:18.58, 18.58, 18.58
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:22.3611, 22.3611, 22.3611
+bev  AP:13.9352, 13.9352, 13.9352
+3d   AP:10.2778, 10.2778, 10.2778
+aos  AP:12.60, 12.60, 12.60
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:27.1044, 27.1044, 27.1044
+bev  AP:23.4323, 23.4323, 23.4323
+3d   AP:23.4323, 23.4323, 23.4323
+aos  AP:18.58, 18.58, 18.58
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:22.3611, 22.3611, 22.3611
+bev  AP:17.2160, 17.2160, 17.2160
+3d   AP:17.2160, 17.2160, 17.2160
+aos  AP:12.60, 12.60, 12.60
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:74.8449, 74.8449, 74.8449
+bev  AP:55.1273, 55.1273, 55.1273
+3d   AP:23.2049, 23.2049, 23.2049
+aos  AP:55.64, 55.64, 55.64
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:74.1544, 74.1544, 74.1544
+bev  AP:54.1419, 54.1419, 54.1419
+3d   AP:20.6694, 20.6694, 20.6694
+aos  AP:52.65, 52.65, 52.65
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:74.8449, 74.8449, 74.8449
+bev  AP:66.9345, 66.9345, 66.9345
+3d   AP:66.9345, 66.9345, 66.9345
+aos  AP:55.64, 55.64, 55.64
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:74.1544, 74.1544, 74.1544
+bev  AP:68.6052, 68.6052, 68.6052
+3d   AP:68.6052, 68.6052, 68.6052
+aos  AP:52.65, 52.65, 52.65
+
+2026-08-06 15:02:18,818   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_5/val_all
+2026-08-06 15:02:18,818   INFO  ****************Evaluation done.*****************
+2026-08-06 15:02:18,826   INFO  Epoch 5 has been evaluated
+2026-08-06 15:02:18,827   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_6.pth to GPU
+2026-08-06 15:02:18,891   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:02:18,895   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:02:18,898   INFO  *************** EPOCH 6 EVALUATION *****************
+2026-08-06 15:02:26,190   INFO  *************** Performance of EPOCH 6 *****************
+2026-08-06 15:02:26,190   INFO  Generate label finished(sec_per_example: 0.0323 second).
+2026-08-06 15:02:26,190   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:02:26,190   INFO  recall_rcnn_0.3: 0.682488
+2026-08-06 15:02:26,190   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:02:26,190   INFO  recall_rcnn_0.5: 0.456628
+2026-08-06 15:02:26,190   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:02:26,190   INFO  recall_rcnn_0.7: 0.073650
+2026-08-06 15:02:26,191   INFO  Average predicted number of objects(226 samples): 24.686
+2026-08-06 15:02:27,314   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:80.1599, 80.1599, 80.1599
+bev  AP:28.1226, 28.1226, 28.1226
+3d   AP:1.7112, 1.7112, 1.7112
+aos  AP:59.54, 59.54, 59.54
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:81.9744, 81.9744, 81.9744
+bev  AP:27.2544, 27.2544, 27.2544
+3d   AP:1.3252, 1.3252, 1.3252
+aos  AP:59.07, 59.07, 59.07
+Car AP@0.70, 0.50, 0.50:
+bbox AP:80.1599, 80.1599, 80.1599
+bev  AP:41.9857, 41.9857, 41.9857
+3d   AP:33.2123, 33.2123, 33.2123
+aos  AP:59.54, 59.54, 59.54
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:81.9744, 81.9744, 81.9744
+bev  AP:39.6403, 39.6403, 39.6403
+3d   AP:30.9521, 30.9521, 30.9521
+aos  AP:59.07, 59.07, 59.07
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:75.7266, 75.7266, 75.7266
+bev  AP:20.8608, 20.8608, 20.8608
+3d   AP:12.6462, 12.6462, 12.6462
+aos  AP:38.58, 38.58, 38.58
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:76.1870, 76.1870, 76.1870
+bev  AP:20.2642, 20.2642, 20.2642
+3d   AP:9.2506, 9.2506, 9.2506
+aos  AP:37.01, 37.01, 37.01
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:75.7266, 75.7266, 75.7266
+bev  AP:21.5652, 21.5652, 21.5652
+3d   AP:21.5652, 21.5652, 21.5652
+aos  AP:38.58, 38.58, 38.58
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:76.1870, 76.1870, 76.1870
+bev  AP:22.1123, 22.1123, 22.1123
+3d   AP:22.0943, 22.0943, 22.0943
+aos  AP:37.01, 37.01, 37.01
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:66.2614, 66.2614, 66.2614
+bev  AP:38.8938, 38.8938, 38.8938
+3d   AP:0.9404, 0.9404, 0.9404
+aos  AP:56.48, 56.48, 56.48
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:66.1318, 66.1318, 66.1318
+bev  AP:36.4155, 36.4155, 36.4155
+3d   AP:0.5749, 0.5749, 0.5749
+aos  AP:55.44, 55.44, 55.44
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:66.2614, 66.2614, 66.2614
+bev  AP:44.3752, 44.3752, 44.3752
+3d   AP:44.3752, 44.3752, 44.3752
+aos  AP:56.48, 56.48, 56.48
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:66.1318, 66.1318, 66.1318
+bev  AP:42.4727, 42.4727, 42.4727
+3d   AP:42.4727, 42.4727, 42.4727
+aos  AP:55.44, 55.44, 55.44
+
+2026-08-06 15:02:27,315   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_6/val_all
+2026-08-06 15:02:27,315   INFO  ****************Evaluation done.*****************
+2026-08-06 15:02:27,321   INFO  Epoch 6 has been evaluated
+2026-08-06 15:02:27,321   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_7.pth to GPU
+2026-08-06 15:02:27,375   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:02:27,378   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:02:27,380   INFO  *************** EPOCH 7 EVALUATION *****************
+2026-08-06 15:02:33,982   INFO  *************** Performance of EPOCH 7 *****************
+2026-08-06 15:02:33,982   INFO  Generate label finished(sec_per_example: 0.0292 second).
+2026-08-06 15:02:33,982   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:02:33,982   INFO  recall_rcnn_0.3: 0.738134
+2026-08-06 15:02:33,982   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:02:33,982   INFO  recall_rcnn_0.5: 0.585925
+2026-08-06 15:02:33,982   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:02:33,982   INFO  recall_rcnn_0.7: 0.191489
+2026-08-06 15:02:33,982   INFO  Average predicted number of objects(226 samples): 18.319
+2026-08-06 15:02:34,877   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:87.5051, 87.5051, 87.5051
+bev  AP:52.7946, 52.7946, 52.7946
+3d   AP:21.2168, 21.2168, 21.2168
+aos  AP:70.17, 70.17, 70.17
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:90.1666, 90.1666, 90.1666
+bev  AP:52.8266, 52.8266, 52.8266
+3d   AP:19.7578, 19.7578, 19.7578
+aos  AP:70.76, 70.76, 70.76
+Car AP@0.70, 0.50, 0.50:
+bbox AP:87.5051, 87.5051, 87.5051
+bev  AP:64.7989, 64.7989, 64.7989
+3d   AP:61.7900, 61.7900, 61.7900
+aos  AP:70.17, 70.17, 70.17
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:90.1666, 90.1666, 90.1666
+bev  AP:65.0269, 65.0269, 65.0269
+3d   AP:61.1922, 61.1922, 61.1922
+aos  AP:70.76, 70.76, 70.76
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:69.8126, 69.8126, 69.8126
+bev  AP:36.7237, 36.7237, 36.7237
+3d   AP:24.0606, 24.0606, 24.0606
+aos  AP:37.29, 37.29, 37.29
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:71.5859, 71.5859, 71.5859
+bev  AP:38.6729, 38.6729, 38.6729
+3d   AP:21.4498, 21.4498, 21.4498
+aos  AP:36.62, 36.62, 36.62
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:69.8126, 69.8126, 69.8126
+bev  AP:45.3289, 45.3289, 45.3289
+3d   AP:45.0117, 45.0117, 45.0117
+aos  AP:37.29, 37.29, 37.29
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:71.5859, 71.5859, 71.5859
+bev  AP:44.5482, 44.5482, 44.5482
+3d   AP:44.2404, 44.2404, 44.2404
+aos  AP:36.62, 36.62, 36.62
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:74.6281, 74.6281, 74.6281
+bev  AP:51.9494, 51.9494, 51.9494
+3d   AP:22.9801, 22.9801, 22.9801
+aos  AP:70.48, 70.48, 70.48
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:75.3240, 75.3240, 75.3240
+bev  AP:50.6227, 50.6227, 50.6227
+3d   AP:20.9992, 20.9992, 20.9992
+aos  AP:70.73, 70.73, 70.73
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:74.6281, 74.6281, 74.6281
+bev  AP:61.7076, 61.7076, 61.7076
+3d   AP:61.7076, 61.7076, 61.7076
+aos  AP:70.48, 70.48, 70.48
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:75.3240, 75.3240, 75.3240
+bev  AP:61.3704, 61.3704, 61.3704
+3d   AP:61.3704, 61.3704, 61.3704
+aos  AP:70.73, 70.73, 70.73
+
+2026-08-06 15:02:34,877   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_7/val_all
+2026-08-06 15:02:34,877   INFO  ****************Evaluation done.*****************
+2026-08-06 15:02:34,886   INFO  Epoch 7 has been evaluated
+2026-08-06 15:02:34,887   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_8.pth to GPU
+2026-08-06 15:02:34,938   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:02:34,941   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:02:34,942   INFO  *************** EPOCH 8 EVALUATION *****************
+2026-08-06 15:02:41,524   INFO  *************** Performance of EPOCH 8 *****************
+2026-08-06 15:02:41,525   INFO  Generate label finished(sec_per_example: 0.0291 second).
+2026-08-06 15:02:41,525   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:02:41,525   INFO  recall_rcnn_0.3: 0.476268
+2026-08-06 15:02:41,525   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:02:41,525   INFO  recall_rcnn_0.5: 0.270049
+2026-08-06 15:02:41,525   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:02:41,525   INFO  recall_rcnn_0.7: 0.114566
+2026-08-06 15:02:41,525   INFO  Average predicted number of objects(226 samples): 26.226
+2026-08-06 15:02:42,612   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:81.1844, 81.1844, 81.1844
+bev  AP:39.6331, 39.6331, 39.6331
+3d   AP:12.1856, 12.1856, 12.1856
+aos  AP:65.10, 65.10, 65.10
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:82.5385, 82.5385, 82.5385
+bev  AP:38.8255, 38.8255, 38.8255
+3d   AP:11.1692, 11.1692, 11.1692
+aos  AP:64.90, 64.90, 64.90
+Car AP@0.70, 0.50, 0.50:
+bbox AP:81.1844, 81.1844, 81.1844
+bev  AP:52.6906, 52.6906, 52.6906
+3d   AP:40.5463, 40.5463, 40.5463
+aos  AP:65.10, 65.10, 65.10
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:82.5385, 82.5385, 82.5385
+bev  AP:50.9640, 50.9640, 50.9640
+3d   AP:39.4007, 39.4007, 39.4007
+aos  AP:64.90, 64.90, 64.90
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:53.9688, 53.9688, 53.9688
+bev  AP:3.4167, 3.4167, 3.4167
+3d   AP:0.5195, 0.5195, 0.5195
+aos  AP:27.27, 27.27, 27.27
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:56.5709, 56.5709, 56.5709
+bev  AP:2.3490, 2.3490, 2.3490
+3d   AP:0.2817, 0.2817, 0.2817
+aos  AP:28.51, 28.51, 28.51
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:53.9688, 53.9688, 53.9688
+bev  AP:4.9368, 4.9368, 4.9368
+3d   AP:4.8164, 4.8164, 4.8164
+aos  AP:27.27, 27.27, 27.27
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:56.5709, 56.5709, 56.5709
+bev  AP:4.7517, 4.7517, 4.7517
+3d   AP:4.6358, 4.6358, 4.6358
+aos  AP:28.51, 28.51, 28.51
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:58.1344, 58.1344, 58.1344
+bev  AP:44.2746, 44.2746, 44.2746
+3d   AP:0.5682, 0.5682, 0.5682
+aos  AP:43.21, 43.21, 43.21
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:60.5198, 60.5198, 60.5198
+bev  AP:43.1657, 43.1657, 43.1657
+3d   AP:0.1562, 0.1562, 0.1562
+aos  AP:43.46, 43.46, 43.46
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:58.1344, 58.1344, 58.1344
+bev  AP:53.6516, 53.6516, 53.6516
+3d   AP:47.6221, 47.6221, 47.6221
+aos  AP:43.21, 43.21, 43.21
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:60.5198, 60.5198, 60.5198
+bev  AP:50.5472, 50.5472, 50.5472
+3d   AP:46.6958, 46.6958, 46.6958
+aos  AP:43.46, 43.46, 43.46
+
+2026-08-06 15:02:42,613   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_8/val_all
+2026-08-06 15:02:42,613   INFO  ****************Evaluation done.*****************
+2026-08-06 15:02:42,620   INFO  Epoch 8 has been evaluated
+2026-08-06 15:02:42,620   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_9.pth to GPU
+2026-08-06 15:02:42,681   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:02:42,684   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:02:42,685   INFO  *************** EPOCH 9 EVALUATION *****************
+2026-08-06 15:02:49,101   INFO  *************** Performance of EPOCH 9 *****************
+2026-08-06 15:02:49,102   INFO  Generate label finished(sec_per_example: 0.0284 second).
+2026-08-06 15:02:49,102   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:02:49,102   INFO  recall_rcnn_0.3: 0.806874
+2026-08-06 15:02:49,102   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:02:49,102   INFO  recall_rcnn_0.5: 0.595745
+2026-08-06 15:02:49,102   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:02:49,102   INFO  recall_rcnn_0.7: 0.166939
+2026-08-06 15:02:49,102   INFO  Average predicted number of objects(226 samples): 9.606
+2026-08-06 15:02:50,233   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:90.8076, 90.8076, 90.8076
+bev  AP:60.8634, 60.8634, 60.8634
+3d   AP:20.3349, 20.3349, 20.3349
+aos  AP:75.68, 75.68, 75.68
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:93.3982, 93.3982, 93.3982
+bev  AP:59.8122, 59.8122, 59.8122
+3d   AP:20.7136, 20.7136, 20.7136
+aos  AP:76.41, 76.41, 76.41
+Car AP@0.70, 0.50, 0.50:
+bbox AP:90.8076, 90.8076, 90.8076
+bev  AP:74.2547, 74.2547, 74.2547
+3d   AP:67.7673, 67.7673, 67.7673
+aos  AP:75.68, 75.68, 75.68
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:93.3982, 93.3982, 93.3982
+bev  AP:74.0671, 74.0671, 74.0671
+3d   AP:69.2829, 69.2829, 69.2829
+aos  AP:76.41, 76.41, 76.41
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:85.3277, 85.3277, 85.3277
+bev  AP:32.1602, 32.1602, 32.1602
+3d   AP:19.4283, 19.4283, 19.4283
+aos  AP:42.51, 42.51, 42.51
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:86.7352, 86.7352, 86.7352
+bev  AP:33.3703, 33.3703, 33.3703
+3d   AP:18.0582, 18.0582, 18.0582
+aos  AP:42.60, 42.60, 42.60
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:85.3277, 85.3277, 85.3277
+bev  AP:57.5735, 57.5735, 57.5735
+3d   AP:57.1372, 57.1372, 57.1372
+aos  AP:42.51, 42.51, 42.51
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:86.7352, 86.7352, 86.7352
+bev  AP:57.0584, 57.0584, 57.0584
+3d   AP:56.5340, 56.5340, 56.5340
+aos  AP:42.60, 42.60, 42.60
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:80.9247, 80.9247, 80.9247
+bev  AP:56.5097, 56.5097, 56.5097
+3d   AP:39.1098, 39.1098, 39.1098
+aos  AP:73.40, 73.40, 73.40
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:80.8543, 80.8543, 80.8543
+bev  AP:58.5883, 58.5883, 58.5883
+3d   AP:34.6938, 34.6938, 34.6938
+aos  AP:72.72, 72.72, 72.72
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:80.9247, 80.9247, 80.9247
+bev  AP:68.0191, 68.0191, 68.0191
+3d   AP:68.0191, 68.0191, 68.0191
+aos  AP:73.40, 73.40, 73.40
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:80.8543, 80.8543, 80.8543
+bev  AP:69.3176, 69.3176, 69.3176
+3d   AP:69.3176, 69.3176, 69.3176
+aos  AP:72.72, 72.72, 72.72
+
+2026-08-06 15:02:50,234   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_9/val_all
+2026-08-06 15:02:50,234   INFO  ****************Evaluation done.*****************
+2026-08-06 15:02:50,240   INFO  Epoch 9 has been evaluated
+2026-08-06 15:02:50,240   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_10.pth to GPU
+2026-08-06 15:02:50,301   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:02:50,305   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:02:50,306   INFO  *************** EPOCH 10 EVALUATION *****************
+2026-08-06 15:02:56,915   INFO  *************** Performance of EPOCH 10 *****************
+2026-08-06 15:02:56,915   INFO  Generate label finished(sec_per_example: 0.0292 second).
+2026-08-06 15:02:56,915   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:02:56,915   INFO  recall_rcnn_0.3: 0.633388
+2026-08-06 15:02:56,915   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:02:56,915   INFO  recall_rcnn_0.5: 0.482815
+2026-08-06 15:02:56,915   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:02:56,915   INFO  recall_rcnn_0.7: 0.142390
+2026-08-06 15:02:56,916   INFO  Average predicted number of objects(226 samples): 23.128
+2026-08-06 15:02:58,169   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:81.4039, 81.4039, 81.4039
+bev  AP:43.2891, 43.2891, 43.2891
+3d   AP:12.7602, 12.7602, 12.7602
+aos  AP:64.47, 64.47, 64.47
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:82.4023, 82.4023, 82.4023
+bev  AP:42.5628, 42.5628, 42.5628
+3d   AP:11.5915, 11.5915, 11.5915
+aos  AP:64.07, 64.07, 64.07
+Car AP@0.70, 0.50, 0.50:
+bbox AP:81.4039, 81.4039, 81.4039
+bev  AP:54.7629, 54.7629, 54.7629
+3d   AP:50.4482, 50.4482, 50.4482
+aos  AP:64.47, 64.47, 64.47
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:82.4023, 82.4023, 82.4023
+bev  AP:53.7090, 53.7090, 53.7090
+3d   AP:49.8720, 49.8720, 49.8720
+aos  AP:64.07, 64.07, 64.07
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:53.1914, 53.1914, 53.1914
+bev  AP:18.3254, 18.3254, 18.3254
+3d   AP:9.8103, 9.8103, 9.8103
+aos  AP:28.00, 28.00, 28.00
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:51.2388, 51.2388, 51.2388
+bev  AP:15.1196, 15.1196, 15.1196
+3d   AP:8.0935, 8.0935, 8.0935
+aos  AP:26.94, 26.94, 26.94
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:53.1914, 53.1914, 53.1914
+bev  AP:20.3857, 20.3857, 20.3857
+3d   AP:20.3857, 20.3857, 20.3857
+aos  AP:28.00, 28.00, 28.00
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:51.2388, 51.2388, 51.2388
+bev  AP:18.2189, 18.2189, 18.2189
+3d   AP:18.2189, 18.2189, 18.2189
+aos  AP:26.94, 26.94, 26.94
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:77.4085, 77.4085, 77.4085
+bev  AP:53.3353, 53.3353, 53.3353
+3d   AP:15.7161, 15.7161, 15.7161
+aos  AP:70.69, 70.69, 70.69
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:77.5407, 77.5407, 77.5407
+bev  AP:52.8876, 52.8876, 52.8876
+3d   AP:14.1973, 14.1973, 14.1973
+aos  AP:70.13, 70.13, 70.13
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:77.4085, 77.4085, 77.4085
+bev  AP:68.0586, 68.0586, 68.0586
+3d   AP:68.0586, 68.0586, 68.0586
+aos  AP:70.69, 70.69, 70.69
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:77.5407, 77.5407, 77.5407
+bev  AP:70.2215, 70.2215, 70.2215
+3d   AP:70.2040, 70.2040, 70.2040
+aos  AP:70.13, 70.13, 70.13
+
+2026-08-06 15:02:58,170   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_10/val_all
+2026-08-06 15:02:58,170   INFO  ****************Evaluation done.*****************
+2026-08-06 15:02:58,178   INFO  Epoch 10 has been evaluated
+2026-08-06 15:02:58,178   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_11.pth to GPU
+2026-08-06 15:02:58,234   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:02:58,237   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:02:58,239   INFO  *************** EPOCH 11 EVALUATION *****************
+2026-08-06 15:03:04,840   INFO  *************** Performance of EPOCH 11 *****************
+2026-08-06 15:03:04,840   INFO  Generate label finished(sec_per_example: 0.0292 second).
+2026-08-06 15:03:04,840   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:03:04,840   INFO  recall_rcnn_0.3: 0.590835
+2026-08-06 15:03:04,840   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:03:04,840   INFO  recall_rcnn_0.5: 0.438625
+2026-08-06 15:03:04,840   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:03:04,840   INFO  recall_rcnn_0.7: 0.152209
+2026-08-06 15:03:04,840   INFO  Average predicted number of objects(226 samples): 22.743
+2026-08-06 15:03:06,118   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:82.4233, 82.4233, 82.4233
+bev  AP:47.3110, 47.3110, 47.3110
+3d   AP:16.4533, 16.4533, 16.4533
+aos  AP:66.22, 66.22, 66.22
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:84.1804, 84.1804, 84.1804
+bev  AP:47.0109, 47.0109, 47.0109
+3d   AP:14.2218, 14.2218, 14.2218
+aos  AP:65.84, 65.84, 65.84
+Car AP@0.70, 0.50, 0.50:
+bbox AP:82.4233, 82.4233, 82.4233
+bev  AP:59.7044, 59.7044, 59.7044
+3d   AP:55.5592, 55.5592, 55.5592
+aos  AP:66.22, 66.22, 66.22
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:84.1804, 84.1804, 84.1804
+bev  AP:59.6048, 59.6048, 59.6048
+3d   AP:54.6306, 54.6306, 54.6306
+aos  AP:65.84, 65.84, 65.84
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:36.2615, 36.2615, 36.2615
+bev  AP:8.5399, 8.5399, 8.5399
+3d   AP:5.1653, 5.1653, 5.1653
+aos  AP:21.64, 21.64, 21.64
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:37.3596, 37.3596, 37.3596
+bev  AP:8.2069, 8.2069, 8.2069
+3d   AP:2.8409, 2.8409, 2.8409
+aos  AP:20.64, 20.64, 20.64
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:36.2615, 36.2615, 36.2615
+bev  AP:18.9050, 18.9050, 18.9050
+3d   AP:18.5950, 18.5950, 18.5950
+aos  AP:21.64, 21.64, 21.64
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:37.3596, 37.3596, 37.3596
+bev  AP:17.3295, 17.3295, 17.3295
+3d   AP:17.0455, 17.0455, 17.0455
+aos  AP:20.64, 20.64, 20.64
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:69.7479, 69.7479, 69.7479
+bev  AP:60.4120, 60.4120, 60.4120
+3d   AP:17.5712, 17.5712, 17.5712
+aos  AP:55.80, 55.80, 55.80
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:70.7897, 70.7897, 70.7897
+bev  AP:59.1560, 59.1560, 59.1560
+3d   AP:14.5279, 14.5279, 14.5279
+aos  AP:54.46, 54.46, 54.46
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:69.7479, 69.7479, 69.7479
+bev  AP:62.2727, 62.2727, 62.2727
+3d   AP:62.2727, 62.2727, 62.2727
+aos  AP:55.80, 55.80, 55.80
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:70.7897, 70.7897, 70.7897
+bev  AP:64.2890, 64.2890, 64.2890
+3d   AP:64.2890, 64.2890, 64.2890
+aos  AP:54.46, 54.46, 54.46
+
+2026-08-06 15:03:06,119   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_11/val_all
+2026-08-06 15:03:06,119   INFO  ****************Evaluation done.*****************
+2026-08-06 15:03:06,125   INFO  Epoch 11 has been evaluated
+2026-08-06 15:03:06,125   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_12.pth to GPU
+2026-08-06 15:03:06,185   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:03:06,190   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:03:06,191   INFO  *************** EPOCH 12 EVALUATION *****************
+2026-08-06 15:03:12,793   INFO  *************** Performance of EPOCH 12 *****************
+2026-08-06 15:03:12,793   INFO  Generate label finished(sec_per_example: 0.0292 second).
+2026-08-06 15:03:12,793   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:03:12,793   INFO  recall_rcnn_0.3: 0.697218
+2026-08-06 15:03:12,793   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:03:12,793   INFO  recall_rcnn_0.5: 0.495908
+2026-08-06 15:03:12,793   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:03:12,793   INFO  recall_rcnn_0.7: 0.242226
+2026-08-06 15:03:12,793   INFO  Average predicted number of objects(226 samples): 25.478
+2026-08-06 15:03:14,162   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:84.2567, 84.2567, 84.2567
+bev  AP:50.6164, 50.6164, 50.6164
+3d   AP:26.3467, 26.3467, 26.3467
+aos  AP:68.61, 68.61, 68.61
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:86.2865, 86.2865, 86.2865
+bev  AP:48.5298, 48.5298, 48.5298
+3d   AP:25.8766, 25.8766, 25.8766
+aos  AP:69.35, 69.35, 69.35
+Car AP@0.70, 0.50, 0.50:
+bbox AP:84.2567, 84.2567, 84.2567
+bev  AP:62.5834, 62.5834, 62.5834
+3d   AP:57.6707, 57.6707, 57.6707
+aos  AP:68.61, 68.61, 68.61
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:86.2865, 86.2865, 86.2865
+bev  AP:62.6162, 62.6162, 62.6162
+3d   AP:57.3981, 57.3981, 57.3981
+aos  AP:69.35, 69.35, 69.35
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:61.9963, 61.9963, 61.9963
+bev  AP:16.6496, 16.6496, 16.6496
+3d   AP:6.7308, 6.7308, 6.7308
+aos  AP:32.70, 32.70, 32.70
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:62.9716, 62.9716, 62.9716
+bev  AP:14.5646, 14.5646, 14.5646
+3d   AP:4.6795, 4.6795, 4.6795
+aos  AP:30.16, 30.16, 30.16
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:61.9963, 61.9963, 61.9963
+bev  AP:24.7253, 24.7253, 24.7253
+3d   AP:24.7253, 24.7253, 24.7253
+aos  AP:32.70, 32.70, 32.70
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:62.9716, 62.9716, 62.9716
+bev  AP:21.7582, 21.7582, 21.7582
+3d   AP:21.7582, 21.7582, 21.7582
+aos  AP:30.16, 30.16, 30.16
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:73.2170, 73.2170, 73.2170
+bev  AP:39.6135, 39.6135, 39.6135
+3d   AP:18.5141, 18.5141, 18.5141
+aos  AP:55.26, 55.26, 55.26
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:74.2753, 74.2753, 74.2753
+bev  AP:39.1230, 39.1230, 39.1230
+3d   AP:12.0469, 12.0469, 12.0469
+aos  AP:55.71, 55.71, 55.71
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:73.2170, 73.2170, 73.2170
+bev  AP:65.9543, 65.9543, 65.9543
+3d   AP:65.9543, 65.9543, 65.9543
+aos  AP:55.26, 55.26, 55.26
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:74.2753, 74.2753, 74.2753
+bev  AP:65.4655, 65.4655, 65.4655
+3d   AP:65.4655, 65.4655, 65.4655
+aos  AP:55.71, 55.71, 55.71
+
+2026-08-06 15:03:14,162   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_12/val_all
+2026-08-06 15:03:14,162   INFO  ****************Evaluation done.*****************
+2026-08-06 15:03:14,168   INFO  Epoch 12 has been evaluated
+2026-08-06 15:03:14,169   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_13.pth to GPU
+2026-08-06 15:03:14,221   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:03:14,224   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:03:14,225   INFO  *************** EPOCH 13 EVALUATION *****************
+2026-08-06 15:03:20,793   INFO  *************** Performance of EPOCH 13 *****************
+2026-08-06 15:03:20,794   INFO  Generate label finished(sec_per_example: 0.0291 second).
+2026-08-06 15:03:20,794   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:03:20,794   INFO  recall_rcnn_0.3: 0.541735
+2026-08-06 15:03:20,794   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:03:20,794   INFO  recall_rcnn_0.5: 0.400982
+2026-08-06 15:03:20,794   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:03:20,794   INFO  recall_rcnn_0.7: 0.199673
+2026-08-06 15:03:20,794   INFO  Average predicted number of objects(226 samples): 26.004
+2026-08-06 15:03:22,143   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:85.5586, 85.5586, 85.5586
+bev  AP:52.8917, 52.8917, 52.8917
+3d   AP:22.9971, 22.9971, 22.9971
+aos  AP:74.94, 74.94, 74.94
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:87.8891, 87.8891, 87.8891
+bev  AP:53.4199, 53.4199, 53.4199
+3d   AP:22.5502, 22.5502, 22.5502
+aos  AP:75.85, 75.85, 75.85
+Car AP@0.70, 0.50, 0.50:
+bbox AP:85.5586, 85.5586, 85.5586
+bev  AP:64.5973, 64.5973, 64.5973
+3d   AP:60.5102, 60.5102, 60.5102
+aos  AP:74.94, 74.94, 74.94
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:87.8891, 87.8891, 87.8891
+bev  AP:64.2388, 64.2388, 64.2388
+3d   AP:59.4640, 59.4640, 59.4640
+aos  AP:75.85, 75.85, 75.85
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:45.0835, 45.0835, 45.0835
+bev  AP:5.0609, 5.0609, 5.0609
+3d   AP:1.2184, 1.2184, 1.2184
+aos  AP:20.33, 20.33, 20.33
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:39.7391, 39.7391, 39.7391
+bev  AP:3.4794, 3.4794, 3.4794
+3d   AP:1.0052, 1.0052, 1.0052
+aos  AP:17.95, 17.95, 17.95
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:45.0835, 45.0835, 45.0835
+bev  AP:7.1228, 7.1228, 7.1228
+3d   AP:7.1228, 7.1228, 7.1228
+aos  AP:20.33, 20.33, 20.33
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:39.7391, 39.7391, 39.7391
+bev  AP:6.8557, 6.8557, 6.8557
+3d   AP:6.8557, 6.8557, 6.8557
+aos  AP:17.95, 17.95, 17.95
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:59.8818, 59.8818, 59.8818
+bev  AP:31.7618, 31.7618, 31.7618
+3d   AP:7.1678, 7.1678, 7.1678
+aos  AP:47.09, 47.09, 47.09
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:62.2671, 62.2671, 62.2671
+bev  AP:29.9385, 29.9385, 29.9385
+3d   AP:4.8214, 4.8214, 4.8214
+aos  AP:48.46, 48.46, 48.46
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:59.8818, 59.8818, 59.8818
+bev  AP:46.2165, 46.2165, 46.2165
+3d   AP:46.2165, 46.2165, 46.2165
+aos  AP:47.09, 47.09, 47.09
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:62.2671, 62.2671, 62.2671
+bev  AP:42.9144, 42.9144, 42.9144
+3d   AP:42.9144, 42.9144, 42.9144
+aos  AP:48.46, 48.46, 48.46
+
+2026-08-06 15:03:22,144   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_13/val_all
+2026-08-06 15:03:22,144   INFO  ****************Evaluation done.*****************
+2026-08-06 15:03:22,151   INFO  Epoch 13 has been evaluated
+2026-08-06 15:03:22,152   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_14.pth to GPU
+2026-08-06 15:03:22,205   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:03:22,209   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:03:22,211   INFO  *************** EPOCH 14 EVALUATION *****************
+2026-08-06 15:03:29,332   INFO  *************** Performance of EPOCH 14 *****************
+2026-08-06 15:03:29,332   INFO  Generate label finished(sec_per_example: 0.0315 second).
+2026-08-06 15:03:29,333   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:03:29,333   INFO  recall_rcnn_0.3: 0.731588
+2026-08-06 15:03:29,333   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:03:29,333   INFO  recall_rcnn_0.5: 0.446809
+2026-08-06 15:03:29,333   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:03:29,333   INFO  recall_rcnn_0.7: 0.193126
+2026-08-06 15:03:29,333   INFO  Average predicted number of objects(226 samples): 17.925
+2026-08-06 15:03:30,669   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:86.7880, 86.7880, 86.7880
+bev  AP:50.8004, 50.8004, 50.8004
+3d   AP:18.1286, 18.1286, 18.1286
+aos  AP:74.82, 74.82, 74.82
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:87.9949, 87.9949, 87.9949
+bev  AP:51.2262, 51.2262, 51.2262
+3d   AP:16.8560, 16.8560, 16.8560
+aos  AP:74.78, 74.78, 74.78
+Car AP@0.70, 0.50, 0.50:
+bbox AP:86.7880, 86.7880, 86.7880
+bev  AP:63.3388, 63.3388, 63.3388
+3d   AP:58.8571, 58.8571, 58.8571
+aos  AP:74.82, 74.82, 74.82
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:87.9949, 87.9949, 87.9949
+bev  AP:63.5594, 63.5594, 63.5594
+3d   AP:58.3524, 58.3524, 58.3524
+aos  AP:74.78, 74.78, 74.78
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:70.6063, 70.6063, 70.6063
+bev  AP:14.9935, 14.9935, 14.9935
+3d   AP:3.3233, 3.3233, 3.3233
+aos  AP:36.43, 36.43, 36.43
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:74.8376, 74.8376, 74.8376
+bev  AP:15.4621, 15.4621, 15.4621
+3d   AP:2.4914, 2.4914, 2.4914
+aos  AP:35.58, 35.58, 35.58
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:70.6063, 70.6063, 70.6063
+bev  AP:34.1232, 34.1232, 34.1232
+3d   AP:33.9278, 33.9278, 33.9278
+aos  AP:36.43, 36.43, 36.43
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:74.8376, 74.8376, 74.8376
+bev  AP:34.4076, 34.4076, 34.4076
+3d   AP:34.2076, 34.2076, 34.2076
+aos  AP:35.58, 35.58, 35.58
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:75.3348, 75.3348, 75.3348
+bev  AP:55.8538, 55.8538, 55.8538
+3d   AP:8.9532, 8.9532, 8.9532
+aos  AP:46.35, 46.35, 46.35
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:76.0579, 76.0579, 76.0579
+bev  AP:56.4084, 56.4084, 56.4084
+3d   AP:8.0156, 8.0156, 8.0156
+aos  AP:43.72, 43.72, 43.72
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:75.3348, 75.3348, 75.3348
+bev  AP:68.1534, 68.1534, 68.1534
+3d   AP:68.1534, 68.1534, 68.1534
+aos  AP:46.35, 46.35, 46.35
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:76.0579, 76.0579, 76.0579
+bev  AP:71.4430, 71.4430, 71.4430
+3d   AP:71.4430, 71.4430, 71.4430
+aos  AP:43.72, 43.72, 43.72
+
+2026-08-06 15:03:30,669   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_14/val_all
+2026-08-06 15:03:30,670   INFO  ****************Evaluation done.*****************
+2026-08-06 15:03:30,685   INFO  Epoch 14 has been evaluated
+2026-08-06 15:03:30,685   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_15.pth to GPU
+2026-08-06 15:03:30,744   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:03:30,750   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:03:30,752   INFO  *************** EPOCH 15 EVALUATION *****************
+2026-08-06 15:03:38,212   INFO  *************** Performance of EPOCH 15 *****************
+2026-08-06 15:03:38,212   INFO  Generate label finished(sec_per_example: 0.0330 second).
+2026-08-06 15:03:38,212   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:03:38,212   INFO  recall_rcnn_0.3: 0.661211
+2026-08-06 15:03:38,212   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:03:38,212   INFO  recall_rcnn_0.5: 0.422259
+2026-08-06 15:03:38,212   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:03:38,212   INFO  recall_rcnn_0.7: 0.211129
+2026-08-06 15:03:38,212   INFO  Average predicted number of objects(226 samples): 20.319
+2026-08-06 15:03:39,658   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:86.3404, 86.3404, 86.3404
+bev  AP:52.0201, 52.0201, 52.0201
+3d   AP:27.7206, 27.7206, 27.7206
+aos  AP:74.23, 74.23, 74.23
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:87.5667, 87.5667, 87.5667
+bev  AP:51.7617, 51.7617, 51.7617
+3d   AP:25.2070, 25.2070, 25.2070
+aos  AP:74.48, 74.48, 74.48
+Car AP@0.70, 0.50, 0.50:
+bbox AP:86.3404, 86.3404, 86.3404
+bev  AP:62.6464, 62.6464, 62.6464
+3d   AP:59.3776, 59.3776, 59.3776
+aos  AP:74.23, 74.23, 74.23
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:87.5667, 87.5667, 87.5667
+bev  AP:62.5304, 62.5304, 62.5304
+3d   AP:58.1804, 58.1804, 58.1804
+aos  AP:74.48, 74.48, 74.48
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:53.9695, 53.9695, 53.9695
+bev  AP:16.5517, 16.5517, 16.5517
+3d   AP:10.6802, 10.6802, 10.6802
+aos  AP:26.37, 26.37, 26.37
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:56.6315, 56.6315, 56.6315
+bev  AP:10.3149, 10.3149, 10.3149
+3d   AP:2.2051, 2.2051, 2.2051
+aos  AP:27.73, 27.73, 27.73
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:53.9695, 53.9695, 53.9695
+bev  AP:35.9226, 35.9226, 35.9226
+3d   AP:35.9226, 35.9226, 35.9226
+aos  AP:26.37, 26.37, 26.37
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:56.6315, 56.6315, 56.6315
+bev  AP:33.2328, 33.2328, 33.2328
+3d   AP:33.2328, 33.2328, 33.2328
+aos  AP:27.73, 27.73, 27.73
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:67.5944, 67.5944, 67.5944
+bev  AP:34.2389, 34.2389, 34.2389
+3d   AP:7.0872, 7.0872, 7.0872
+aos  AP:45.24, 45.24, 45.24
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:69.8063, 69.8063, 69.8063
+bev  AP:31.5030, 31.5030, 31.5030
+3d   AP:5.6033, 5.6033, 5.6033
+aos  AP:44.79, 44.79, 44.79
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:67.5944, 67.5944, 67.5944
+bev  AP:59.2413, 59.2413, 59.2413
+3d   AP:59.2413, 59.2413, 59.2413
+aos  AP:45.24, 45.24, 45.24
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:69.8063, 69.8063, 69.8063
+bev  AP:59.3057, 59.3057, 59.3057
+3d   AP:59.3057, 59.3057, 59.3057
+aos  AP:44.79, 44.79, 44.79
+
+2026-08-06 15:03:39,659   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_15/val_all
+2026-08-06 15:03:39,659   INFO  ****************Evaluation done.*****************
+2026-08-06 15:03:39,671   INFO  Epoch 15 has been evaluated
+2026-08-06 15:03:39,671   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_16.pth to GPU
+2026-08-06 15:03:39,731   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:03:39,736   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:03:39,738   INFO  *************** EPOCH 16 EVALUATION *****************
+2026-08-06 15:03:47,052   INFO  *************** Performance of EPOCH 16 *****************
+2026-08-06 15:03:47,052   INFO  Generate label finished(sec_per_example: 0.0324 second).
+2026-08-06 15:03:47,052   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:03:47,052   INFO  recall_rcnn_0.3: 0.587561
+2026-08-06 15:03:47,052   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:03:47,052   INFO  recall_rcnn_0.5: 0.414075
+2026-08-06 15:03:47,053   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:03:47,053   INFO  recall_rcnn_0.7: 0.212766
+2026-08-06 15:03:47,053   INFO  Average predicted number of objects(226 samples): 15.987
+2026-08-06 15:03:48,280   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:86.7419, 86.7419, 86.7419
+bev  AP:53.3215, 53.3215, 53.3215
+3d   AP:25.2661, 25.2661, 25.2661
+aos  AP:74.05, 74.05, 74.05
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:87.8859, 87.8859, 87.8859
+bev  AP:52.4435, 52.4435, 52.4435
+3d   AP:23.6869, 23.6869, 23.6869
+aos  AP:73.98, 73.98, 73.98
+Car AP@0.70, 0.50, 0.50:
+bbox AP:86.7419, 86.7419, 86.7419
+bev  AP:63.3334, 63.3334, 63.3334
+3d   AP:60.2888, 60.2888, 60.2888
+aos  AP:74.05, 74.05, 74.05
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:87.8859, 87.8859, 87.8859
+bev  AP:63.5103, 63.5103, 63.5103
+3d   AP:59.4148, 59.4148, 59.4148
+aos  AP:73.98, 73.98, 73.98
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:53.6859, 53.6859, 53.6859
+bev  AP:4.8352, 4.8352, 4.8352
+3d   AP:2.7972, 2.7972, 2.7972
+aos  AP:30.01, 30.01, 30.01
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:51.6558, 51.6558, 51.6558
+bev  AP:3.7942, 3.7942, 3.7942
+3d   AP:1.5385, 1.5385, 1.5385
+aos  AP:25.63, 25.63, 25.63
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:53.6859, 53.6859, 53.6859
+bev  AP:12.6033, 12.6033, 12.6033
+3d   AP:12.6033, 12.6033, 12.6033
+aos  AP:30.01, 30.01, 30.01
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:51.6558, 51.6558, 51.6558
+bev  AP:11.5530, 11.5530, 11.5530
+3d   AP:11.5530, 11.5530, 11.5530
+aos  AP:25.63, 25.63, 25.63
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:66.0614, 66.0614, 66.0614
+bev  AP:35.0436, 35.0436, 35.0436
+3d   AP:7.9323, 7.9323, 7.9323
+aos  AP:49.25, 49.25, 49.25
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:64.6656, 64.6656, 64.6656
+bev  AP:32.3618, 32.3618, 32.3618
+3d   AP:6.3480, 6.3480, 6.3480
+aos  AP:46.26, 46.26, 46.26
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:66.0614, 66.0614, 66.0614
+bev  AP:58.3348, 58.3348, 58.3348
+3d   AP:58.3348, 58.3348, 58.3348
+aos  AP:49.25, 49.25, 49.25
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:64.6656, 64.6656, 64.6656
+bev  AP:55.8662, 55.8662, 55.8662
+3d   AP:55.8662, 55.8662, 55.8662
+aos  AP:46.26, 46.26, 46.26
+
+2026-08-06 15:03:48,281   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_16/val_all
+2026-08-06 15:03:48,281   INFO  ****************Evaluation done.*****************
+2026-08-06 15:03:48,287   INFO  Epoch 16 has been evaluated
+2026-08-06 15:03:48,288   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_17.pth to GPU
+2026-08-06 15:03:48,338   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:03:48,342   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:03:48,344   INFO  *************** EPOCH 17 EVALUATION *****************
+2026-08-06 15:03:54,896   INFO  *************** Performance of EPOCH 17 *****************
+2026-08-06 15:03:54,896   INFO  Generate label finished(sec_per_example: 0.0290 second).
+2026-08-06 15:03:54,896   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:03:54,896   INFO  recall_rcnn_0.3: 0.554828
+2026-08-06 15:03:54,896   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:03:54,896   INFO  recall_rcnn_0.5: 0.410802
+2026-08-06 15:03:54,896   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:03:54,896   INFO  recall_rcnn_0.7: 0.191489
+2026-08-06 15:03:54,896   INFO  Average predicted number of objects(226 samples): 22.792
+2026-08-06 15:03:55,753   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:84.9636, 84.9636, 84.9636
+bev  AP:50.7264, 50.7264, 50.7264
+3d   AP:20.5622, 20.5622, 20.5622
+aos  AP:71.55, 71.55, 71.55
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:86.2382, 86.2382, 86.2382
+bev  AP:50.3848, 50.3848, 50.3848
+3d   AP:20.1189, 20.1189, 20.1189
+aos  AP:71.68, 71.68, 71.68
+Car AP@0.70, 0.50, 0.50:
+bbox AP:84.9636, 84.9636, 84.9636
+bev  AP:61.3026, 61.3026, 61.3026
+3d   AP:58.2028, 58.2028, 58.2028
+aos  AP:71.55, 71.55, 71.55
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:86.2382, 86.2382, 86.2382
+bev  AP:61.2180, 61.2180, 61.2180
+3d   AP:56.9752, 56.9752, 56.9752
+aos  AP:71.68, 71.68, 71.68
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:44.7782, 44.7782, 44.7782
+bev  AP:4.1166, 4.1166, 4.1166
+3d   AP:0.9434, 0.9434, 0.9434
+aos  AP:21.83, 21.83, 21.83
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:41.7822, 41.7822, 41.7822
+bev  AP:2.2642, 2.2642, 2.2642
+3d   AP:0.5189, 0.5189, 0.5189
+aos  AP:20.21, 20.21, 20.21
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:44.7782, 44.7782, 44.7782
+bev  AP:11.5780, 11.5780, 11.5780
+3d   AP:11.5780, 11.5780, 11.5780
+aos  AP:21.83, 21.83, 21.83
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:41.7822, 41.7822, 41.7822
+bev  AP:8.4906, 8.4906, 8.4906
+3d   AP:8.4906, 8.4906, 8.4906
+aos  AP:20.21, 20.21, 20.21
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:58.2802, 58.2802, 58.2802
+bev  AP:38.6918, 38.6918, 38.6918
+3d   AP:10.9759, 10.9759, 10.9759
+aos  AP:40.76, 40.76, 40.76
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:58.3410, 58.3410, 58.3410
+bev  AP:37.9536, 37.9536, 37.9536
+3d   AP:9.4841, 9.4841, 9.4841
+aos  AP:38.57, 38.57, 38.57
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:58.2802, 58.2802, 58.2802
+bev  AP:50.1127, 50.1127, 50.1127
+3d   AP:50.1127, 50.1127, 50.1127
+aos  AP:40.76, 40.76, 40.76
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:58.3410, 58.3410, 58.3410
+bev  AP:50.8458, 50.8458, 50.8458
+3d   AP:50.8458, 50.8458, 50.8458
+aos  AP:38.57, 38.57, 38.57
+
+2026-08-06 15:03:55,754   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_17/val_all
+2026-08-06 15:03:55,754   INFO  ****************Evaluation done.*****************
+2026-08-06 15:03:55,761   INFO  Epoch 17 has been evaluated
+2026-08-06 15:03:55,761   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_18.pth to GPU
+2026-08-06 15:03:55,815   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:03:55,818   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:03:55,819   INFO  *************** EPOCH 18 EVALUATION *****************
+2026-08-06 15:04:02,370   INFO  *************** Performance of EPOCH 18 *****************
+2026-08-06 15:04:02,370   INFO  Generate label finished(sec_per_example: 0.0290 second).
+2026-08-06 15:04:02,371   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:04:02,371   INFO  recall_rcnn_0.3: 0.613748
+2026-08-06 15:04:02,371   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:04:02,371   INFO  recall_rcnn_0.5: 0.425532
+2026-08-06 15:04:02,371   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:04:02,371   INFO  recall_rcnn_0.7: 0.199673
+2026-08-06 15:04:02,371   INFO  Average predicted number of objects(226 samples): 26.212
+2026-08-06 15:04:03,735   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:84.8828, 84.8828, 84.8828
+bev  AP:54.1223, 54.1223, 54.1223
+3d   AP:26.8187, 26.8187, 26.8187
+aos  AP:74.78, 74.78, 74.78
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:86.9618, 86.9618, 86.9618
+bev  AP:52.7667, 52.7667, 52.7667
+3d   AP:24.4864, 24.4864, 24.4864
+aos  AP:75.56, 75.56, 75.56
+Car AP@0.70, 0.50, 0.50:
+bbox AP:84.8828, 84.8828, 84.8828
+bev  AP:61.9177, 61.9177, 61.9177
+3d   AP:60.4495, 60.4495, 60.4495
+aos  AP:74.78, 74.78, 74.78
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:86.9618, 86.9618, 86.9618
+bev  AP:62.5543, 62.5543, 62.5543
+3d   AP:59.6314, 59.6314, 59.6314
+aos  AP:75.56, 75.56, 75.56
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:53.4754, 53.4754, 53.4754
+bev  AP:5.9297, 5.9297, 5.9297
+3d   AP:2.8633, 2.8633, 2.8633
+aos  AP:28.33, 28.33, 28.33
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:48.9696, 48.9696, 48.9696
+bev  AP:5.6898, 5.6898, 5.6898
+3d   AP:1.5748, 1.5748, 1.5748
+aos  AP:25.85, 25.85, 25.85
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:53.4754, 53.4754, 53.4754
+bev  AP:21.5909, 21.5909, 21.5909
+3d   AP:21.5909, 21.5909, 21.5909
+aos  AP:28.33, 28.33, 28.33
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:48.9696, 48.9696, 48.9696
+bev  AP:19.2969, 19.2969, 19.2969
+3d   AP:19.2969, 19.2969, 19.2969
+aos  AP:25.85, 25.85, 25.85
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:63.6290, 63.6290, 63.6290
+bev  AP:42.4456, 42.4456, 42.4456
+3d   AP:6.2743, 6.2743, 6.2743
+aos  AP:52.69, 52.69, 52.69
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:63.1450, 63.1450, 63.1450
+bev  AP:40.3221, 40.3221, 40.3221
+3d   AP:5.1196, 5.1196, 5.1196
+aos  AP:51.64, 51.64, 51.64
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:63.6290, 63.6290, 63.6290
+bev  AP:55.8345, 55.8345, 55.8345
+3d   AP:55.5140, 55.5140, 55.5140
+aos  AP:52.69, 52.69, 52.69
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:63.1450, 63.1450, 63.1450
+bev  AP:56.1821, 56.1821, 56.1821
+3d   AP:55.9342, 55.9342, 55.9342
+aos  AP:51.64, 51.64, 51.64
+
+2026-08-06 15:04:03,735   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_18/val_all
+2026-08-06 15:04:03,735   INFO  ****************Evaluation done.*****************
+2026-08-06 15:04:03,741   INFO  Epoch 18 has been evaluated
+2026-08-06 15:04:03,742   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_19.pth to GPU
+2026-08-06 15:04:03,795   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:04:03,798   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:04:03,799   INFO  *************** EPOCH 19 EVALUATION *****************
+2026-08-06 15:04:10,131   INFO  *************** Performance of EPOCH 19 *****************
+2026-08-06 15:04:10,132   INFO  Generate label finished(sec_per_example: 0.0280 second).
+2026-08-06 15:04:10,132   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:04:10,132   INFO  recall_rcnn_0.3: 0.638298
+2026-08-06 15:04:10,132   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:04:10,132   INFO  recall_rcnn_0.5: 0.443535
+2026-08-06 15:04:10,132   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:04:10,133   INFO  recall_rcnn_0.7: 0.222586
+2026-08-06 15:04:10,133   INFO  Average predicted number of objects(226 samples): 19.133
+2026-08-06 15:04:11,451   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:85.3059, 85.3059, 85.3059
+bev  AP:53.8276, 53.8276, 53.8276
+3d   AP:27.1035, 27.1035, 27.1035
+aos  AP:74.94, 74.94, 74.94
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:87.6381, 87.6381, 87.6381
+bev  AP:53.1309, 53.1309, 53.1309
+3d   AP:25.0595, 25.0595, 25.0595
+aos  AP:76.10, 76.10, 76.10
+Car AP@0.70, 0.50, 0.50:
+bbox AP:85.3059, 85.3059, 85.3059
+bev  AP:62.6913, 62.6913, 62.6913
+3d   AP:60.5997, 60.5997, 60.5997
+aos  AP:74.94, 74.94, 74.94
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:87.6381, 87.6381, 87.6381
+bev  AP:63.2384, 63.2384, 63.2384
+3d   AP:60.2741, 60.2741, 60.2741
+aos  AP:76.10, 76.10, 76.10
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:53.6331, 53.6331, 53.6331
+bev  AP:10.4312, 10.4312, 10.4312
+3d   AP:4.7264, 4.7264, 4.7264
+aos  AP:27.08, 27.08, 27.08
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:54.0480, 54.0480, 54.0480
+bev  AP:7.7031, 7.7031, 7.7031
+3d   AP:2.0176, 2.0176, 2.0176
+aos  AP:27.23, 27.23, 27.23
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:53.6331, 53.6331, 53.6331
+bev  AP:24.2507, 24.2507, 24.2507
+3d   AP:24.2507, 24.2507, 24.2507
+aos  AP:27.08, 27.08, 27.08
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:54.0480, 54.0480, 54.0480
+bev  AP:24.7370, 24.7370, 24.7370
+3d   AP:24.7370, 24.7370, 24.7370
+aos  AP:27.23, 27.23, 27.23
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:67.4441, 67.4441, 67.4441
+bev  AP:45.3283, 45.3283, 45.3283
+3d   AP:12.0078, 12.0078, 12.0078
+aos  AP:53.67, 53.67, 53.67
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:68.5105, 68.5105, 68.5105
+bev  AP:44.1896, 44.1896, 44.1896
+3d   AP:11.1732, 11.1732, 11.1732
+aos  AP:53.00, 53.00, 53.00
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:67.4441, 67.4441, 67.4441
+bev  AP:58.9837, 58.9837, 58.9837
+3d   AP:58.9837, 58.9837, 58.9837
+aos  AP:53.67, 53.67, 53.67
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:68.5105, 68.5105, 68.5105
+bev  AP:60.5831, 60.5831, 60.5831
+3d   AP:60.5831, 60.5831, 60.5831
+aos  AP:53.00, 53.00, 53.00
+
+2026-08-06 15:04:11,452   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_19/val_all
+2026-08-06 15:04:11,452   INFO  ****************Evaluation done.*****************
+2026-08-06 15:04:11,461   INFO  Epoch 19 has been evaluated
+2026-08-06 15:04:11,461   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_20.pth to GPU
+2026-08-06 15:04:11,514   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-06 15:04:11,518   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:04:11,521   INFO  *************** EPOCH 20 EVALUATION *****************
+2026-08-06 15:04:17,966   INFO  *************** Performance of EPOCH 20 *****************
+2026-08-06 15:04:17,966   INFO  Generate label finished(sec_per_example: 0.0285 second).
+2026-08-06 15:04:17,966   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:04:17,966   INFO  recall_rcnn_0.3: 0.621931
+2026-08-06 15:04:17,966   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:04:17,966   INFO  recall_rcnn_0.5: 0.430442
+2026-08-06 15:04:17,966   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:04:17,966   INFO  recall_rcnn_0.7: 0.214403
+2026-08-06 15:04:17,966   INFO  Average predicted number of objects(226 samples): 19.540
+2026-08-06 15:04:19,177   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:85.3537, 85.3537, 85.3537
+bev  AP:53.6507, 53.6507, 53.6507
+3d   AP:27.5182, 27.5182, 27.5182
+aos  AP:74.86, 74.86, 74.86
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:87.6945, 87.6945, 87.6945
+bev  AP:53.0376, 53.0376, 53.0376
+3d   AP:25.3455, 25.3455, 25.3455
+aos  AP:76.00, 76.00, 76.00
+Car AP@0.70, 0.50, 0.50:
+bbox AP:85.3537, 85.3537, 85.3537
+bev  AP:62.6243, 62.6243, 62.6243
+3d   AP:60.5085, 60.5085, 60.5085
+aos  AP:74.86, 74.86, 74.86
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:87.6945, 87.6945, 87.6945
+bev  AP:63.0422, 63.0422, 63.0422
+3d   AP:60.1739, 60.1739, 60.1739
+aos  AP:76.00, 76.00, 76.00
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:53.5748, 53.5748, 53.5748
+bev  AP:6.7843, 6.7843, 6.7843
+3d   AP:3.8636, 3.8636, 3.8636
+aos  AP:27.73, 27.73, 27.73
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:51.4995, 51.4995, 51.4995
+bev  AP:6.0964, 6.0964, 6.0964
+3d   AP:1.9659, 1.9659, 1.9659
+aos  AP:26.56, 26.56, 26.56
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:53.5748, 53.5748, 53.5748
+bev  AP:22.9872, 22.9872, 22.9872
+3d   AP:22.9872, 22.9872, 22.9872
+aos  AP:27.73, 27.73, 27.73
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:51.4995, 51.4995, 51.4995
+bev  AP:20.5256, 20.5256, 20.5256
+3d   AP:20.5256, 20.5256, 20.5256
+aos  AP:26.56, 26.56, 26.56
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:67.0664, 67.0664, 67.0664
+bev  AP:45.0447, 45.0447, 45.0447
+3d   AP:9.9936, 9.9936, 9.9936
+aos  AP:55.15, 55.15, 55.15
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:68.5556, 68.5556, 68.5556
+bev  AP:43.8887, 43.8887, 43.8887
+3d   AP:8.9319, 8.9319, 8.9319
+aos  AP:55.32, 55.32, 55.32
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:67.0664, 67.0664, 67.0664
+bev  AP:58.5236, 58.5236, 58.5236
+3d   AP:58.5236, 58.5236, 58.5236
+aos  AP:55.15, 55.15, 55.15
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:68.5556, 68.5556, 68.5556
+bev  AP:58.8709, 58.8709, 58.8709
+3d   AP:58.8709, 58.8709, 58.8709
+aos  AP:55.32, 55.32, 55.32
+
+2026-08-06 15:04:19,178   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_20/val_all
+2026-08-06 15:04:19,178   INFO  ****************Evaluation done.*****************
+2026-08-06 15:04:19,200   INFO  Epoch 20 has been evaluated
+2026-08-06 15:04:19,200   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_21.pth to GPU
+2026-08-06 15:04:19,263   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-06 15:04:19,267   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:04:19,268   INFO  *************** EPOCH 21 EVALUATION *****************
+2026-08-06 15:04:25,746   INFO  *************** Performance of EPOCH 21 *****************
+2026-08-06 15:04:25,746   INFO  Generate label finished(sec_per_example: 0.0287 second).
+2026-08-06 15:04:25,746   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:04:25,746   INFO  recall_rcnn_0.3: 0.610475
+2026-08-06 15:04:25,746   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:04:25,746   INFO  recall_rcnn_0.5: 0.427169
+2026-08-06 15:04:25,746   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:04:25,747   INFO  recall_rcnn_0.7: 0.198036
+2026-08-06 15:04:25,747   INFO  Average predicted number of objects(226 samples): 17.204
+2026-08-06 15:04:27,027   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:85.3831, 85.3831, 85.3831
+bev  AP:48.2716, 48.2716, 48.2716
+3d   AP:22.3630, 22.3630, 22.3630
+aos  AP:71.02, 71.02, 71.02
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:87.7594, 87.7594, 87.7594
+bev  AP:48.0637, 48.0637, 48.0637
+3d   AP:21.3842, 21.3842, 21.3842
+aos  AP:71.70, 71.70, 71.70
+Car AP@0.70, 0.50, 0.50:
+bbox AP:85.3831, 85.3831, 85.3831
+bev  AP:61.2813, 61.2813, 61.2813
+3d   AP:55.8271, 55.8271, 55.8271
+aos  AP:71.02, 71.02, 71.02
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:87.7594, 87.7594, 87.7594
+bev  AP:61.1000, 61.1000, 61.1000
+3d   AP:54.6981, 54.6981, 54.6981
+aos  AP:71.70, 71.70, 71.70
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:53.5525, 53.5525, 53.5525
+bev  AP:9.4627, 9.4627, 9.4627
+3d   AP:3.2928, 3.2928, 3.2928
+aos  AP:27.91, 27.91, 27.91
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:49.0848, 49.0848, 49.0848
+bev  AP:6.9368, 6.9368, 6.9368
+3d   AP:1.8110, 1.8110, 1.8110
+aos  AP:22.05, 22.05, 22.05
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:53.5525, 53.5525, 53.5525
+bev  AP:20.9623, 20.9623, 20.9623
+3d   AP:20.9623, 20.9623, 20.9623
+aos  AP:27.91, 27.91, 27.91
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:49.0848, 49.0848, 49.0848
+bev  AP:17.2939, 17.2939, 17.2939
+3d   AP:17.2939, 17.2939, 17.2939
+aos  AP:22.05, 22.05, 22.05
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:74.2725, 74.2725, 74.2725
+bev  AP:44.4191, 44.4191, 44.4191
+3d   AP:14.9886, 14.9886, 14.9886
+aos  AP:57.86, 57.86, 57.86
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:72.9660, 72.9660, 72.9660
+bev  AP:44.6479, 44.6479, 44.6479
+3d   AP:12.9700, 12.9700, 12.9700
+aos  AP:55.24, 55.24, 55.24
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:74.2725, 74.2725, 74.2725
+bev  AP:65.3077, 65.3077, 65.3077
+3d   AP:59.1906, 59.1906, 59.1906
+aos  AP:57.86, 57.86, 57.86
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:72.9660, 72.9660, 72.9660
+bev  AP:62.7955, 62.7955, 62.7955
+3d   AP:60.8186, 60.8186, 60.8186
+aos  AP:55.24, 55.24, 55.24
+
+2026-08-06 15:04:27,028   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_21/val_all
+2026-08-06 15:04:27,028   INFO  ****************Evaluation done.*****************
+2026-08-06 15:04:27,050   INFO  Epoch 21 has been evaluated
+2026-08-06 15:04:27,050   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_22.pth to GPU
+2026-08-06 15:04:27,114   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-06 15:04:27,118   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:04:27,120   INFO  *************** EPOCH 22 EVALUATION *****************
+2026-08-06 15:04:33,745   INFO  *************** Performance of EPOCH 22 *****************
+2026-08-06 15:04:33,745   INFO  Generate label finished(sec_per_example: 0.0293 second).
+2026-08-06 15:04:33,745   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:04:33,745   INFO  recall_rcnn_0.3: 0.628478
+2026-08-06 15:04:33,745   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:04:33,745   INFO  recall_rcnn_0.5: 0.418985
+2026-08-06 15:04:33,745   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:04:33,745   INFO  recall_rcnn_0.7: 0.237316
+2026-08-06 15:04:33,746   INFO  Average predicted number of objects(226 samples): 12.319
+2026-08-06 15:04:34,910   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:87.5640, 87.5640, 87.5640
+bev  AP:56.8083, 56.8083, 56.8083
+3d   AP:31.1823, 31.1823, 31.1823
+aos  AP:78.95, 78.95, 78.95
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:89.4896, 89.4896, 89.4896
+bev  AP:55.9291, 55.9291, 55.9291
+3d   AP:30.7046, 30.7046, 30.7046
+aos  AP:80.07, 80.07, 80.07
+Car AP@0.70, 0.50, 0.50:
+bbox AP:87.5640, 87.5640, 87.5640
+bev  AP:65.4877, 65.4877, 65.4877
+3d   AP:63.1127, 63.1127, 63.1127
+aos  AP:78.95, 78.95, 78.95
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:89.4896, 89.4896, 89.4896
+bev  AP:66.9077, 66.9077, 66.9077
+3d   AP:63.0170, 63.0170, 63.0170
+aos  AP:80.07, 80.07, 80.07
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:62.7629, 62.7629, 62.7629
+bev  AP:11.6736, 11.6736, 11.6736
+3d   AP:1.2539, 1.2539, 1.2539
+aos  AP:27.64, 27.64, 27.64
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:59.2332, 59.2332, 59.2332
+bev  AP:4.0050, 4.0050, 4.0050
+3d   AP:1.0022, 1.0022, 1.0022
+aos  AP:26.06, 26.06, 26.06
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:62.7629, 62.7629, 62.7629
+bev  AP:25.1245, 25.1245, 25.1245
+3d   AP:25.1245, 25.1245, 25.1245
+aos  AP:27.64, 27.64, 27.64
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:59.2332, 59.2332, 59.2332
+bev  AP:22.0690, 22.0690, 22.0690
+3d   AP:22.0690, 22.0690, 22.0690
+aos  AP:26.06, 26.06, 26.06
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:68.3549, 68.3549, 68.3549
+bev  AP:42.5698, 42.5698, 42.5698
+3d   AP:11.2510, 11.2510, 11.2510
+aos  AP:56.07, 56.07, 56.07
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:71.2498, 71.2498, 71.2498
+bev  AP:39.2628, 39.2628, 39.2628
+3d   AP:9.4576, 9.4576, 9.4576
+aos  AP:56.53, 56.53, 56.53
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:68.3549, 68.3549, 68.3549
+bev  AP:58.4883, 58.4883, 58.4883
+3d   AP:58.4883, 58.4883, 58.4883
+aos  AP:56.07, 56.07, 56.07
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:71.2498, 71.2498, 71.2498
+bev  AP:60.3797, 60.3797, 60.3797
+3d   AP:60.3797, 60.3797, 60.3797
+aos  AP:56.53, 56.53, 56.53
+
+2026-08-06 15:04:34,911   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_22/val_all
+2026-08-06 15:04:34,911   INFO  ****************Evaluation done.*****************
+2026-08-06 15:04:34,916   INFO  Epoch 22 has been evaluated
+2026-08-06 15:04:34,917   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_23.pth to GPU
+2026-08-06 15:04:34,973   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-06 15:04:34,976   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:04:34,977   INFO  *************** EPOCH 23 EVALUATION *****************
+2026-08-06 15:04:41,870   INFO  *************** Performance of EPOCH 23 *****************
+2026-08-06 15:04:41,871   INFO  Generate label finished(sec_per_example: 0.0305 second).
+2026-08-06 15:04:41,871   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:04:41,871   INFO  recall_rcnn_0.3: 0.590835
+2026-08-06 15:04:41,871   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:04:41,871   INFO  recall_rcnn_0.5: 0.410802
+2026-08-06 15:04:41,871   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:04:41,871   INFO  recall_rcnn_0.7: 0.214403
+2026-08-06 15:04:41,871   INFO  Average predicted number of objects(226 samples): 18.509
+2026-08-06 15:04:43,053   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:85.0546, 85.0546, 85.0546
+bev  AP:49.1210, 49.1210, 49.1210
+3d   AP:23.0406, 23.0406, 23.0406
+aos  AP:74.39, 74.39, 74.39
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:86.6672, 86.6672, 86.6672
+bev  AP:48.7977, 48.7977, 48.7977
+3d   AP:21.8052, 21.8052, 21.8052
+aos  AP:75.19, 75.19, 75.19
+Car AP@0.70, 0.50, 0.50:
+bbox AP:85.0546, 85.0546, 85.0546
+bev  AP:60.5153, 60.5153, 60.5153
+3d   AP:55.9197, 55.9197, 55.9197
+aos  AP:74.39, 74.39, 74.39
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:86.6672, 86.6672, 86.6672
+bev  AP:60.3336, 60.3336, 60.3336
+3d   AP:54.6406, 54.6406, 54.6406
+aos  AP:75.19, 75.19, 75.19
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:45.3636, 45.3636, 45.3636
+bev  AP:7.4472, 7.4472, 7.4472
+3d   AP:1.4742, 1.4742, 1.4742
+aos  AP:26.56, 26.56, 26.56
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:44.7698, 44.7698, 44.7698
+bev  AP:6.7802, 6.7802, 6.7802
+3d   AP:1.2162, 1.2162, 1.2162
+aos  AP:21.81, 21.81, 21.81
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:45.3636, 45.3636, 45.3636
+bev  AP:14.8577, 14.8577, 14.8577
+3d   AP:14.8577, 14.8577, 14.8577
+aos  AP:26.56, 26.56, 26.56
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:44.7698, 44.7698, 44.7698
+bev  AP:13.5536, 13.5536, 13.5536
+3d   AP:13.5536, 13.5536, 13.5536
+aos  AP:21.81, 21.81, 21.81
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:70.3210, 70.3210, 70.3210
+bev  AP:48.2163, 48.2163, 48.2163
+3d   AP:5.9748, 5.9748, 5.9748
+aos  AP:55.18, 55.18, 55.18
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:70.9577, 70.9577, 70.9577
+bev  AP:46.2945, 46.2945, 46.2945
+3d   AP:4.8453, 4.8453, 4.8453
+aos  AP:55.18, 55.18, 55.18
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:70.3210, 70.3210, 70.3210
+bev  AP:57.4853, 57.4853, 57.4853
+3d   AP:54.1433, 54.1433, 54.1433
+aos  AP:55.18, 55.18, 55.18
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:70.9577, 70.9577, 70.9577
+bev  AP:56.4430, 56.4430, 56.4430
+3d   AP:55.4173, 55.4173, 55.4173
+aos  AP:55.18, 55.18, 55.18
+
+2026-08-06 15:04:43,053   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_23/val_all
+2026-08-06 15:04:43,053   INFO  ****************Evaluation done.*****************
+2026-08-06 15:04:43,071   INFO  Epoch 23 has been evaluated
+2026-08-06 15:04:43,072   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_24.pth to GPU
+2026-08-06 15:04:43,129   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-06 15:04:43,132   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:04:43,133   INFO  *************** EPOCH 24 EVALUATION *****************
+2026-08-06 15:04:50,455   INFO  *************** Performance of EPOCH 24 *****************
+2026-08-06 15:04:50,455   INFO  Generate label finished(sec_per_example: 0.0324 second).
+2026-08-06 15:04:50,455   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:04:50,455   INFO  recall_rcnn_0.3: 0.639935
+2026-08-06 15:04:50,455   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:04:50,455   INFO  recall_rcnn_0.5: 0.409165
+2026-08-06 15:04:50,455   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:04:50,455   INFO  recall_rcnn_0.7: 0.175123
+2026-08-06 15:04:50,456   INFO  Average predicted number of objects(226 samples): 17.619
+2026-08-06 15:04:51,540   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:85.5613, 85.5613, 85.5613
+bev  AP:47.2652, 47.2652, 47.2652
+3d   AP:15.1060, 15.1060, 15.1060
+aos  AP:71.34, 71.34, 71.34
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:87.2033, 87.2033, 87.2033
+bev  AP:47.2414, 47.2414, 47.2414
+3d   AP:13.6224, 13.6224, 13.6224
+aos  AP:71.40, 71.40, 71.40
+Car AP@0.70, 0.50, 0.50:
+bbox AP:85.5613, 85.5613, 85.5613
+bev  AP:59.2959, 59.2959, 59.2959
+3d   AP:56.6536, 56.6536, 56.6536
+aos  AP:71.34, 71.34, 71.34
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:87.2033, 87.2033, 87.2033
+bev  AP:58.6115, 58.6115, 58.6115
+3d   AP:55.4379, 55.4379, 55.4379
+aos  AP:71.40, 71.40, 71.40
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:62.5183, 62.5183, 62.5183
+bev  AP:4.2781, 4.2781, 4.2781
+3d   AP:0.5086, 0.5086, 0.5086
+aos  AP:28.28, 28.28, 28.28
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:59.1262, 59.1262, 59.1262
+bev  AP:3.5294, 3.5294, 3.5294
+3d   AP:0.2797, 0.2797, 0.2797
+aos  AP:26.87, 26.87, 26.87
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:62.5183, 62.5183, 62.5183
+bev  AP:19.1024, 19.1024, 19.1024
+3d   AP:19.1024, 19.1024, 19.1024
+aos  AP:28.28, 28.28, 28.28
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:59.1262, 59.1262, 59.1262
+bev  AP:18.3861, 18.3861, 18.3861
+3d   AP:18.3861, 18.3861, 18.3861
+aos  AP:26.87, 26.87, 26.87
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:63.6095, 63.6095, 63.6095
+bev  AP:43.6398, 43.6398, 43.6398
+3d   AP:5.5065, 5.5065, 5.5065
+aos  AP:54.20, 54.20, 54.20
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:65.6068, 65.6068, 65.6068
+bev  AP:43.0915, 43.0915, 43.0915
+3d   AP:4.9460, 4.9460, 4.9460
+aos  AP:54.28, 54.28, 54.28
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:63.6095, 63.6095, 63.6095
+bev  AP:54.8317, 54.8317, 54.8317
+3d   AP:54.8317, 54.8317, 54.8317
+aos  AP:54.20, 54.20, 54.20
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:65.6068, 65.6068, 65.6068
+bev  AP:56.2469, 56.2469, 56.2469
+3d   AP:56.2469, 56.2469, 56.2469
+aos  AP:54.28, 54.28, 54.28
+
+2026-08-06 15:04:51,540   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_24/val_all
+2026-08-06 15:04:51,540   INFO  ****************Evaluation done.*****************
+2026-08-06 15:04:51,556   INFO  Epoch 24 has been evaluated
+2026-08-06 15:04:51,557   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_25.pth to GPU
+2026-08-06 15:04:51,622   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-06 15:04:51,628   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:04:51,629   INFO  *************** EPOCH 25 EVALUATION *****************
+2026-08-06 15:04:59,198   INFO  *************** Performance of EPOCH 25 *****************
+2026-08-06 15:04:59,198   INFO  Generate label finished(sec_per_example: 0.0335 second).
+2026-08-06 15:04:59,198   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:04:59,198   INFO  recall_rcnn_0.3: 0.662848
+2026-08-06 15:04:59,198   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:04:59,198   INFO  recall_rcnn_0.5: 0.451718
+2026-08-06 15:04:59,198   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:04:59,198   INFO  recall_rcnn_0.7: 0.216039
+2026-08-06 15:04:59,198   INFO  Average predicted number of objects(226 samples): 20.314
+2026-08-06 15:05:00,622   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:85.4272, 85.4272, 85.4272
+bev  AP:49.6397, 49.6397, 49.6397
+3d   AP:23.5174, 23.5174, 23.5174
+aos  AP:74.50, 74.50, 74.50
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:86.9511, 86.9511, 86.9511
+bev  AP:50.7063, 50.7063, 50.7063
+3d   AP:21.8659, 21.8659, 21.8659
+aos  AP:75.18, 75.18, 75.18
+Car AP@0.70, 0.50, 0.50:
+bbox AP:85.4272, 85.4272, 85.4272
+bev  AP:61.6306, 61.6306, 61.6306
+3d   AP:59.0925, 59.0925, 59.0925
+aos  AP:74.50, 74.50, 74.50
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:86.9511, 86.9511, 86.9511
+bev  AP:61.5484, 61.5484, 61.5484
+3d   AP:58.1531, 58.1531, 58.1531
+aos  AP:75.18, 75.18, 75.18
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:62.8492, 62.8492, 62.8492
+bev  AP:14.5977, 14.5977, 14.5977
+3d   AP:10.3594, 10.3594, 10.3594
+aos  AP:32.98, 32.98, 32.98
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:66.3236, 66.3236, 66.3236
+bev  AP:7.3725, 7.3725, 7.3725
+3d   AP:1.8294, 1.8294, 1.8294
+aos  AP:33.29, 33.29, 33.29
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:62.8492, 62.8492, 62.8492
+bev  AP:31.8807, 31.8807, 31.8807
+3d   AP:31.8807, 31.8807, 31.8807
+aos  AP:32.98, 32.98, 32.98
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:66.3236, 66.3236, 66.3236
+bev  AP:28.3417, 28.3417, 28.3417
+3d   AP:28.3417, 28.3417, 28.3417
+aos  AP:33.29, 33.29, 33.29
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:70.0773, 70.0773, 70.0773
+bev  AP:47.6607, 47.6607, 47.6607
+3d   AP:17.9720, 17.9720, 17.9720
+aos  AP:60.56, 60.56, 60.56
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:71.4710, 71.4710, 71.4710
+bev  AP:48.7024, 48.7024, 48.7024
+3d   AP:18.2987, 18.2987, 18.2987
+aos  AP:60.50, 60.50, 60.50
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:70.0773, 70.0773, 70.0773
+bev  AP:61.4013, 61.4013, 61.4013
+3d   AP:61.4013, 61.4013, 61.4013
+aos  AP:60.56, 60.56, 60.56
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:71.4710, 71.4710, 71.4710
+bev  AP:63.7558, 63.7558, 63.7558
+3d   AP:63.7558, 63.7558, 63.7558
+aos  AP:60.50, 60.50, 60.50
+
+2026-08-06 15:05:00,622   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_25/val_all
+2026-08-06 15:05:00,622   INFO  ****************Evaluation done.*****************
+2026-08-06 15:05:00,671   INFO  Epoch 25 has been evaluated
+2026-08-06 15:05:00,672   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_26.pth to GPU
+2026-08-06 15:05:00,734   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-06 15:05:00,739   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:05:00,741   INFO  *************** EPOCH 26 EVALUATION *****************
+2026-08-06 15:05:07,757   INFO  *************** Performance of EPOCH 26 *****************
+2026-08-06 15:05:07,757   INFO  Generate label finished(sec_per_example: 0.0310 second).
+2026-08-06 15:05:07,757   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:05:07,757   INFO  recall_rcnn_0.3: 0.651391
+2026-08-06 15:05:07,757   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:05:07,757   INFO  recall_rcnn_0.5: 0.414075
+2026-08-06 15:05:07,757   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:05:07,757   INFO  recall_rcnn_0.7: 0.178396
+2026-08-06 15:05:07,757   INFO  Average predicted number of objects(226 samples): 24.558
+2026-08-06 15:05:08,990   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:84.5817, 84.5817, 84.5817
+bev  AP:48.4658, 48.4658, 48.4658
+3d   AP:19.3139, 19.3139, 19.3139
+aos  AP:75.16, 75.16, 75.16
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:86.5867, 86.5867, 86.5867
+bev  AP:48.7435, 48.7435, 48.7435
+3d   AP:17.9025, 17.9025, 17.9025
+aos  AP:76.45, 76.45, 76.45
+Car AP@0.70, 0.50, 0.50:
+bbox AP:84.5817, 84.5817, 84.5817
+bev  AP:62.2492, 62.2492, 62.2492
+3d   AP:56.5324, 56.5324, 56.5324
+aos  AP:75.16, 75.16, 75.16
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:86.5867, 86.5867, 86.5867
+bev  AP:62.4337, 62.4337, 62.4337
+3d   AP:55.5602, 55.5602, 55.5602
+aos  AP:76.45, 76.45, 76.45
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:70.8733, 70.8733, 70.8733
+bev  AP:14.1929, 14.1929, 14.1929
+3d   AP:9.0909, 9.0909, 9.0909
+aos  AP:37.18, 37.18, 37.18
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:70.3615, 70.3615, 70.3615
+bev  AP:6.6122, 6.6122, 6.6122
+3d   AP:0.8411, 0.8411, 0.8411
+aos  AP:36.12, 36.12, 36.12
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:70.8733, 70.8733, 70.8733
+bev  AP:28.5714, 28.5714, 28.5714
+3d   AP:28.5714, 28.5714, 28.5714
+aos  AP:37.18, 37.18, 37.18
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:70.3615, 70.3615, 70.3615
+bev  AP:24.1106, 24.1106, 24.1106
+3d   AP:24.1106, 24.1106, 24.1106
+aos  AP:36.12, 36.12, 36.12
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:63.8457, 63.8457, 63.8457
+bev  AP:42.1885, 42.1885, 42.1885
+3d   AP:6.8687, 6.8687, 6.8687
+aos  AP:54.48, 54.48, 54.48
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:63.3261, 63.3261, 63.3261
+bev  AP:38.6275, 38.6275, 38.6275
+3d   AP:5.5605, 5.5605, 5.5605
+aos  AP:52.68, 52.68, 52.68
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:63.8457, 63.8457, 63.8457
+bev  AP:55.3102, 55.3102, 55.3102
+3d   AP:55.2428, 55.2428, 55.2428
+aos  AP:54.48, 54.48, 54.48
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:63.3261, 63.3261, 63.3261
+bev  AP:53.5639, 53.5639, 53.5639
+3d   AP:53.3208, 53.3208, 53.3208
+aos  AP:52.68, 52.68, 52.68
+
+2026-08-06 15:05:08,991   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_26/val_all
+2026-08-06 15:05:08,991   INFO  ****************Evaluation done.*****************
+2026-08-06 15:05:08,999   INFO  Epoch 26 has been evaluated
+2026-08-06 15:05:08,999   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_27.pth to GPU
+2026-08-06 15:05:09,061   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-06 15:05:09,064   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:05:09,065   INFO  *************** EPOCH 27 EVALUATION *****************
+2026-08-06 15:05:15,233   INFO  *************** Performance of EPOCH 27 *****************
+2026-08-06 15:05:15,233   INFO  Generate label finished(sec_per_example: 0.0273 second).
+2026-08-06 15:05:15,233   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:05:15,233   INFO  recall_rcnn_0.3: 0.705401
+2026-08-06 15:05:15,233   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:05:15,233   INFO  recall_rcnn_0.5: 0.433715
+2026-08-06 15:05:15,233   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:05:15,233   INFO  recall_rcnn_0.7: 0.232406
+2026-08-06 15:05:15,233   INFO  Average predicted number of objects(226 samples): 20.221
+2026-08-06 15:05:16,521   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:86.6104, 86.6104, 86.6104
+bev  AP:54.1121, 54.1121, 54.1121
+3d   AP:28.4859, 28.4859, 28.4859
+aos  AP:77.92, 77.92, 77.92
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:89.0010, 89.0010, 89.0010
+bev  AP:53.8960, 53.8960, 53.8960
+3d   AP:27.0872, 27.0872, 27.0872
+aos  AP:79.64, 79.64, 79.64
+Car AP@0.70, 0.50, 0.50:
+bbox AP:86.6104, 86.6104, 86.6104
+bev  AP:66.2827, 66.2827, 66.2827
+3d   AP:61.1352, 61.1352, 61.1352
+aos  AP:77.92, 77.92, 77.92
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:89.0010, 89.0010, 89.0010
+bev  AP:67.3506, 67.3506, 67.3506
+3d   AP:60.6057, 60.6057, 60.6057
+aos  AP:79.64, 79.64, 79.64
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:71.3307, 71.3307, 71.3307
+bev  AP:9.8171, 9.8171, 9.8171
+3d   AP:4.5455, 4.5455, 4.5455
+aos  AP:34.88, 34.88, 34.88
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:68.7756, 68.7756, 68.7756
+bev  AP:7.0673, 7.0673, 7.0673
+3d   AP:0.7704, 0.7704, 0.7704
+aos  AP:33.60, 33.60, 33.60
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:71.3307, 71.3307, 71.3307
+bev  AP:38.4305, 38.4305, 38.4305
+3d   AP:38.4305, 38.4305, 38.4305
+aos  AP:34.88, 34.88, 34.88
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:68.7756, 68.7756, 68.7756
+bev  AP:36.6728, 36.6728, 36.6728
+3d   AP:36.6728, 36.6728, 36.6728
+aos  AP:33.60, 33.60, 33.60
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:68.1136, 68.1136, 68.1136
+bev  AP:43.8386, 43.8386, 43.8386
+3d   AP:10.4545, 10.4545, 10.4545
+aos  AP:55.28, 55.28, 55.28
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:65.4047, 65.4047, 65.4047
+bev  AP:42.3394, 42.3394, 42.3394
+3d   AP:10.2917, 10.2917, 10.2917
+aos  AP:53.46, 53.46, 53.46
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:68.1136, 68.1136, 68.1136
+bev  AP:59.8827, 59.8827, 59.8827
+3d   AP:59.8827, 59.8827, 59.8827
+aos  AP:55.28, 55.28, 55.28
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:65.4047, 65.4047, 65.4047
+bev  AP:60.2059, 60.2059, 60.2059
+3d   AP:60.2059, 60.2059, 60.2059
+aos  AP:53.46, 53.46, 53.46
+
+2026-08-06 15:05:16,521   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_27/val_all
+2026-08-06 15:05:16,521   INFO  ****************Evaluation done.*****************
+2026-08-06 15:05:16,530   INFO  Epoch 27 has been evaluated
+2026-08-06 15:05:16,531   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_28.pth to GPU
+2026-08-06 15:05:16,586   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-06 15:05:16,589   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:05:16,591   INFO  *************** EPOCH 28 EVALUATION *****************
+2026-08-06 15:05:22,940   INFO  *************** Performance of EPOCH 28 *****************
+2026-08-06 15:05:22,940   INFO  Generate label finished(sec_per_example: 0.0281 second).
+2026-08-06 15:05:22,940   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:05:22,940   INFO  recall_rcnn_0.3: 0.662848
+2026-08-06 15:05:22,940   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:05:22,940   INFO  recall_rcnn_0.5: 0.417349
+2026-08-06 15:05:22,940   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:05:22,941   INFO  recall_rcnn_0.7: 0.225859
+2026-08-06 15:05:22,941   INFO  Average predicted number of objects(226 samples): 21.071
+2026-08-06 15:05:24,252   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:86.1575, 86.1575, 86.1575
+bev  AP:53.6901, 53.6901, 53.6901
+3d   AP:27.0186, 27.0186, 27.0186
+aos  AP:78.53, 78.53, 78.53
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:88.2266, 88.2266, 88.2266
+bev  AP:53.1076, 53.1076, 53.1076
+3d   AP:25.5902, 25.5902, 25.5902
+aos  AP:79.85, 79.85, 79.85
+Car AP@0.70, 0.50, 0.50:
+bbox AP:86.1575, 86.1575, 86.1575
+bev  AP:65.0892, 65.0892, 65.0892
+3d   AP:60.7491, 60.7491, 60.7491
+aos  AP:78.53, 78.53, 78.53
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:88.2266, 88.2266, 88.2266
+bev  AP:66.0573, 66.0573, 66.0573
+3d   AP:59.4715, 59.4715, 59.4715
+aos  AP:79.85, 79.85, 79.85
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:71.5472, 71.5472, 71.5472
+bev  AP:8.5040, 8.5040, 8.5040
+3d   AP:1.8182, 1.8182, 1.8182
+aos  AP:33.68, 33.68, 33.68
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:68.9499, 68.9499, 68.9499
+bev  AP:6.5419, 6.5419, 6.5419
+3d   AP:0.6732, 0.6732, 0.6732
+aos  AP:32.29, 32.29, 32.29
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:71.5472, 71.5472, 71.5472
+bev  AP:28.7213, 28.7213, 28.7213
+3d   AP:28.7213, 28.7213, 28.7213
+aos  AP:33.68, 33.68, 33.68
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:68.9499, 68.9499, 68.9499
+bev  AP:30.0137, 30.0137, 30.0137
+3d   AP:30.0137, 30.0137, 30.0137
+aos  AP:32.29, 32.29, 32.29
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:60.5490, 60.5490, 60.5490
+bev  AP:43.3501, 43.3501, 43.3501
+3d   AP:10.4132, 10.4132, 10.4132
+aos  AP:49.69, 49.69, 49.69
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:62.4694, 62.4694, 62.4694
+bev  AP:38.9668, 38.9668, 38.9668
+3d   AP:9.0973, 9.0973, 9.0973
+aos  AP:49.80, 49.80, 49.80
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:60.5490, 60.5490, 60.5490
+bev  AP:57.7708, 57.7708, 57.7708
+3d   AP:57.7708, 57.7708, 57.7708
+aos  AP:49.69, 49.69, 49.69
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:62.4694, 62.4694, 62.4694
+bev  AP:54.9770, 54.9770, 54.9770
+3d   AP:54.9770, 54.9770, 54.9770
+aos  AP:49.80, 49.80, 49.80
+
+2026-08-06 15:05:24,252   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_28/val_all
+2026-08-06 15:05:24,252   INFO  ****************Evaluation done.*****************
+2026-08-06 15:05:24,259   INFO  Epoch 28 has been evaluated
+2026-08-06 15:05:24,259   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_29.pth to GPU
+2026-08-06 15:05:24,321   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-06 15:05:24,324   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:05:24,325   INFO  *************** EPOCH 29 EVALUATION *****************
+2026-08-06 15:05:30,480   INFO  *************** Performance of EPOCH 29 *****************
+2026-08-06 15:05:30,480   INFO  Generate label finished(sec_per_example: 0.0272 second).
+2026-08-06 15:05:30,481   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:05:30,481   INFO  recall_rcnn_0.3: 0.664484
+2026-08-06 15:05:30,481   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:05:30,481   INFO  recall_rcnn_0.5: 0.417349
+2026-08-06 15:05:30,481   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:05:30,481   INFO  recall_rcnn_0.7: 0.227496
+2026-08-06 15:05:30,481   INFO  Average predicted number of objects(226 samples): 20.509
+2026-08-06 15:05:31,521   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:86.1578, 86.1578, 86.1578
+bev  AP:53.8966, 53.8966, 53.8966
+3d   AP:27.4204, 27.4204, 27.4204
+aos  AP:77.40, 77.40, 77.40
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:88.0859, 88.0859, 88.0859
+bev  AP:53.3009, 53.3009, 53.3009
+3d   AP:25.8828, 25.8828, 25.8828
+aos  AP:78.49, 78.49, 78.49
+Car AP@0.70, 0.50, 0.50:
+bbox AP:86.1578, 86.1578, 86.1578
+bev  AP:65.2775, 65.2775, 65.2775
+3d   AP:60.8081, 60.8081, 60.8081
+aos  AP:77.40, 77.40, 77.40
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:88.0859, 88.0859, 88.0859
+bev  AP:66.3625, 66.3625, 66.3625
+3d   AP:59.8884, 59.8884, 59.8884
+aos  AP:78.49, 78.49, 78.49
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:71.5106, 71.5106, 71.5106
+bev  AP:8.8933, 8.8933, 8.8933
+3d   AP:1.0101, 1.0101, 1.0101
+aos  AP:34.52, 34.52, 34.52
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:68.9397, 68.9397, 68.9397
+bev  AP:5.2026, 5.2026, 5.2026
+3d   AP:0.5470, 0.5470, 0.5470
+aos  AP:33.23, 33.23, 33.23
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:71.5106, 71.5106, 71.5106
+bev  AP:30.0875, 30.0875, 30.0875
+3d   AP:30.0875, 30.0875, 30.0875
+aos  AP:34.52, 34.52, 34.52
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:68.9397, 68.9397, 68.9397
+bev  AP:30.6558, 30.6558, 30.6558
+3d   AP:30.6558, 30.6558, 30.6558
+aos  AP:33.23, 33.23, 33.23
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:60.8483, 60.8483, 60.8483
+bev  AP:38.8962, 38.8962, 38.8962
+3d   AP:10.2273, 10.2273, 10.2273
+aos  AP:49.97, 49.97, 49.97
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:61.4814, 61.4814, 61.4814
+bev  AP:38.0950, 38.0950, 38.0950
+3d   AP:8.9819, 8.9819, 8.9819
+aos  AP:48.62, 48.62, 48.62
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:60.8483, 60.8483, 60.8483
+bev  AP:52.1409, 52.1409, 52.1409
+3d   AP:52.1409, 52.1409, 52.1409
+aos  AP:49.97, 49.97, 49.97
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:61.4814, 61.4814, 61.4814
+bev  AP:51.2922, 51.2922, 51.2922
+3d   AP:51.2922, 51.2922, 51.2922
+aos  AP:48.62, 48.62, 48.62
+
+2026-08-06 15:05:31,522   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_29/val_all
+2026-08-06 15:05:31,523   INFO  ****************Evaluation done.*****************
+2026-08-06 15:05:31,535   INFO  Epoch 29 has been evaluated
+2026-08-06 15:05:31,535   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_30.pth to GPU
+2026-08-06 15:05:31,598   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-06 15:05:31,605   INFO  ==> Done (loaded 127/127)
+2026-08-06 15:05:31,609   INFO  *************** EPOCH 30 EVALUATION *****************
+2026-08-06 15:05:38,159   INFO  *************** Performance of EPOCH 30 *****************
+2026-08-06 15:05:38,160   INFO  Generate label finished(sec_per_example: 0.0290 second).
+2026-08-06 15:05:38,160   INFO  recall_roi_0.3: 0.000000
+2026-08-06 15:05:38,160   INFO  recall_rcnn_0.3: 0.659574
+2026-08-06 15:05:38,160   INFO  recall_roi_0.5: 0.000000
+2026-08-06 15:05:38,160   INFO  recall_rcnn_0.5: 0.417349
+2026-08-06 15:05:38,160   INFO  recall_roi_0.7: 0.000000
+2026-08-06 15:05:38,160   INFO  recall_rcnn_0.7: 0.229133
+2026-08-06 15:05:38,160   INFO  Average predicted number of objects(226 samples): 19.265
+2026-08-06 15:05:39,458   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:86.0659, 86.0659, 86.0659
+bev  AP:54.0178, 54.0178, 54.0178
+3d   AP:27.4419, 27.4419, 27.4419
+aos  AP:77.97, 77.97, 77.97
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:88.2206, 88.2206, 88.2206
+bev  AP:53.4758, 53.4758, 53.4758
+3d   AP:25.7788, 25.7788, 25.7788
+aos  AP:79.25, 79.25, 79.25
+Car AP@0.70, 0.50, 0.50:
+bbox AP:86.0659, 86.0659, 86.0659
+bev  AP:65.2609, 65.2609, 65.2609
+3d   AP:61.1969, 61.1969, 61.1969
+aos  AP:77.97, 77.97, 77.97
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:88.2206, 88.2206, 88.2206
+bev  AP:66.4480, 66.4480, 66.4480
+3d   AP:60.1015, 60.1015, 60.1015
+aos  AP:79.25, 79.25, 79.25
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:62.9959, 62.9959, 62.9959
+bev  AP:9.2508, 9.2508, 9.2508
+3d   AP:1.2987, 1.2987, 1.2987
+aos  AP:30.02, 30.02, 30.02
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:66.5304, 66.5304, 66.5304
+bev  AP:5.5977, 5.5977, 5.5977
+3d   AP:0.6416, 0.6416, 0.6416
+aos  AP:31.61, 31.61, 31.61
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:62.9959, 62.9959, 62.9959
+bev  AP:30.2854, 30.2854, 30.2854
+3d   AP:30.0390, 30.0390, 30.0390
+aos  AP:30.02, 30.02, 30.02
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:66.5304, 66.5304, 66.5304
+bev  AP:30.8957, 30.8957, 30.8957
+3d   AP:30.5832, 30.5832, 30.5832
+aos  AP:31.61, 31.61, 31.61
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:59.6769, 59.6769, 59.6769
+bev  AP:39.1720, 39.1720, 39.1720
+3d   AP:11.2299, 11.2299, 11.2299
+aos  AP:49.56, 49.56, 49.56
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:60.4584, 60.4584, 60.4584
+bev  AP:37.7431, 37.7431, 37.7431
+3d   AP:9.7078, 9.7078, 9.7078
+aos  AP:48.28, 48.28, 48.28
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:59.6769, 59.6769, 59.6769
+bev  AP:51.2357, 51.2357, 51.2357
+3d   AP:51.2357, 51.2357, 51.2357
+aos  AP:49.56, 49.56, 49.56
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:60.4584, 60.4584, 60.4584
+bev  AP:51.3248, 51.3248, 51.3248
+3d   AP:51.3248, 51.3248, 51.3248
+aos  AP:48.28, 48.28, 48.28
+
+2026-08-06 15:05:39,459   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_E/default/eval/eval_all_default/default/epoch_30/val_all
+2026-08-06 15:05:39,459   INFO  ****************Evaluation done.*****************
+2026-08-06 15:05:39,472   INFO  Epoch 30 has been evaluated
