@@ -519,3 +519,593 @@ NDS:	 0.1249
 2026-08-07 12:25:14,490   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
 2026-08-07 12:25:14,493   INFO  ==> Done (loaded 127/127)
 2026-08-07 12:25:14,495   INFO  *************** EPOCH 13 EVALUATION *****************
+2026-08-07 12:29:07,153   INFO  *************** Performance of EPOCH 13 *****************
+2026-08-07 12:29:07,153   INFO  Generate label finished(sec_per_example: 0.0387 second).
+2026-08-07 12:29:07,153   INFO  recall_roi_0.3: 0.000000
+2026-08-07 12:29:07,153   INFO  recall_rcnn_0.3: 0.582764
+2026-08-07 12:29:07,153   INFO  recall_roi_0.5: 0.000000
+2026-08-07 12:29:07,153   INFO  recall_rcnn_0.5: 0.469319
+2026-08-07 12:29:07,153   INFO  recall_roi_0.7: 0.000000
+2026-08-07 12:29:07,154   INFO  recall_rcnn_0.7: 0.246473
+2026-08-07 12:29:07,156   INFO  Average predicted number of objects(6019 samples): 32.499
+2026-08-07 12:30:12,141   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_13/val/final_result/data/results_nusc.json
+2026-08-07 12:31:10,799   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.20, 2.08, 0.52 | 51.09, 57.60, 61.19, 63.01 | mean AP: 0.5822340824877659
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.43, 0.95, 0.79 | 51.72, 52.64, 54.05, 56.27 | mean AP: 0.536687932172097
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.27, 0.27, 1.04, 1.18, 0.27 | 2.41, 3.18, 3.23, 3.51 | mean AP: 0.030839722523305017
+--------------average performance-------------
+trans_err:	 0.7589
+scale_err:	 0.7700
+orient_err:	 0.9628
+vel_err:	 1.1509
+attr_err:	 0.8228
+mAP:	 0.1150
+NDS:	 0.1260
+
+2026-08-07 12:31:10,801   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_13/val
+2026-08-07 12:31:10,801   INFO  ****************Evaluation done.*****************
+2026-08-07 12:31:10,823   INFO  Epoch 13 has been evaluated
+2026-08-07 12:31:10,824   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_14.pth to GPU
+2026-08-07 12:31:10,881   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-07 12:31:10,884   INFO  ==> Done (loaded 127/127)
+2026-08-07 12:31:10,886   INFO  *************** EPOCH 14 EVALUATION *****************
+2026-08-07 12:34:45,298   INFO  *************** Performance of EPOCH 14 *****************
+2026-08-07 12:34:45,298   INFO  Generate label finished(sec_per_example: 0.0356 second).
+2026-08-07 12:34:45,298   INFO  recall_roi_0.3: 0.000000
+2026-08-07 12:34:45,298   INFO  recall_rcnn_0.3: 0.588676
+2026-08-07 12:34:45,298   INFO  recall_roi_0.5: 0.000000
+2026-08-07 12:34:45,298   INFO  recall_rcnn_0.5: 0.473439
+2026-08-07 12:34:45,298   INFO  recall_roi_0.7: 0.000000
+2026-08-07 12:34:45,299   INFO  recall_rcnn_0.7: 0.253849
+2026-08-07 12:34:45,301   INFO  Average predicted number of objects(6019 samples): 32.979
+2026-08-07 12:35:48,411   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_14/val/final_result/data/results_nusc.json
+2026-08-07 12:36:42,191   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.19, 2.00, 0.51 | 52.07, 58.56, 62.18, 64.06 | mean AP: 0.5921504679375275
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.43, 0.95, 0.79 | 53.33, 54.29, 55.62, 57.97 | mean AP: 0.553002994567672
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.27, 0.26, 0.95, 1.20, 0.27 | 2.43, 3.03, 3.23, 3.51 | mean AP: 0.03049944209067896
+--------------average performance-------------
+trans_err:	 0.7596
+scale_err:	 0.7691
+orient_err:	 0.9513
+vel_err:	 1.1437
+attr_err:	 0.8206
+mAP:	 0.1176
+NDS:	 0.1287
+
+2026-08-07 12:36:42,192   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_14/val
+2026-08-07 12:36:42,192   INFO  ****************Evaluation done.*****************
+2026-08-07 12:36:42,210   INFO  Epoch 14 has been evaluated
+2026-08-07 12:36:42,211   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_15.pth to GPU
+2026-08-07 12:36:42,282   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-07 12:36:42,285   INFO  ==> Done (loaded 127/127)
+2026-08-07 12:36:42,287   INFO  *************** EPOCH 15 EVALUATION *****************
+2026-08-07 12:40:22,277   INFO  *************** Performance of EPOCH 15 *****************
+2026-08-07 12:40:22,277   INFO  Generate label finished(sec_per_example: 0.0365 second).
+2026-08-07 12:40:22,277   INFO  recall_roi_0.3: 0.000000
+2026-08-07 12:40:22,277   INFO  recall_rcnn_0.3: 0.595954
+2026-08-07 12:40:22,278   INFO  recall_roi_0.5: 0.000000
+2026-08-07 12:40:22,278   INFO  recall_rcnn_0.5: 0.478728
+2026-08-07 12:40:22,278   INFO  recall_roi_0.7: 0.000000
+2026-08-07 12:40:22,278   INFO  recall_rcnn_0.7: 0.250484
+2026-08-07 12:40:22,280   INFO  Average predicted number of objects(6019 samples): 32.730
+2026-08-07 12:41:26,870   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_15/val/final_result/data/results_nusc.json
+2026-08-07 12:42:21,603   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.19, 2.03, 0.51 | 52.30, 59.50, 63.23, 65.18 | mean AP: 0.6005162058430785
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.43, 0.96, 0.79 | 53.66, 54.54, 55.82, 58.10 | mean AP: 0.5553012400403586
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.27, 0.26, 0.92, 1.16, 0.26 | 2.44, 3.11, 3.27, 3.58 | mean AP: 0.031006408810323096
+--------------average performance-------------
+trans_err:	 0.7593
+scale_err:	 0.7687
+orient_err:	 0.9492
+vel_err:	 1.1431
+attr_err:	 0.8207
+mAP:	 0.1187
+NDS:	 0.1296
+
+2026-08-07 12:42:21,604   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_15/val
+2026-08-07 12:42:21,604   INFO  ****************Evaluation done.*****************
+2026-08-07 12:42:21,634   INFO  Epoch 15 has been evaluated
+2026-08-07 12:42:21,635   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_16.pth to GPU
+2026-08-07 12:42:21,703   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-07 12:42:21,706   INFO  ==> Done (loaded 127/127)
+2026-08-07 12:42:21,708   INFO  *************** EPOCH 16 EVALUATION *****************
+2026-08-07 12:46:01,862   INFO  *************** Performance of EPOCH 16 *****************
+2026-08-07 12:46:01,862   INFO  Generate label finished(sec_per_example: 0.0366 second).
+2026-08-07 12:46:01,862   INFO  recall_roi_0.3: 0.000000
+2026-08-07 12:46:01,863   INFO  recall_rcnn_0.3: 0.597779
+2026-08-07 12:46:01,863   INFO  recall_roi_0.5: 0.000000
+2026-08-07 12:46:01,863   INFO  recall_rcnn_0.5: 0.483154
+2026-08-07 12:46:01,863   INFO  recall_roi_0.7: 0.000000
+2026-08-07 12:46:01,863   INFO  recall_rcnn_0.7: 0.260155
+2026-08-07 12:46:01,871   INFO  Average predicted number of objects(6019 samples): 31.151
+2026-08-07 12:47:02,528   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_16/val/final_result/data/results_nusc.json
+2026-08-07 12:47:57,469   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.18, 2.00, 0.51 | 52.74, 59.79, 63.64, 65.60 | mean AP: 0.6044276461194789
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.39, 0.96, 0.79 | 54.40, 55.30, 56.74, 58.86 | mean AP: 0.5632516261635109
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.26, 0.26, 1.02, 1.10, 0.26 | 2.91, 3.28, 3.40, 3.68 | mean AP: 0.03317362913343037
+--------------average performance-------------
+trans_err:	 0.7578
+scale_err:	 0.7690
+orient_err:	 0.9544
+vel_err:	 1.1325
+attr_err:	 0.8202
+mAP:	 0.1201
+NDS:	 0.1299
+
+2026-08-07 12:47:57,470   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_16/val
+2026-08-07 12:47:57,470   INFO  ****************Evaluation done.*****************
+2026-08-07 12:47:57,517   INFO  Epoch 16 has been evaluated
+2026-08-07 12:47:57,519   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_17.pth to GPU
+2026-08-07 12:47:57,582   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-07 12:47:57,586   INFO  ==> Done (loaded 127/127)
+2026-08-07 12:47:57,588   INFO  *************** EPOCH 17 EVALUATION *****************
+2026-08-07 12:51:33,284   INFO  *************** Performance of EPOCH 17 *****************
+2026-08-07 12:51:33,284   INFO  Generate label finished(sec_per_example: 0.0358 second).
+2026-08-07 12:51:33,284   INFO  recall_roi_0.3: 0.000000
+2026-08-07 12:51:33,284   INFO  recall_rcnn_0.3: 0.600763
+2026-08-07 12:51:33,284   INFO  recall_roi_0.5: 0.000000
+2026-08-07 12:51:33,284   INFO  recall_rcnn_0.5: 0.483941
+2026-08-07 12:51:33,284   INFO  recall_roi_0.7: 0.000000
+2026-08-07 12:51:33,284   INFO  recall_rcnn_0.7: 0.261805
+2026-08-07 12:51:33,287   INFO  Average predicted number of objects(6019 samples): 32.720
+2026-08-07 12:52:32,877   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_17/val/final_result/data/results_nusc.json
+2026-08-07 12:53:26,673   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.18, 2.00, 0.51 | 53.17, 60.04, 64.22, 66.23 | mean AP: 0.6091258459187789
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.39, 0.96, 0.79 | 54.68, 55.62, 56.94, 59.31 | mean AP: 0.5663642233245755
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.26, 0.26, 0.94, 1.21, 0.27 | 3.27, 3.85, 4.06, 4.30 | mean AP: 0.038704954770996995
+--------------average performance-------------
+trans_err:	 0.7582
+scale_err:	 0.7690
+orient_err:	 0.9459
+vel_err:	 1.1458
+attr_err:	 0.8214
+mAP:	 0.1214
+NDS:	 0.1313
+
+2026-08-07 12:53:26,674   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_17/val
+2026-08-07 12:53:26,674   INFO  ****************Evaluation done.*****************
+2026-08-07 12:53:26,701   INFO  Epoch 17 has been evaluated
+2026-08-07 12:53:26,702   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_18.pth to GPU
+2026-08-07 12:53:26,761   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-07 12:53:26,766   INFO  ==> Done (loaded 127/127)
+2026-08-07 12:53:26,769   INFO  *************** EPOCH 18 EVALUATION *****************
+2026-08-07 12:56:58,035   INFO  *************** Performance of EPOCH 18 *****************
+2026-08-07 12:56:58,035   INFO  Generate label finished(sec_per_example: 0.0351 second).
+2026-08-07 12:56:58,035   INFO  recall_roi_0.3: 0.000000
+2026-08-07 12:56:58,035   INFO  recall_rcnn_0.3: 0.603976
+2026-08-07 12:56:58,035   INFO  recall_roi_0.5: 0.000000
+2026-08-07 12:56:58,035   INFO  recall_rcnn_0.5: 0.486160
+2026-08-07 12:56:58,035   INFO  recall_roi_0.7: 0.000000
+2026-08-07 12:56:58,035   INFO  recall_rcnn_0.7: 0.261969
+2026-08-07 12:56:58,037   INFO  Average predicted number of objects(6019 samples): 33.612
+2026-08-07 12:57:59,222   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_18/val/final_result/data/results_nusc.json
+2026-08-07 12:58:57,705   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.18, 2.02, 0.51 | 53.31, 60.41, 64.19, 66.61 | mean AP: 0.6113168381427222
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.40, 0.96, 0.79 | 54.73, 55.65, 56.95, 59.28 | mean AP: 0.5665122912732263
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.27, 0.27, 0.95, 1.20, 0.27 | 3.37, 4.12, 4.33, 4.57 | mean AP: 0.040959329644391536
+--------------average performance-------------
+trans_err:	 0.7585
+scale_err:	 0.7694
+orient_err:	 0.9474
+vel_err:	 1.1472
+attr_err:	 0.8219
+mAP:	 0.1219
+NDS:	 0.1312
+
+2026-08-07 12:58:57,706   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_18/val
+2026-08-07 12:58:57,706   INFO  ****************Evaluation done.*****************
+2026-08-07 12:58:57,738   INFO  Epoch 18 has been evaluated
+2026-08-07 12:58:57,740   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_19.pth to GPU
+2026-08-07 12:58:57,810   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-07 12:58:57,813   INFO  ==> Done (loaded 127/127)
+2026-08-07 12:58:57,815   INFO  *************** EPOCH 19 EVALUATION *****************
+2026-08-07 13:02:48,260   INFO  *************** Performance of EPOCH 19 *****************
+2026-08-07 13:02:48,260   INFO  Generate label finished(sec_per_example: 0.0383 second).
+2026-08-07 13:02:48,260   INFO  recall_roi_0.3: 0.000000
+2026-08-07 13:02:48,260   INFO  recall_rcnn_0.3: 0.601746
+2026-08-07 13:02:48,260   INFO  recall_roi_0.5: 0.000000
+2026-08-07 13:02:48,260   INFO  recall_rcnn_0.5: 0.486739
+2026-08-07 13:02:48,260   INFO  recall_roi_0.7: 0.000000
+2026-08-07 13:02:48,260   INFO  recall_rcnn_0.7: 0.263444
+2026-08-07 13:02:48,264   INFO  Average predicted number of objects(6019 samples): 31.935
+2026-08-07 13:03:50,316   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_19/val/final_result/data/results_nusc.json
+2026-08-07 13:04:48,914   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.17, 2.00, 0.51 | 53.48, 60.16, 64.32, 66.30 | mean AP: 0.610636463599814
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.40, 0.96, 0.79 | 54.93, 55.86, 57.17, 59.50 | mean AP: 0.5686459173296906
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.26, 0.26, 0.94, 1.18, 0.27 | 3.26, 3.98, 4.19, 4.49 | mean AP: 0.03979453067975275
+--------------average performance-------------
+trans_err:	 0.7584
+scale_err:	 0.7692
+orient_err:	 0.9455
+vel_err:	 1.1417
+attr_err:	 0.8207
+mAP:	 0.1219
+NDS:	 0.1316
+
+2026-08-07 13:04:48,915   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_19/val
+2026-08-07 13:04:48,915   INFO  ****************Evaluation done.*****************
+2026-08-07 13:04:48,950   INFO  Epoch 19 has been evaluated
+2026-08-07 13:04:48,952   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_20.pth to GPU
+2026-08-07 13:04:49,006   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-07 13:04:49,011   INFO  ==> Done (loaded 127/127)
+2026-08-07 13:04:49,012   INFO  *************** EPOCH 20 EVALUATION *****************
+2026-08-07 13:09:04,283   INFO  *************** Performance of EPOCH 20 *****************
+2026-08-07 13:09:04,283   INFO  Generate label finished(sec_per_example: 0.0424 second).
+2026-08-07 13:09:04,284   INFO  recall_roi_0.3: 0.000000
+2026-08-07 13:09:04,284   INFO  recall_rcnn_0.3: 0.602872
+2026-08-07 13:09:04,284   INFO  recall_roi_0.5: 0.000000
+2026-08-07 13:09:04,284   INFO  recall_rcnn_0.5: 0.488312
+2026-08-07 13:09:04,284   INFO  recall_roi_0.7: 0.000000
+2026-08-07 13:09:04,284   INFO  recall_rcnn_0.7: 0.264395
+2026-08-07 13:09:04,289   INFO  Average predicted number of objects(6019 samples): 32.420
+2026-08-07 13:10:06,729   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_20/val/final_result/data/results_nusc.json
+2026-08-07 13:11:00,758   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.17, 2.00, 0.51 | 53.55, 60.60, 64.37, 66.36 | mean AP: 0.6122111770378209
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.40, 0.96, 0.79 | 55.01, 55.94, 57.40, 59.59 | mean AP: 0.5698779347368925
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.26, 0.26, 0.94, 1.18, 0.27 | 3.47, 4.32, 4.51, 4.82 | mean AP: 0.042820946715291616
+--------------average performance-------------
+trans_err:	 0.7585
+scale_err:	 0.7691
+orient_err:	 0.9458
+vel_err:	 1.1423
+attr_err:	 0.8207
+mAP:	 0.1225
+NDS:	 0.1318
+
+2026-08-07 13:11:00,758   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_20/val
+2026-08-07 13:11:00,758   INFO  ****************Evaluation done.*****************
+2026-08-07 13:11:00,810   INFO  Epoch 20 has been evaluated
+2026-08-07 13:11:00,812   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_21.pth to GPU
+2026-08-07 13:11:00,877   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-07 13:11:00,880   INFO  ==> Done (loaded 127/127)
+2026-08-07 13:11:00,881   INFO  *************** EPOCH 21 EVALUATION *****************
+2026-08-07 13:15:12,365   INFO  *************** Performance of EPOCH 21 *****************
+2026-08-07 13:15:12,366   INFO  Generate label finished(sec_per_example: 0.0418 second).
+2026-08-07 13:15:12,366   INFO  recall_roi_0.3: 0.000000
+2026-08-07 13:15:12,366   INFO  recall_rcnn_0.3: 0.583343
+2026-08-07 13:15:12,366   INFO  recall_roi_0.5: 0.000000
+2026-08-07 13:15:12,366   INFO  recall_rcnn_0.5: 0.468052
+2026-08-07 13:15:12,366   INFO  recall_roi_0.7: 0.000000
+2026-08-07 13:15:12,366   INFO  recall_rcnn_0.7: 0.248265
+2026-08-07 13:15:12,374   INFO  Average predicted number of objects(6019 samples): 30.417
+2026-08-07 13:16:14,369   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_21/val/final_result/data/results_nusc.json
+2026-08-07 13:17:07,254   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.18, 1.96, 0.50 | 51.38, 57.80, 61.45, 63.44 | mean AP: 0.5851890749460836
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.43, 0.95, 0.78 | 53.30, 54.22, 55.53, 57.87 | mean AP: 0.5522978112060841
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.26, 0.26, 1.01, 1.11, 0.25 | 2.55, 3.20, 3.35, 3.63 | mean AP: 0.03183999397676071
+--------------average performance-------------
+trans_err:	 0.7581
+scale_err:	 0.7695
+orient_err:	 0.9575
+vel_err:	 1.1272
+attr_err:	 0.8169
+mAP:	 0.1169
+NDS:	 0.1283
+
+2026-08-07 13:17:07,257   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_21/val
+2026-08-07 13:17:07,257   INFO  ****************Evaluation done.*****************
+2026-08-07 13:17:07,297   INFO  Epoch 21 has been evaluated
+2026-08-07 13:17:07,301   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_22.pth to GPU
+2026-08-07 13:17:07,371   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-07 13:17:07,375   INFO  ==> Done (loaded 127/127)
+2026-08-07 13:17:07,376   INFO  *************** EPOCH 22 EVALUATION *****************
+2026-08-07 13:21:24,544   INFO  *************** Performance of EPOCH 22 *****************
+2026-08-07 13:21:24,545   INFO  Generate label finished(sec_per_example: 0.0427 second).
+2026-08-07 13:21:24,545   INFO  recall_roi_0.3: 0.000000
+2026-08-07 13:21:24,545   INFO  recall_rcnn_0.3: 0.577278
+2026-08-07 13:21:24,545   INFO  recall_roi_0.5: 0.000000
+2026-08-07 13:21:24,545   INFO  recall_rcnn_0.5: 0.455921
+2026-08-07 13:21:24,545   INFO  recall_roi_0.7: 0.000000
+2026-08-07 13:21:24,545   INFO  recall_rcnn_0.7: 0.234605
+2026-08-07 13:21:24,548   INFO  Average predicted number of objects(6019 samples): 31.444
+2026-08-07 13:22:27,265   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_22/val/final_result/data/results_nusc.json
+2026-08-07 13:23:21,863   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.16, 2.05, 0.52 | 51.33, 57.71, 60.72, 63.05 | mean AP: 0.5819927554975124
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.43, 0.95, 0.78 | 53.72, 54.48, 55.79, 58.08 | mean AP: 0.5551887180450907
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.27, 0.26, 0.87, 1.19, 0.28 | 2.94, 3.71, 3.93, 4.27 | mean AP: 0.037113463464737845
+--------------average performance-------------
+trans_err:	 0.7584
+scale_err:	 0.7690
+orient_err:	 0.9401
+vel_err:	 1.1486
+attr_err:	 0.8225
+mAP:	 0.1174
+NDS:	 0.1297
+
+2026-08-07 13:23:21,865   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_22/val
+2026-08-07 13:23:21,865   INFO  ****************Evaluation done.*****************
+2026-08-07 13:23:21,908   INFO  Epoch 22 has been evaluated
+2026-08-07 13:23:21,909   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_23.pth to GPU
+2026-08-07 13:23:21,964   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-07 13:23:21,967   INFO  ==> Done (loaded 127/127)
+2026-08-07 13:23:21,968   INFO  *************** EPOCH 23 EVALUATION *****************
+2026-08-07 13:27:57,138   INFO  *************** Performance of EPOCH 23 *****************
+2026-08-07 13:27:57,138   INFO  Generate label finished(sec_per_example: 0.0457 second).
+2026-08-07 13:27:57,138   INFO  recall_roi_0.3: 0.000000
+2026-08-07 13:27:57,139   INFO  recall_rcnn_0.3: 0.597594
+2026-08-07 13:27:57,139   INFO  recall_roi_0.5: 0.000000
+2026-08-07 13:27:57,139   INFO  recall_rcnn_0.5: 0.482531
+2026-08-07 13:27:57,139   INFO  recall_roi_0.7: 0.000000
+2026-08-07 13:27:57,139   INFO  recall_rcnn_0.7: 0.257729
+2026-08-07 13:27:57,143   INFO  Average predicted number of objects(6019 samples): 35.120
+2026-08-07 13:29:03,941   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_23/val/final_result/data/results_nusc.json
+2026-08-07 13:30:00,439   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.18, 1.94, 0.50 | 52.37, 58.96, 62.59, 65.00 | mean AP: 0.5973208034348516
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.46, 0.95, 0.78 | 54.63, 55.45, 56.92, 59.14 | mean AP: 0.5653610988176679
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.27, 0.27, 0.97, 1.11, 0.25 | 3.28, 4.22, 4.51, 4.83 | mean AP: 0.04208994064730905
+--------------average performance-------------
+trans_err:	 0.7596
+scale_err:	 0.7691
+orient_err:	 0.9567
+vel_err:	 1.1244
+attr_err:	 0.8168
+mAP:	 0.1205
+NDS:	 0.1300
+
+2026-08-07 13:30:00,441   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_23/val
+2026-08-07 13:30:00,441   INFO  ****************Evaluation done.*****************
+2026-08-07 13:30:00,478   INFO  Epoch 23 has been evaluated
+2026-08-07 13:30:00,480   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_24.pth to GPU
+2026-08-07 13:30:00,537   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-07 13:30:00,540   INFO  ==> Done (loaded 127/127)
+2026-08-07 13:30:00,542   INFO  *************** EPOCH 24 EVALUATION *****************
+2026-08-07 13:34:47,658   INFO  *************** Performance of EPOCH 24 *****************
+2026-08-07 13:34:47,658   INFO  Generate label finished(sec_per_example: 0.0477 second).
+2026-08-07 13:34:47,658   INFO  recall_roi_0.3: 0.000000
+2026-08-07 13:34:47,658   INFO  recall_rcnn_0.3: 0.598697
+2026-08-07 13:34:47,658   INFO  recall_roi_0.5: 0.000000
+2026-08-07 13:34:47,658   INFO  recall_rcnn_0.5: 0.484444
+2026-08-07 13:34:47,658   INFO  recall_roi_0.7: 0.000000
+2026-08-07 13:34:47,658   INFO  recall_rcnn_0.7: 0.260057
+2026-08-07 13:34:47,661   INFO  Average predicted number of objects(6019 samples): 31.922
+2026-08-07 13:35:51,683   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_24/val/final_result/data/results_nusc.json
+2026-08-07 13:36:50,313   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.18, 1.97, 0.51 | 53.25, 59.89, 63.61, 66.07 | mean AP: 0.6070772729832707
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.43, 0.96, 0.79 | 54.63, 55.54, 56.83, 59.13 | mean AP: 0.5653341344995417
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.27, 0.26, 0.80, 1.14, 0.25 | 3.48, 4.19, 4.50, 4.71 | mean AP: 0.04218876670064614
+--------------average performance-------------
+trans_err:	 0.7590
+scale_err:	 0.7691
+orient_err:	 0.9350
+vel_err:	 1.1343
+attr_err:	 0.8178
+mAP:	 0.1215
+NDS:	 0.1326
+
+2026-08-07 13:36:50,316   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_24/val
+2026-08-07 13:36:50,316   INFO  ****************Evaluation done.*****************
+2026-08-07 13:36:50,370   INFO  Epoch 24 has been evaluated
+2026-08-07 13:36:50,372   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_25.pth to GPU
+2026-08-07 13:36:50,440   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-07 13:36:50,445   INFO  ==> Done (loaded 127/127)
+2026-08-07 13:36:50,449   INFO  *************** EPOCH 25 EVALUATION *****************
+2026-08-07 13:41:50,479   INFO  *************** Performance of EPOCH 25 *****************
+2026-08-07 13:41:50,479   INFO  Generate label finished(sec_per_example: 0.0498 second).
+2026-08-07 13:41:50,479   INFO  recall_roi_0.3: 0.000000
+2026-08-07 13:41:50,479   INFO  recall_rcnn_0.3: 0.600468
+2026-08-07 13:41:50,479   INFO  recall_roi_0.5: 0.000000
+2026-08-07 13:41:50,479   INFO  recall_rcnn_0.5: 0.485788
+2026-08-07 13:41:50,479   INFO  recall_roi_0.7: 0.000000
+2026-08-07 13:41:50,479   INFO  recall_rcnn_0.7: 0.262056
+2026-08-07 13:41:50,481   INFO  Average predicted number of objects(6019 samples): 32.949
+2026-08-07 13:42:50,417   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_25/val/final_result/data/results_nusc.json
+2026-08-07 13:43:46,451   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.17, 1.96, 0.50 | 53.21, 59.76, 63.93, 65.96 | mean AP: 0.607167372484502
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.45, 0.95, 0.79 | 55.29, 56.05, 57.50, 59.68 | mean AP: 0.5713120149232176
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.26, 0.27, 0.96, 1.16, 0.26 | 3.38, 3.89, 4.24, 4.55 | mean AP: 0.04013616369746756
+--------------average performance-------------
+trans_err:	 0.7579
+scale_err:	 0.7698
+orient_err:	 0.9529
+vel_err:	 1.1348
+attr_err:	 0.8183
+mAP:	 0.1219
+NDS:	 0.1310
+
+2026-08-07 13:43:46,452   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_25/val
+2026-08-07 13:43:46,452   INFO  ****************Evaluation done.*****************
+2026-08-07 13:43:46,476   INFO  Epoch 25 has been evaluated
+2026-08-07 13:43:46,478   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_26.pth to GPU
+2026-08-07 13:43:46,546   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-07 13:43:46,550   INFO  ==> Done (loaded 127/127)
+2026-08-07 13:43:46,552   INFO  *************** EPOCH 26 EVALUATION *****************
+2026-08-07 13:47:53,044   INFO  *************** Performance of EPOCH 26 *****************
+2026-08-07 13:47:53,044   INFO  Generate label finished(sec_per_example: 0.0410 second).
+2026-08-07 13:47:53,044   INFO  recall_roi_0.3: 0.000000
+2026-08-07 13:47:53,044   INFO  recall_rcnn_0.3: 0.602828
+2026-08-07 13:47:53,044   INFO  recall_roi_0.5: 0.000000
+2026-08-07 13:47:53,045   INFO  recall_rcnn_0.5: 0.488378
+2026-08-07 13:47:53,045   INFO  recall_roi_0.7: 0.000000
+2026-08-07 13:47:53,045   INFO  recall_rcnn_0.7: 0.263477
+2026-08-07 13:47:53,047   INFO  Average predicted number of objects(6019 samples): 33.862
+2026-08-07 13:48:54,352   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_26/val/final_result/data/results_nusc.json
+2026-08-07 13:49:47,276   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.17, 1.98, 0.51 | 53.44, 60.06, 63.67, 66.05 | mean AP: 0.6080509153659068
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.44, 0.95, 0.78 | 55.51, 56.43, 57.73, 60.05 | mean AP: 0.5743303220134689
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.26, 0.27, 0.93, 1.10, 0.25 | 3.81, 4.69, 5.00, 5.33 | mean AP: 0.04709096623233639
+--------------average performance-------------
+trans_err:	 0.7581
+scale_err:	 0.7697
+orient_err:	 0.9486
+vel_err:	 1.1279
+attr_err:	 0.8171
+mAP:	 0.1229
+NDS:	 0.1321
+
+2026-08-07 13:49:47,278   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_26/val
+2026-08-07 13:49:47,278   INFO  ****************Evaluation done.*****************
+2026-08-07 13:49:47,294   INFO  Epoch 26 has been evaluated
+2026-08-07 13:49:47,295   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_27.pth to GPU
+2026-08-07 13:49:47,360   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-07 13:49:47,365   INFO  ==> Done (loaded 127/127)
+2026-08-07 13:49:47,367   INFO  *************** EPOCH 27 EVALUATION *****************
+2026-08-07 13:53:48,241   INFO  *************** Performance of EPOCH 27 *****************
+2026-08-07 13:53:48,241   INFO  Generate label finished(sec_per_example: 0.0400 second).
+2026-08-07 13:53:48,241   INFO  recall_roi_0.3: 0.000000
+2026-08-07 13:53:48,241   INFO  recall_rcnn_0.3: 0.601910
+2026-08-07 13:53:48,241   INFO  recall_roi_0.5: 0.000000
+2026-08-07 13:53:48,241   INFO  recall_rcnn_0.5: 0.488280
+2026-08-07 13:53:48,242   INFO  recall_roi_0.7: 0.000000
+2026-08-07 13:53:48,242   INFO  recall_rcnn_0.7: 0.263761
+2026-08-07 13:53:48,247   INFO  Average predicted number of objects(6019 samples): 32.161
+2026-08-07 13:54:48,123   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_27/val/final_result/data/results_nusc.json
+2026-08-07 13:55:43,053   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.17, 1.99, 0.51 | 53.44, 60.07, 63.71, 66.03 | mean AP: 0.6081312205457252
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.43, 0.95, 0.79 | 55.95, 56.87, 58.21, 60.65 | mean AP: 0.5792240896950479
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.27, 0.26, 0.97, 1.15, 0.26 | 4.03, 4.81, 5.21, 5.50 | mean AP: 0.04888424965732505
+--------------average performance-------------
+trans_err:	 0.7590
+scale_err:	 0.7689
+orient_err:	 0.9512
+vel_err:	 1.1358
+attr_err:	 0.8189
+mAP:	 0.1236
+NDS:	 0.1320
+
+2026-08-07 13:55:43,054   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_27/val
+2026-08-07 13:55:43,054   INFO  ****************Evaluation done.*****************
+2026-08-07 13:55:43,080   INFO  Epoch 27 has been evaluated
+2026-08-07 13:55:43,082   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_28.pth to GPU
+2026-08-07 13:55:43,144   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-07 13:55:43,148   INFO  ==> Done (loaded 127/127)
+2026-08-07 13:55:43,149   INFO  *************** EPOCH 28 EVALUATION *****************
+2026-08-07 13:59:46,086   INFO  *************** Performance of EPOCH 28 *****************
+2026-08-07 13:59:46,086   INFO  Generate label finished(sec_per_example: 0.0404 second).
+2026-08-07 13:59:46,086   INFO  recall_roi_0.3: 0.000000
+2026-08-07 13:59:46,086   INFO  recall_rcnn_0.3: 0.606478
+2026-08-07 13:59:46,086   INFO  recall_roi_0.5: 0.000000
+2026-08-07 13:59:46,086   INFO  recall_rcnn_0.5: 0.492214
+2026-08-07 13:59:46,086   INFO  recall_roi_0.7: 0.000000
+2026-08-07 13:59:46,086   INFO  recall_rcnn_0.7: 0.268034
+2026-08-07 13:59:46,092   INFO  Average predicted number of objects(6019 samples): 33.613
+2026-08-07 14:00:45,086   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_28/val/final_result/data/results_nusc.json
+2026-08-07 14:01:41,588   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.17, 1.98, 0.51 | 53.74, 60.77, 64.53, 66.89 | mean AP: 0.6148245574018414
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.43, 0.96, 0.79 | 55.95, 56.86, 58.16, 60.52 | mean AP: 0.5787091080802735
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.26, 0.26, 0.89, 1.15, 0.25 | 4.10, 4.96, 5.37, 5.70 | mean AP: 0.05031717991045516
+--------------average performance-------------
+trans_err:	 0.7583
+scale_err:	 0.7692
+orient_err:	 0.9437
+vel_err:	 1.1359
+attr_err:	 0.8187
+mAP:	 0.1244
+NDS:	 0.1332
+
+2026-08-07 14:01:41,590   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_28/val
+2026-08-07 14:01:41,590   INFO  ****************Evaluation done.*****************
+2026-08-07 14:01:41,634   INFO  Epoch 28 has been evaluated
+2026-08-07 14:01:41,639   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_29.pth to GPU
+2026-08-07 14:01:41,710   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-07 14:01:41,713   INFO  ==> Done (loaded 127/127)
+2026-08-07 14:01:41,714   INFO  *************** EPOCH 29 EVALUATION *****************
+2026-08-07 14:05:46,293   INFO  *************** Performance of EPOCH 29 *****************
+2026-08-07 14:05:46,294   INFO  Generate label finished(sec_per_example: 0.0406 second).
+2026-08-07 14:05:46,294   INFO  recall_roi_0.3: 0.000000
+2026-08-07 14:05:46,294   INFO  recall_rcnn_0.3: 0.606249
+2026-08-07 14:05:46,294   INFO  recall_roi_0.5: 0.000000
+2026-08-07 14:05:46,294   INFO  recall_rcnn_0.5: 0.492826
+2026-08-07 14:05:46,294   INFO  recall_roi_0.7: 0.000000
+2026-08-07 14:05:46,294   INFO  recall_rcnn_0.7: 0.268100
+2026-08-07 14:05:46,297   INFO  Average predicted number of objects(6019 samples): 33.040
+2026-08-07 14:06:46,519   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_29/val/final_result/data/results_nusc.json
+2026-08-07 14:07:38,876   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.17, 1.99, 0.51 | 53.76, 60.84, 64.58, 66.96 | mean AP: 0.6153614686415683
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.43, 0.95, 0.79 | 56.02, 56.92, 58.24, 60.45 | mean AP: 0.5790405403054985
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.27, 0.26, 0.87, 1.14, 0.25 | 4.12, 5.00, 5.38, 5.71 | mean AP: 0.05052019504079605
+--------------average performance-------------
+trans_err:	 0.7584
+scale_err:	 0.7690
+orient_err:	 0.9410
+vel_err:	 1.1356
+attr_err:	 0.8186
+mAP:	 0.1245
+NDS:	 0.1335
+
+2026-08-07 14:07:38,876   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_29/val
+2026-08-07 14:07:38,876   INFO  ****************Evaluation done.*****************
+2026-08-07 14:07:38,902   INFO  Epoch 29 has been evaluated
+2026-08-07 14:07:38,903   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_30.pth to GPU
+2026-08-07 14:07:38,973   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-07 14:07:38,976   INFO  ==> Done (loaded 127/127)
+2026-08-07 14:07:38,978   INFO  *************** EPOCH 30 EVALUATION *****************
+2026-08-07 14:11:45,897   INFO  *************** Performance of EPOCH 30 *****************
+2026-08-07 14:11:45,897   INFO  Generate label finished(sec_per_example: 0.0410 second).
+2026-08-07 14:11:45,897   INFO  recall_roi_0.3: 0.000000
+2026-08-07 14:11:45,897   INFO  recall_rcnn_0.3: 0.604424
+2026-08-07 14:11:45,897   INFO  recall_roi_0.5: 0.000000
+2026-08-07 14:11:45,897   INFO  recall_rcnn_0.5: 0.491350
+2026-08-07 14:11:45,897   INFO  recall_roi_0.7: 0.000000
+2026-08-07 14:11:45,897   INFO  recall_rcnn_0.7: 0.266373
+2026-08-07 14:11:45,901   INFO  Average predicted number of objects(6019 samples): 32.052
+2026-08-07 14:12:44,726   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_30/val/final_result/data/results_nusc.json
+2026-08-07 14:13:39,342   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.15, 0.17, 1.99, 0.51 | 53.76, 60.83, 64.54, 66.48 | mean AP: 0.6140235140938534
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.43, 0.95, 0.79 | 55.99, 56.90, 58.21, 60.42 | mean AP: 0.5787997690403094
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.26, 0.26, 0.85, 1.14, 0.25 | 4.19, 5.06, 5.50, 5.81 | mean AP: 0.051392517270578614
+--------------average performance-------------
+trans_err:	 0.7583
+scale_err:	 0.7692
+orient_err:	 0.9387
+vel_err:	 1.1352
+attr_err:	 0.8186
+mAP:	 0.1244
+NDS:	 0.1337
+
+2026-08-07 14:13:39,343   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/default/eval/eval_all_default/default/epoch_30/val
+2026-08-07 14:13:39,343   INFO  ****************Evaluation done.*****************
+2026-08-07 14:13:39,369   INFO  Epoch 30 has been evaluated

@@ -1,0 +1,279 @@
+2026-08-09 12:32:25,214   INFO  **********************Start logging**********************
+2026-08-09 12:32:25,214   INFO  CUDA_VISIBLE_DEVICES=ALL
+2026-08-09 12:32:25,214   INFO  cfg_file         /OpenPCDet/tools/cfgs/models/S/D/S_D_E.yaml
+2026-08-09 12:32:25,214   INFO  batch_size       6
+2026-08-09 12:32:25,214   INFO  workers          4
+2026-08-09 12:32:25,214   INFO  extra_tag        default
+2026-08-09 12:32:25,214   INFO  ckpt             None
+2026-08-09 12:32:25,214   INFO  pretrained_model None
+2026-08-09 12:32:25,214   INFO  launcher         none
+2026-08-09 12:32:25,215   INFO  tcp_port         18888
+2026-08-09 12:32:25,215   INFO  local_rank       None
+2026-08-09 12:32:25,215   INFO  set_cfgs         None
+2026-08-09 12:32:25,215   INFO  max_waiting_mins 1
+2026-08-09 12:32:25,215   INFO  start_epoch      0
+2026-08-09 12:32:25,215   INFO  eval_tag         default
+2026-08-09 12:32:25,215   INFO  eval_all         True
+2026-08-09 12:32:25,215   INFO  ckpt_dir         /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_93/ckpt
+2026-08-09 12:32:25,215   INFO  save_to_file     False
+2026-08-09 12:32:25,215   INFO  infer_time       False
+2026-08-09 12:32:25,215   INFO  cfg.ROOT_DIR: /OpenPCDet
+2026-08-09 12:32:25,215   INFO  cfg.LOCAL_RANK: 0
+2026-08-09 12:32:25,215   INFO  cfg.CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
+2026-08-09 12:32:25,215   INFO  ----------- DATA_CONFIG -----------
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.DATASET: CustomDataset
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.DATA_PATH: /OpenPCDet/erod
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.LABEL_DIR: labels
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.SWAP_LW: False
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.SWAP_LW_IF_DY_GT_DX: False
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.HEADING_IN_DEGREES: None
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.FILTER_EVAL_OUTSIDE_RANGE: True
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.POINT_CLOUD_RANGE: [-32.8, -40.0, -3, 32.8, 40.0, 1]
+2026-08-09 12:32:25,215   INFO  ----------- MAP_CLASS_TO_KITTI -----------
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.Vehicle: Car
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.Car: Car
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.Pedestrian: Pedestrian
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.Cyclist: Cyclist
+2026-08-09 12:32:25,215   INFO  ----------- DATA_SPLIT -----------
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.DATA_SPLIT.train: train
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.DATA_SPLIT.val: val
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.DATA_SPLIT.test: val_all
+2026-08-09 12:32:25,215   INFO  ----------- INFO_PATH -----------
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.INFO_PATH.train: ['custom_infos_train.pkl']
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.INFO_PATH.val: ['custom_infos_val.pkl']
+2026-08-09 12:32:25,215   INFO  cfg.DATA_CONFIG.INFO_PATH.test: ['custom_infos_val_all.pkl']
+2026-08-09 12:32:25,216   INFO  ----------- POINT_FEATURE_ENCODING -----------
+2026-08-09 12:32:25,216   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.encoding_type: absolute_coordinates_encoding
+2026-08-09 12:32:25,216   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.used_feature_list: ['x', 'y', 'z', 'intensity']
+2026-08-09 12:32:25,216   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.src_feature_list: ['x', 'y', 'z', 'intensity']
+2026-08-09 12:32:25,216   INFO  ----------- DATA_AUGMENTOR -----------
+2026-08-09 12:32:25,216   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.DISABLE_AUG_LIST: ['placeholder']
+2026-08-09 12:32:25,216   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.AUG_CONFIG_LIST: [{'NAME': 'gt_sampling', 'USE_ROAD_PLANE': False, 'DB_INFO_PATH': ['custom_dbinfos_train.pkl'], 'PREPARE': {'filter_by_min_points': ['Vehicle:5', 'Pedestrian:5', 'Cyclist:5']}, 'SAMPLE_GROUPS': ['Vehicle:20', 'Pedestrian:15', 'Cyclist:15'], 'NUM_POINT_FEATURES': 4, 'DATABASE_WITH_FAKELIDAR': False, 'REMOVE_EXTRA_WIDTH': [0.0, 0.0, 0.0], 'LIMIT_WHOLE_SCENE': True}, {'NAME': 'random_world_flip', 'ALONG_AXIS_LIST': ['x', 'y']}, {'NAME': 'random_world_rotation', 'WORLD_ROT_ANGLE': [-0.78539816, 0.78539816]}, {'NAME': 'random_world_scaling', 'WORLD_SCALE_RANGE': [0.95, 1.05]}]
+2026-08-09 12:32:25,216   INFO  cfg.DATA_CONFIG.DATA_PROCESSOR: [{'NAME': 'mask_points_and_boxes_outside_range', 'REMOVE_OUTSIDE_BOXES': True}, {'NAME': 'shuffle_points', 'SHUFFLE_ENABLED': {'train': True, 'test': False}}, {'NAME': 'transform_points_to_voxels', 'VOXEL_SIZE': [0.05, 0.05, 0.1], 'MAX_POINTS_PER_VOXEL': 45, 'MAX_NUMBER_OF_VOXELS': {'train': 16000, 'test': 40000}}]
+2026-08-09 12:32:25,216   INFO  cfg.DATA_CONFIG._BASE_CONFIG_: cfgs/dataset_configs/custom_dataset.yaml
+2026-08-09 12:32:25,216   INFO  ----------- MODEL -----------
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.NAME: SECONDNet
+2026-08-09 12:32:25,216   INFO  ----------- VFE -----------
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.VFE.NAME: MeanVFE
+2026-08-09 12:32:25,216   INFO  ----------- BACKBONE_3D -----------
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.BACKBONE_3D.NAME: VoxelBackBone8xSECOND
+2026-08-09 12:32:25,216   INFO  ----------- MAP_TO_BEV -----------
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.MAP_TO_BEV.NAME: HeightCompression
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.MAP_TO_BEV.NUM_BEV_FEATURES: 256
+2026-08-09 12:32:25,216   INFO  ----------- BACKBONE_2D -----------
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.BACKBONE_2D.NAME: BaseBEVBackbone
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.BACKBONE_2D.LAYER_NUMS: [5, 5]
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.BACKBONE_2D.LAYER_STRIDES: [1, 2]
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.BACKBONE_2D.NUM_FILTERS: [128, 256]
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.BACKBONE_2D.UPSAMPLE_STRIDES: [1, 2]
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.BACKBONE_2D.NUM_UPSAMPLE_FILTERS: [256, 256]
+2026-08-09 12:32:25,216   INFO  ----------- DENSE_HEAD -----------
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.DENSE_HEAD.NAME: AnchorHeadSingle
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.DENSE_HEAD.CLASS_AGNOSTIC: False
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.DENSE_HEAD.USE_DIRECTION_CLASSIFIER: True
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.DENSE_HEAD.DIR_OFFSET: 0.78539
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.DENSE_HEAD.DIR_LIMIT_OFFSET: 0.0
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.DENSE_HEAD.NUM_DIR_BINS: 2
+2026-08-09 12:32:25,216   INFO  cfg.MODEL.DENSE_HEAD.ANCHOR_GENERATOR_CONFIG: [{'class_name': 'Car', 'anchor_sizes': [[3.9, 1.6, 1.56]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-1.78], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.6, 'unmatched_threshold': 0.45}, {'class_name': 'Pedestrian', 'anchor_sizes': [[0.8, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}, {'class_name': 'Cyclist', 'anchor_sizes': [[1.76, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}]
+2026-08-09 12:32:25,216   INFO  ----------- TARGET_ASSIGNER_CONFIG -----------
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NAME: AxisAlignedTargetAssigner
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.POS_FRACTION: -1.0
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.SAMPLE_SIZE: 512
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NORM_BY_NUM_EXAMPLES: False
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.MATCH_HEIGHT: False
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.BOX_CODER: ResidualCoder
+2026-08-09 12:32:25,217   INFO  ----------- LOSS_CONFIG -----------
+2026-08-09 12:32:25,217   INFO  ----------- LOSS_WEIGHTS -----------
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.cls_weight: 1.0
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.loc_weight: 2.0
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.dir_weight: 0.2
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.code_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-09 12:32:25,217   INFO  ----------- POST_PROCESSING -----------
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.POST_PROCESSING.RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.POST_PROCESSING.SCORE_THRESH: 0.1
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.POST_PROCESSING.OUTPUT_RAW_SCORE: False
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.POST_PROCESSING.EVAL_METRIC: kitti
+2026-08-09 12:32:25,217   INFO  ----------- NMS_CONFIG -----------
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.MULTI_CLASSES_NMS: False
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_TYPE: nms_gpu
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_THRESH: 0.05
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_PRE_MAXSIZE: 1000
+2026-08-09 12:32:25,217   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_POST_MAXSIZE: 100
+2026-08-09 12:32:25,217   INFO  ----------- OPTIMIZATION -----------
+2026-08-09 12:32:25,217   INFO  cfg.OPTIMIZATION.BATCH_SIZE_PER_GPU: 6
+2026-08-09 12:32:25,217   INFO  cfg.OPTIMIZATION.NUM_EPOCHS: 40
+2026-08-09 12:32:25,217   INFO  cfg.OPTIMIZATION.OPTIMIZER: adam_onecycle
+2026-08-09 12:32:25,217   INFO  cfg.OPTIMIZATION.LR: 0.003
+2026-08-09 12:32:25,217   INFO  cfg.OPTIMIZATION.WEIGHT_DECAY: 0.01
+2026-08-09 12:32:25,217   INFO  cfg.OPTIMIZATION.MOMENTUM: 0.9
+2026-08-09 12:32:25,217   INFO  cfg.OPTIMIZATION.MOMS: [0.95, 0.85]
+2026-08-09 12:32:25,217   INFO  cfg.OPTIMIZATION.PCT_START: 0.4
+2026-08-09 12:32:25,217   INFO  cfg.OPTIMIZATION.DIV_FACTOR: 10
+2026-08-09 12:32:25,217   INFO  cfg.OPTIMIZATION.DECAY_STEP_LIST: [35, 45]
+2026-08-09 12:32:25,217   INFO  cfg.OPTIMIZATION.LR_DECAY: 0.1
+2026-08-09 12:32:25,218   INFO  cfg.OPTIMIZATION.LR_CLIP: 1e-07
+2026-08-09 12:32:25,218   INFO  cfg.OPTIMIZATION.LR_WARMUP: False
+2026-08-09 12:32:25,218   INFO  cfg.OPTIMIZATION.WARMUP_EPOCH: 1
+2026-08-09 12:32:25,218   INFO  cfg.OPTIMIZATION.GRAD_NORM_CLIP: 10
+2026-08-09 12:32:25,218   INFO  cfg.TAG: S_D_E
+2026-08-09 12:32:25,218   INFO  cfg.EXP_GROUP_PATH: OpenPCDet/tools/cfgs/models/S/D
+2026-08-09 12:32:25,218   INFO  Loading Custom dataset.
+2026-08-09 12:32:25,220   INFO  Total samples for CUSTOM dataset: 226
+2026-08-09 12:32:26,507   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_93/ckpt/checkpoint_epoch_1.pth to GPU
+2026-08-09 12:32:26,585   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-09 12:32:26,595   INFO  ==> Done (loaded 163/163)
+2026-08-09 12:32:26,607   INFO  *************** EPOCH 1 EVALUATION *****************
+2026-08-09 12:32:36,332   INFO  *************** Performance of EPOCH 1 *****************
+2026-08-09 12:32:36,332   INFO  Generate label finished(sec_per_example: 0.0430 second).
+2026-08-09 12:32:36,332   INFO  recall_roi_0.3: 0.000000
+2026-08-09 12:32:36,332   INFO  recall_rcnn_0.3: 0.049100
+2026-08-09 12:32:36,332   INFO  recall_roi_0.5: 0.000000
+2026-08-09 12:32:36,332   INFO  recall_rcnn_0.5: 0.000000
+2026-08-09 12:32:36,332   INFO  recall_roi_0.7: 0.000000
+2026-08-09 12:32:36,332   INFO  recall_rcnn_0.7: 0.000000
+2026-08-09 12:32:36,332   INFO  Average predicted number of objects(226 samples): 26.580
+2026-08-09 12:32:44,005   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:56.6335, 56.6335, 56.6335
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:27.08, 27.08, 27.08
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:57.2590, 57.2590, 57.2590
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:27.09, 27.09, 27.09
+Car AP@0.70, 0.50, 0.50:
+bbox AP:56.6335, 56.6335, 56.6335
+bev  AP:0.1008, 0.1008, 0.1008
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:27.08, 27.08, 27.08
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:57.2590, 57.2590, 57.2590
+bev  AP:0.0605, 0.0605, 0.0605
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:27.09, 27.09, 27.09
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:11.0865, 11.0865, 11.0865
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:5.43, 5.43, 5.43
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:7.6172, 7.6172, 7.6172
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:3.69, 3.69, 3.69
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:11.0865, 11.0865, 11.0865
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:5.43, 5.43, 5.43
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:7.6172, 7.6172, 7.6172
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:3.69, 3.69, 3.69
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:5.9128, 5.9128, 5.9128
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:2.90, 2.90, 2.90
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:3.9634, 3.9634, 3.9634
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:1.99, 1.99, 1.99
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:5.9128, 5.9128, 5.9128
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:2.90, 2.90, 2.90
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:3.9634, 3.9634, 3.9634
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:1.99, 1.99, 1.99
+
+2026-08-09 12:32:44,005   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_E/default/eval/eval_all_default/default/epoch_1/val_all
+2026-08-09 12:32:44,005   INFO  ****************Evaluation done.*****************
+2026-08-09 12:32:44,012   INFO  Epoch 1 has been evaluated
+2026-08-09 12:32:44,012   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_93/ckpt/checkpoint_epoch_2.pth to GPU
+2026-08-09 12:32:44,070   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-09 12:32:44,074   INFO  ==> Done (loaded 163/163)
+2026-08-09 12:32:44,075   INFO  *************** EPOCH 2 EVALUATION *****************
+2026-08-09 12:32:52,155   INFO  *************** Performance of EPOCH 2 *****************
+2026-08-09 12:32:52,155   INFO  Generate label finished(sec_per_example: 0.0357 second).
+2026-08-09 12:32:52,155   INFO  recall_roi_0.3: 0.000000
+2026-08-09 12:32:52,155   INFO  recall_rcnn_0.3: 0.045827
+2026-08-09 12:32:52,156   INFO  recall_roi_0.5: 0.000000
+2026-08-09 12:32:52,156   INFO  recall_rcnn_0.5: 0.003273
+2026-08-09 12:32:52,156   INFO  recall_roi_0.7: 0.000000
+2026-08-09 12:32:52,156   INFO  recall_rcnn_0.7: 0.000000
+2026-08-09 12:32:52,156   INFO  Average predicted number of objects(226 samples): 30.469
+2026-08-09 12:32:53,592   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:62.1444, 62.1444, 62.1444
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:28.27, 28.27, 28.27
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:61.6084, 61.6084, 61.6084
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:26.79, 26.79, 26.79
+Car AP@0.70, 0.50, 0.50:
+bbox AP:62.1444, 62.1444, 62.1444
+bev  AP:0.0910, 0.0910, 0.0910
+3d   AP:0.0034, 0.0034, 0.0034
+aos  AP:28.27, 28.27, 28.27
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:61.6084, 61.6084, 61.6084
+bev  AP:0.0626, 0.0626, 0.0626
+3d   AP:0.0008, 0.0008, 0.0008
+aos  AP:26.79, 26.79, 26.79
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:16.1932, 16.1932, 16.1932
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:7.01, 7.01, 7.01
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:10.0196, 10.0196, 10.0196
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:3.97, 3.97, 3.97
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:16.1932, 16.1932, 16.1932
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:7.01, 7.01, 7.01
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:10.0196, 10.0196, 10.0196
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:3.97, 3.97, 3.97
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:9.9174, 9.9174, 9.9174
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:5.50, 5.50, 5.50
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:7.2727, 7.2727, 7.2727
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:4.04, 4.04, 4.04
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:9.9174, 9.9174, 9.9174
+bev  AP:0.1595, 0.1595, 0.1595
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:5.50, 5.50, 5.50
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:7.2727, 7.2727, 7.2727
+bev  AP:0.0000, 0.0000, 0.0000
+3d   AP:0.0000, 0.0000, 0.0000
+aos  AP:4.04, 4.04, 4.04
+
+2026-08-09 12:32:53,593   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_E/default/eval/eval_all_default/default/epoch_2/val_all
+2026-08-09 12:32:53,593   INFO  ****************Evaluation done.*****************
+2026-08-09 12:32:53,601   INFO  Epoch 2 has been evaluated
+2026-08-09 12:32:53,601   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_93/ckpt/checkpoint_epoch_3.pth to GPU
+2026-08-09 12:32:53,666   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py424d034
+2026-08-09 12:32:53,670   INFO  ==> Done (loaded 163/163)
+2026-08-09 12:32:53,671   INFO  *************** EPOCH 3 EVALUATION *****************

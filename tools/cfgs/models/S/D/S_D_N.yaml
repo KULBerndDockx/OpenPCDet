@@ -1,9 +1,9 @@
 CLASS_NAMES: ['car', 'pedestrian', 'bicycle']
 
-MAP_CLASS_TO_KITTI:
-    car: Car
-    pedestrian: Pedestrian
-    bicycle: Cyclist
+#MAP_CLASS_TO_KITTI:
+#    car: Car
+#    pedestrian: Pedestrian
+#    bicycle: Cyclist
 
 DATA_CONFIG: 
     _BASE_CONFIG_: cfgs/dataset_configs/nuscenes_dataset.yaml
@@ -12,8 +12,9 @@ DATA_CONFIG:
     #VOXEL_SIZE: [0.4, 0.2, 0.2]
     #MAX_POINTS_PER_VOXEL: 45
 
-    VOXEL_SIZE: [0.1, 0.1, 0.2]
-    MAX_POINTS_PER_VOXEL: 45
+    VOXEL_SIZE: [0.05, 0.05, 0.05]
+    #MAX_POINTS_PER_VOXEL: 45
+
 
 
 MODEL:
@@ -99,7 +100,7 @@ MODEL:
 
     POST_PROCESSING:
         RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
-        SCORE_THRESH: 0.1
+        SCORE_THRESH: 0.3
         OUTPUT_RAW_SCORE: False
 
         EVAL_METRIC: kitti
@@ -107,14 +108,14 @@ MODEL:
         NMS_CONFIG:
             MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.2
+            NMS_THRESH: 0.005
             NMS_PRE_MAXSIZE: 1000
             NMS_POST_MAXSIZE: 100
 
 
 OPTIMIZATION:
-    BATCH_SIZE_PER_GPU: 6
-    NUM_EPOCHS: 40
+    BATCH_SIZE_PER_GPU: 2
+    NUM_EPOCHS: 10
 
     OPTIMIZER: adam_onecycle
     LR: 0.0003

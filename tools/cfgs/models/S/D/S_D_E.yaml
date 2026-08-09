@@ -8,36 +8,39 @@ DATA_CONFIG:
     #POINT_CLOUD_RANGE: [-64.8, -64.8, -3.0, 64.8, 64.8, 1.0]
     #POINT_CLOUD_RANGE: [0, -32.0, -3, 52.8, 32.0, 1]
     #POINT_CLOUD_RANGE: [-32.8, -40.00, -3, 4.00, 40.00, 1]
-    POINT_CLOUD_RANGE: [-32.8, -40.00, -3, 32.80, 40.00, 1]
+    #POINT_CLOUD_RANGE: [-32.8, -40.00, -3, 32.80, 40.00, 1]
 
     #POINT_CLOUD_RANGE: [0, -40, -3, 70, 40, 1]
 
 
 
-    VOXEL_SIZE: [0.1, 0.1, 0.2]
-    MAX_POINTS_PER_VOXEL: 45
+    DATA_AUGMENTOR:
+        DISABLE_AUG_LIST: ['placeholder']
+        AUG_CONFIG_LIST:
+            - NAME: gt_sampling
+              USE_ROAD_PLANE: True
+              DB_INFO_PATH:
+                  - custom_dbinfos_train.pkl
+              PREPARE: {
+                 filter_by_min_points: ['Car:5', 'Pedestrian:5', 'Cyclist:5'],
+                 filter_by_difficulty: [-1],
+              }
 
-    # NOTE: SECONDNet's VoxelBackBone8x expects enough Z bins so that after downsampling
-    # the encoded tensor has depth D=2. With POINT_CLOUD_RANGE z=[-3, 1] and
-    # VOXEL_SIZE z=0.15, depth collapses to D=1 and HeightCompression produces 128
-    # channels instead of 256, causing a runtime channel mismatch in BACKBONE_2D.
-    DATA_PROCESSOR:
-        - NAME: mask_points_and_boxes_outside_range
-          REMOVE_OUTSIDE_BOXES: True
+              SAMPLE_GROUPS: ['Car:15','Pedestrian:15', 'Cyclist:15']
+              NUM_POINT_FEATURES: 4
+              DATABASE_WITH_FAKELIDAR: False
+              REMOVE_EXTRA_WIDTH: [0.0, 0.0, 0.0]
+              LIMIT_WHOLE_SCENE: False
 
-        - NAME: shuffle_points
-          SHUFFLE_ENABLED: {
-            'train': True,
-            'test': False
-            }
+            - NAME: random_world_flip
+              ALONG_AXIS_LIST: ['x']
 
-        - NAME: transform_points_to_voxels
-          VOXEL_SIZE: [0.05, 0.05, 0.1]
-          MAX_POINTS_PER_VOXEL: 45
-          MAX_NUMBER_OF_VOXELS: {
-            'train': 16000,
-            'test': 40000
-          }
+            - NAME: random_world_rotation
+              WORLD_ROT_ANGLE: [-0.78539816, 0.78539816]
+
+            - NAME: random_world_scaling
+              WORLD_SCALE_RANGE: [0.95, 1.05]
+
 
 
 MODEL:
@@ -130,7 +133,7 @@ MODEL:
         NMS_CONFIG:
             MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.1
+            NMS_THRESH: 0.01
             NMS_PRE_MAXSIZE: 1000
             NMS_POST_MAXSIZE: 100
 

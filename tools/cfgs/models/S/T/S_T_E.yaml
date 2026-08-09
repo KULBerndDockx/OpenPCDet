@@ -12,8 +12,8 @@ DATA_CONFIG:
 
 
 
-    VOXEL_SIZE: [0.05, 0.05, 0.1]
-    MAX_POINTS_PER_VOXEL: 45
+    #VOXEL_SIZE: [0.05, 0.05, 0.1]
+    #MAX_POINTS_PER_VOXEL: 45
 
     # NOTE: SECONDNet's VoxelBackBone8x expects enough Z bins so that after downsampling
     # the encoded tensor has depth D=2. With POINT_CLOUD_RANGE z=[-3, 1] and
@@ -44,15 +44,15 @@ MODEL:
     TENT:
         ENABLED: True
         LR: 0.0001
-        STEPS: 1
+        STEPS: 4
         EPISODIC: False
         ADAPT_MODULES: ['backbone_2d']
         # Entropy objective settings (for sigmoid/Bernoulli entropy)
         # Use either ENTROPY_TOPK (>0) or ENTROPY_SCORE_THRESH (>0). If both are disabled,
         # all anchors contribute, which is often dominated by easy background anchors.
-        ENTROPY_TOPK: 0
-        ENTROPY_SCORE_THRESH: 0.6
-        ENTROPY_WEIGHT: 0.4
+        ENTROPY_TOPK: 5
+        ENTROPY_SCORE_THRESH: 0.0
+        ENTROPY_WEIGHT: 0.1
 
     VFE:
         NAME: MeanVFE
@@ -133,7 +133,7 @@ MODEL:
 
     POST_PROCESSING:
         RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
-        SCORE_THRESH: 0.38
+        SCORE_THRESH: 0.1
         OUTPUT_RAW_SCORE: False
 
         EVAL_METRIC: kitti
@@ -141,9 +141,9 @@ MODEL:
         NMS_CONFIG:
             MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.01
-            NMS_PRE_MAXSIZE: 4096
-            NMS_POST_MAXSIZE: 500
+            NMS_THRESH: 0.05
+            NMS_PRE_MAXSIZE: 1000
+            NMS_POST_MAXSIZE: 50
 
 
 OPTIMIZATION:

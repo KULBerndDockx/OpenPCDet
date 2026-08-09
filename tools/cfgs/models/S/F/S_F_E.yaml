@@ -13,7 +13,7 @@ DATA_CONFIG:
     #POINT_CLOUD_RANGE: [-32.8, -40.00, -3, 4.00, 40.00, 1]
 
 
-    VOXEL_SIZE: [0.4, 0.2, 0.2]
+    VOXEL_SIZE:  [0.1, 0.1, 0.2]
     MAX_POINTS_PER_VOXEL: 45
 
     # NOTE: SECONDNet's voxel backbone expects enough Z bins so that after downsampling
