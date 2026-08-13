@@ -41,7 +41,7 @@ class DemoDataset(DatasetTemplate):
         data_file_list = glob.glob(str(root_path / f'*{self.ext}')) if self.root_path.is_dir() else [self.root_path]
 
         data_file_list.sort()
-        self.sample_file_list = data_file_list[174:401]
+        self.sample_file_list = data_file_list[174:423]
 
     def __len__(self):
         return len(self.sample_file_list)
@@ -139,11 +139,13 @@ def draw_bev_image(points, pred_boxes, pred_scores, pred_labels, class_names, sa
     else:
         if save_path is not None:
             fig.savefig(save_path, facecolor='black')
-            save_name = Path(save_path).stem.rsplit('_', 1)[-1]
-
-            if save_name in TO_USE:
-                file_name = Path(save_path).name
-                fig.savefig("afbeeldingen" / f'{file_name}.png', facecolor='black')
+            save_name = Path(save_path).stem
+            print(save_name, flush=True)
+            if any(save_name.endswith(name) for name in TO_USE):
+                print("YES")
+                afbeeldingen_dir = Path("afbeeldingen")
+                afbeeldingen_dir.mkdir(parents=True, exist_ok=True)
+                fig.savefig(afbeeldingen_dir / Path(save_path).name, facecolor='black')
         if created_fig:
             plt.close(fig)
         return None

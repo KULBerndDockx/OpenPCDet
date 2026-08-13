@@ -1,0 +1,1262 @@
+2026-08-13 12:39:04,550   INFO  **********************Start logging**********************
+2026-08-13 12:39:04,550   INFO  CUDA_VISIBLE_DEVICES=ALL
+2026-08-13 12:39:04,550   INFO  cfg_file         /OpenPCDet/tools/cfgs/models/S/F/S_F_N.yaml
+2026-08-13 12:39:04,550   INFO  batch_size       2
+2026-08-13 12:39:04,550   INFO  workers          4
+2026-08-13 12:39:04,550   INFO  extra_tag        default
+2026-08-13 12:39:04,550   INFO  ckpt             None
+2026-08-13 12:39:04,550   INFO  pretrained_model None
+2026-08-13 12:39:04,550   INFO  launcher         none
+2026-08-13 12:39:04,551   INFO  tcp_port         18888
+2026-08-13 12:39:04,551   INFO  local_rank       None
+2026-08-13 12:39:04,551   INFO  set_cfgs         None
+2026-08-13 12:39:04,551   INFO  max_waiting_mins 1
+2026-08-13 12:39:04,551   INFO  start_epoch      0
+2026-08-13 12:39:04,551   INFO  eval_tag         default
+2026-08-13 12:39:04,551   INFO  eval_all         True
+2026-08-13 12:39:04,551   INFO  ckpt_dir         /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt
+2026-08-13 12:39:04,551   INFO  save_to_file     False
+2026-08-13 12:39:04,551   INFO  infer_time       False
+2026-08-13 12:39:04,551   INFO  cfg.ROOT_DIR: /OpenPCDet
+2026-08-13 12:39:04,551   INFO  cfg.LOCAL_RANK: 0
+2026-08-13 12:39:04,551   INFO  cfg.CLASS_NAMES: ['car', 'pedestrian', 'bicycle']
+2026-08-13 12:39:04,551   INFO  ----------- DATA_CONFIG -----------
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.DATASET: NuScenesDataset
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.DATA_PATH: ../datasets/nuscenes
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.VERSION: v1.0-mini
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.MAX_SWEEPS: 1
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.PRED_VELOCITY: False
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.SET_NAN_VELOCITY_TO_ZEROS: True
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.FILTER_MIN_POINTS_IN_GT: 1
+2026-08-13 12:39:04,551   INFO  ----------- MAP_CLASS_TO_KITTI -----------
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.car: Car
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.pedestrian: Pedestrian
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.bicycle: Cyclist
+2026-08-13 12:39:04,551   INFO  ----------- DATA_SPLIT -----------
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.DATA_SPLIT.train: train
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.DATA_SPLIT.test: val
+2026-08-13 12:39:04,551   INFO  ----------- INFO_PATH -----------
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.INFO_PATH.train: ['nuscenes_infos_1sweeps_train.pkl']
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.INFO_PATH.test: ['nuscenes_infos_1sweeps_val.pkl']
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.POINT_CLOUD_RANGE: [-51.2, -51.2, -3.0, 51.2, 51.2, 1.0]
+2026-08-13 12:39:04,551   INFO  cfg.DATA_CONFIG.BALANCED_RESAMPLING: True
+2026-08-13 12:39:04,552   INFO  ----------- DATA_AUGMENTOR -----------
+2026-08-13 12:39:04,552   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.DISABLE_AUG_LIST: ['gt_sampling']
+2026-08-13 12:39:04,552   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.AUG_CONFIG_LIST: [{'NAME': 'gt_sampling', 'DB_INFO_PATH': ['nuscenes_dbinfos_1sweeps_withvelo.pkl'], 'PREPARE': {'filter_by_min_points': ['car:5', 'bicycle:5', 'pedestrian:5']}, 'SAMPLE_GROUPS': ['car:2', 'bicycle:6', 'pedestrian:2'], 'NUM_POINT_FEATURES': 4, 'DATABASE_WITH_FAKELIDAR': False, 'REMOVE_EXTRA_WIDTH': [0.0, 0.0, 0.0], 'LIMIT_WHOLE_SCENE': True}, {'NAME': 'random_world_flip', 'ALONG_AXIS_LIST': ['x', 'y']}, {'NAME': 'random_world_rotation', 'WORLD_ROT_ANGLE': [-0.3925, 0.3925]}, {'NAME': 'random_world_scaling', 'WORLD_SCALE_RANGE': [0.95, 1.05]}]
+2026-08-13 12:39:04,552   INFO  ----------- POINT_FEATURE_ENCODING -----------
+2026-08-13 12:39:04,552   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.encoding_type: absolute_coordinates_encoding
+2026-08-13 12:39:04,552   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.used_feature_list: ['x', 'y', 'z', 'intensity']
+2026-08-13 12:39:04,552   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.src_feature_list: ['x', 'y', 'z', 'intensity']
+2026-08-13 12:39:04,552   INFO  cfg.DATA_CONFIG.DATA_PROCESSOR: [{'NAME': 'mask_points_and_boxes_outside_range', 'REMOVE_OUTSIDE_BOXES': True}, {'NAME': 'shuffle_points', 'SHUFFLE_ENABLED': {'train': True, 'test': True}}, {'NAME': 'transform_points_to_voxels', 'VOXEL_SIZE': [0.05, 0.05, 0.1], 'MAX_POINTS_PER_VOXEL': 45, 'MAX_NUMBER_OF_VOXELS': {'train': 60000, 'test': 60000}}]
+2026-08-13 12:39:04,552   INFO  cfg.DATA_CONFIG._BASE_CONFIG_: cfgs/dataset_configs/nuscenes_dataset.yaml
+2026-08-13 12:39:04,552   INFO  cfg.DATA_CONFIG.SKIPH: True
+2026-08-13 12:39:04,552   INFO  ----------- MODEL -----------
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.NAME: SECONDNet
+2026-08-13 12:39:04,552   INFO  ----------- VFE -----------
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.VFE.NAME: MeanVFE
+2026-08-13 12:39:04,552   INFO  ----------- BACKBONE_3D -----------
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.BACKBONE_3D.NAME: VoxelBackBone8xFocal
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.BACKBONE_3D.MASK_MULTI: True
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.BACKBONE_3D.ENLARGE_VOXEL_CHANNELS: 64
+2026-08-13 12:39:04,552   INFO  ----------- MAP_TO_BEV -----------
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.MAP_TO_BEV.NAME: HeightCompression
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.MAP_TO_BEV.NUM_BEV_FEATURES: 256
+2026-08-13 12:39:04,552   INFO  ----------- BACKBONE_2D -----------
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.BACKBONE_2D.NAME: BaseBEVBackbone
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.BACKBONE_2D.LAYER_NUMS: [5, 5]
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.BACKBONE_2D.LAYER_STRIDES: [1, 2]
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.BACKBONE_2D.NUM_FILTERS: [128, 256]
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.BACKBONE_2D.UPSAMPLE_STRIDES: [1, 2]
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.BACKBONE_2D.NUM_UPSAMPLE_FILTERS: [256, 256]
+2026-08-13 12:39:04,552   INFO  ----------- DENSE_HEAD -----------
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.DENSE_HEAD.NAME: AnchorHeadSingle
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.DENSE_HEAD.CLASS_AGNOSTIC: False
+2026-08-13 12:39:04,552   INFO  cfg.MODEL.DENSE_HEAD.USE_DIRECTION_CLASSIFIER: True
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.DIR_OFFSET: 0.78539
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.DIR_LIMIT_OFFSET: 0.0
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.NUM_DIR_BINS: 2
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.ANCHOR_GENERATOR_CONFIG: [{'class_name': 'car', 'anchor_sizes': [[3.9, 1.6, 1.56]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-1.78], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.6, 'unmatched_threshold': 0.45}, {'class_name': 'pedestrian', 'anchor_sizes': [[0.8, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}, {'class_name': 'bicycle', 'anchor_sizes': [[1.76, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 8, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}]
+2026-08-13 12:39:04,553   INFO  ----------- TARGET_ASSIGNER_CONFIG -----------
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NAME: AxisAlignedTargetAssigner
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.POS_FRACTION: -1.0
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.SAMPLE_SIZE: 512
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NORM_BY_NUM_EXAMPLES: False
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.MATCH_HEIGHT: False
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.BOX_CODER: ResidualCoder
+2026-08-13 12:39:04,553   INFO  ----------- LOSS_CONFIG -----------
+2026-08-13 12:39:04,553   INFO  ----------- LOSS_WEIGHTS -----------
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.cls_weight: 1.0
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.loc_weight: 2.0
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.dir_weight: 0.2
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.code_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-13 12:39:04,553   INFO  ----------- POST_PROCESSING -----------
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.POST_PROCESSING.RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.POST_PROCESSING.SCORE_THRESH: 0.1
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.POST_PROCESSING.OUTPUT_RAW_SCORE: False
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.POST_PROCESSING.EVAL_METRIC: nuscenes
+2026-08-13 12:39:04,553   INFO  ----------- NMS_CONFIG -----------
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.MULTI_CLASSES_NMS: False
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_TYPE: nms_gpu
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_THRESH: 0.05
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_PRE_MAXSIZE: 1000
+2026-08-13 12:39:04,553   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_POST_MAXSIZE: 100
+2026-08-13 12:39:04,553   INFO  ----------- OPTIMIZATION -----------
+2026-08-13 12:39:04,553   INFO  cfg.OPTIMIZATION.BATCH_SIZE_PER_GPU: 2
+2026-08-13 12:39:04,553   INFO  cfg.OPTIMIZATION.NUM_EPOCHS: 40
+2026-08-13 12:39:04,553   INFO  cfg.OPTIMIZATION.OPTIMIZER: adam_onecycle
+2026-08-13 12:39:04,553   INFO  cfg.OPTIMIZATION.LR: 0.0003
+2026-08-13 12:39:04,554   INFO  cfg.OPTIMIZATION.WEIGHT_DECAY: 0.01
+2026-08-13 12:39:04,554   INFO  cfg.OPTIMIZATION.MOMENTUM: 0.9
+2026-08-13 12:39:04,554   INFO  cfg.OPTIMIZATION.MOMS: [0.95, 0.85]
+2026-08-13 12:39:04,554   INFO  cfg.OPTIMIZATION.PCT_START: 0.2
+2026-08-13 12:39:04,554   INFO  cfg.OPTIMIZATION.DIV_FACTOR: 10
+2026-08-13 12:39:04,554   INFO  cfg.OPTIMIZATION.DECAY_STEP_LIST: [25, 35]
+2026-08-13 12:39:04,554   INFO  cfg.OPTIMIZATION.LR_DECAY: 0.1
+2026-08-13 12:39:04,554   INFO  cfg.OPTIMIZATION.LR_CLIP: 1e-07
+2026-08-13 12:39:04,554   INFO  cfg.OPTIMIZATION.LR_WARMUP: False
+2026-08-13 12:39:04,554   INFO  cfg.OPTIMIZATION.WARMUP_EPOCH: 1
+2026-08-13 12:39:04,554   INFO  cfg.OPTIMIZATION.GRAD_NORM_CLIP: 10
+2026-08-13 12:39:04,554   INFO  cfg.TAG: S_F_N
+2026-08-13 12:39:04,554   INFO  cfg.EXP_GROUP_PATH: OpenPCDet/tools/cfgs/models/S/F
+2026-08-13 12:39:04,554   INFO  Loading NuScenes dataset
+2026-08-13 12:39:04,557   INFO  Total samples for NuScenes dataset: 81
+2026-08-13 12:39:05,843   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_1.pth to GPU
+2026-08-13 12:39:05,906   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:39:05,920   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:05,921   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:05,921   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:39:05,938   INFO  *************** EPOCH 1 EVALUATION *****************
+2026-08-13 12:39:16,986   INFO  *************** Performance of EPOCH 1 *****************
+2026-08-13 12:39:16,986   INFO  Generate label finished(sec_per_example: 0.1364 second).
+2026-08-13 12:39:16,986   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:39:16,986   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:39:16,986   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:39:16,986   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:39:16,986   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:39:16,986   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:39:16,986   INFO  Average predicted number of objects(81 samples): 0.000
+2026-08-13 12:39:17,686   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_1/val/final_result/data/results_nusc.json
+2026-08-13 12:39:17,885   INFO  Evaluation failed: list index out of range
+2026-08-13 12:39:17,888   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_1/val
+2026-08-13 12:39:17,889   INFO  ****************Evaluation done.*****************
+2026-08-13 12:39:17,891   INFO  Epoch 1 has been evaluated
+2026-08-13 12:39:17,892   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_2.pth to GPU
+2026-08-13 12:39:17,951   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:39:17,958   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:39:17,958   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:39:17,958   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:39:17,958   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:17,959   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:39:17,960   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:39:17,960   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:39:17,960   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:39:17,960   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:39:17,960   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:17,960   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:39:17,960   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:17,960   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:17,960   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:17,960   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:17,960   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:17,960   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:17,960   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:39:17,962   INFO  *************** EPOCH 2 EVALUATION *****************
+2026-08-13 12:39:26,367   INFO  *************** Performance of EPOCH 2 *****************
+2026-08-13 12:39:26,367   INFO  Generate label finished(sec_per_example: 0.1038 second).
+2026-08-13 12:39:26,367   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:39:26,367   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:39:26,367   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:39:26,367   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:39:26,367   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:39:26,367   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:39:26,367   INFO  Average predicted number of objects(81 samples): 0.000
+2026-08-13 12:39:26,867   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_2/val/final_result/data/results_nusc.json
+2026-08-13 12:39:27,056   INFO  Evaluation failed: list index out of range
+2026-08-13 12:39:27,058   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_2/val
+2026-08-13 12:39:27,058   INFO  ****************Evaluation done.*****************
+2026-08-13 12:39:27,059   INFO  Epoch 2 has been evaluated
+2026-08-13 12:39:27,059   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_3.pth to GPU
+2026-08-13 12:39:27,113   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:27,118   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:27,119   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:27,119   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:39:27,120   INFO  *************** EPOCH 3 EVALUATION *****************
+2026-08-13 12:39:35,253   INFO  *************** Performance of EPOCH 3 *****************
+2026-08-13 12:39:35,253   INFO  Generate label finished(sec_per_example: 0.1004 second).
+2026-08-13 12:39:35,253   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:39:35,253   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:39:35,253   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:39:35,253   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:39:35,253   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:39:35,253   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:39:35,253   INFO  Average predicted number of objects(81 samples): 0.000
+2026-08-13 12:39:35,756   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_3/val/final_result/data/results_nusc.json
+2026-08-13 12:39:35,945   INFO  Evaluation failed: list index out of range
+2026-08-13 12:39:35,947   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_3/val
+2026-08-13 12:39:35,947   INFO  ****************Evaluation done.*****************
+2026-08-13 12:39:35,949   INFO  Epoch 3 has been evaluated
+2026-08-13 12:39:35,949   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_4.pth to GPU
+2026-08-13 12:39:36,004   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:36,009   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:39:36,010   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:39:36,010   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:39:36,010   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:39:36,010   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:39:36,010   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:36,010   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:39:36,010   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:36,010   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:36,010   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:36,010   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:36,010   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:36,010   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:36,010   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:39:36,011   INFO  *************** EPOCH 4 EVALUATION *****************
+2026-08-13 12:39:44,418   INFO  *************** Performance of EPOCH 4 *****************
+2026-08-13 12:39:44,418   INFO  Generate label finished(sec_per_example: 0.1038 second).
+2026-08-13 12:39:44,418   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:39:44,418   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:39:44,418   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:39:44,418   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:39:44,418   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:39:44,418   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:39:44,418   INFO  Average predicted number of objects(81 samples): 0.000
+2026-08-13 12:39:45,013   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_4/val/final_result/data/results_nusc.json
+2026-08-13 12:39:45,224   INFO  Evaluation failed: list index out of range
+2026-08-13 12:39:45,226   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_4/val
+2026-08-13 12:39:45,227   INFO  ****************Evaluation done.*****************
+2026-08-13 12:39:45,228   INFO  Epoch 4 has been evaluated
+2026-08-13 12:39:45,229   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_5.pth to GPU
+2026-08-13 12:39:45,294   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:39:45,300   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:45,301   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:45,301   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:39:45,304   INFO  *************** EPOCH 5 EVALUATION *****************
+2026-08-13 12:39:54,013   INFO  *************** Performance of EPOCH 5 *****************
+2026-08-13 12:39:54,013   INFO  Generate label finished(sec_per_example: 0.1075 second).
+2026-08-13 12:39:54,013   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:39:54,013   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:39:54,014   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:39:54,014   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:39:54,014   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:39:54,014   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:39:54,014   INFO  Average predicted number of objects(81 samples): 0.012
+2026-08-13 12:39:54,470   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_5/val/final_result/data/results_nusc.json
+2026-08-13 12:39:54,642   INFO  Evaluation failed: list index out of range
+2026-08-13 12:39:54,644   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_5/val
+2026-08-13 12:39:54,644   INFO  ****************Evaluation done.*****************
+2026-08-13 12:39:54,645   INFO  Epoch 5 has been evaluated
+2026-08-13 12:39:54,646   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_6.pth to GPU
+2026-08-13 12:39:54,705   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:39:54,710   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:39:54,710   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:39:54,710   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:39:54,710   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:39:54,710   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:39:54,710   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:54,710   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:39:54,711   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:39:54,711   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:39:54,713   INFO  *************** EPOCH 6 EVALUATION *****************
+2026-08-13 12:40:03,481   INFO  *************** Performance of EPOCH 6 *****************
+2026-08-13 12:40:03,481   INFO  Generate label finished(sec_per_example: 0.1082 second).
+2026-08-13 12:40:03,481   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:40:03,481   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:40:03,481   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:40:03,481   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:40:03,481   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:40:03,481   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:40:03,482   INFO  Average predicted number of objects(81 samples): 0.000
+2026-08-13 12:40:04,178   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_6/val/final_result/data/results_nusc.json
+2026-08-13 12:40:04,362   INFO  Evaluation failed: list index out of range
+2026-08-13 12:40:04,364   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_6/val
+2026-08-13 12:40:04,364   INFO  ****************Evaluation done.*****************
+2026-08-13 12:40:04,365   INFO  Epoch 6 has been evaluated
+2026-08-13 12:40:04,365   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_7.pth to GPU
+2026-08-13 12:40:04,426   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:40:04,431   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:40:04,432   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:40:04,432   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:40:04,432   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:04,432   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:04,432   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:04,432   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:04,432   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:04,432   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:04,432   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:04,432   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:04,432   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:40:04,434   INFO  *************** EPOCH 7 EVALUATION *****************
+2026-08-13 12:40:12,559   INFO  *************** Performance of EPOCH 7 *****************
+2026-08-13 12:40:12,560   INFO  Generate label finished(sec_per_example: 0.1003 second).
+2026-08-13 12:40:12,560   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:40:12,560   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:40:12,560   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:40:12,560   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:40:12,560   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:40:12,560   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:40:12,560   INFO  Average predicted number of objects(81 samples): 0.000
+2026-08-13 12:40:13,124   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_7/val/final_result/data/results_nusc.json
+2026-08-13 12:40:13,306   INFO  Evaluation failed: list index out of range
+2026-08-13 12:40:13,307   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_7/val
+2026-08-13 12:40:13,307   INFO  ****************Evaluation done.*****************
+2026-08-13 12:40:13,308   INFO  Epoch 7 has been evaluated
+2026-08-13 12:40:13,309   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_8.pth to GPU
+2026-08-13 12:40:13,371   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:40:13,375   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:40:13,375   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:40:13,375   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:40:13,375   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:40:13,375   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:40:13,376   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:13,377   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:13,377   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:13,377   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:13,377   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:13,377   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:13,377   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:13,377   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:13,377   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:40:13,378   INFO  *************** EPOCH 8 EVALUATION *****************
+2026-08-13 12:40:21,539   INFO  *************** Performance of EPOCH 8 *****************
+2026-08-13 12:40:21,539   INFO  Generate label finished(sec_per_example: 0.1007 second).
+2026-08-13 12:40:21,539   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:40:21,539   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:40:21,539   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:40:21,539   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:40:21,539   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:40:21,539   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:40:21,539   INFO  Average predicted number of objects(81 samples): 0.173
+2026-08-13 12:40:22,048   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_8/val/final_result/data/results_nusc.json
+2026-08-13 12:40:22,231   INFO  Evaluation failed: list index out of range
+2026-08-13 12:40:22,232   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_8/val
+2026-08-13 12:40:22,233   INFO  ****************Evaluation done.*****************
+2026-08-13 12:40:22,233   INFO  Epoch 8 has been evaluated
+2026-08-13 12:40:22,234   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_9.pth to GPU
+2026-08-13 12:40:22,289   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:22,294   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:22,295   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:22,295   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:40:22,298   INFO  *************** EPOCH 9 EVALUATION *****************
+2026-08-13 12:40:30,497   INFO  *************** Performance of EPOCH 9 *****************
+2026-08-13 12:40:30,497   INFO  Generate label finished(sec_per_example: 0.1012 second).
+2026-08-13 12:40:30,497   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:40:30,497   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:40:30,497   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:40:30,497   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:40:30,497   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:40:30,497   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:40:30,497   INFO  Average predicted number of objects(81 samples): 0.012
+2026-08-13 12:40:31,001   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_9/val/final_result/data/results_nusc.json
+2026-08-13 12:40:31,182   INFO  Evaluation failed: list index out of range
+2026-08-13 12:40:31,183   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_9/val
+2026-08-13 12:40:31,183   INFO  ****************Evaluation done.*****************
+2026-08-13 12:40:31,184   INFO  Epoch 9 has been evaluated
+2026-08-13 12:40:31,185   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_10.pth to GPU
+2026-08-13 12:40:31,240   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:40:31,244   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:31,245   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:31,245   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:40:31,247   INFO  *************** EPOCH 10 EVALUATION *****************
+2026-08-13 12:40:39,359   INFO  *************** Performance of EPOCH 10 *****************
+2026-08-13 12:40:39,359   INFO  Generate label finished(sec_per_example: 0.1002 second).
+2026-08-13 12:40:39,359   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:40:39,360   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:40:39,360   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:40:39,360   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:40:39,360   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:40:39,360   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:40:39,360   INFO  Average predicted number of objects(81 samples): 0.000
+2026-08-13 12:40:39,971   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_10/val/final_result/data/results_nusc.json
+2026-08-13 12:40:40,163   INFO  Evaluation failed: list index out of range
+2026-08-13 12:40:40,165   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_10/val
+2026-08-13 12:40:40,165   INFO  ****************Evaluation done.*****************
+2026-08-13 12:40:40,166   INFO  Epoch 10 has been evaluated
+2026-08-13 12:40:40,166   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_11.pth to GPU
+2026-08-13 12:40:40,226   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:40:40,231   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:40:40,231   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:40:40,231   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:40:40,231   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:40:40,231   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:40:40,231   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:40,231   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:40:40,231   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:40,231   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:40,231   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:40,231   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:40,232   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:40,232   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:40:40,234   INFO  *************** EPOCH 11 EVALUATION *****************
+2026-08-13 12:40:48,716   INFO  *************** Performance of EPOCH 11 *****************
+2026-08-13 12:40:48,716   INFO  Generate label finished(sec_per_example: 0.1047 second).
+2026-08-13 12:40:48,716   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:40:48,716   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:40:48,716   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:40:48,716   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:40:48,716   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:40:48,716   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:40:48,717   INFO  Average predicted number of objects(81 samples): 0.000
+2026-08-13 12:40:49,358   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_11/val/final_result/data/results_nusc.json
+2026-08-13 12:40:49,570   INFO  Evaluation failed: list index out of range
+2026-08-13 12:40:49,572   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_11/val
+2026-08-13 12:40:49,572   INFO  ****************Evaluation done.*****************
+2026-08-13 12:40:49,573   INFO  Epoch 11 has been evaluated
+2026-08-13 12:40:49,574   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_12.pth to GPU
+2026-08-13 12:40:49,634   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:49,639   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:49,640   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:49,640   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:40:49,642   INFO  *************** EPOCH 12 EVALUATION *****************
+2026-08-13 12:40:58,179   INFO  *************** Performance of EPOCH 12 *****************
+2026-08-13 12:40:58,180   INFO  Generate label finished(sec_per_example: 0.1054 second).
+2026-08-13 12:40:58,180   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:40:58,180   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:40:58,180   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:40:58,180   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:40:58,180   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:40:58,180   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:40:58,180   INFO  Average predicted number of objects(81 samples): 0.000
+2026-08-13 12:40:59,147   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_12/val/final_result/data/results_nusc.json
+2026-08-13 12:40:59,344   INFO  Evaluation failed: list index out of range
+2026-08-13 12:40:59,346   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_12/val
+2026-08-13 12:40:59,346   INFO  ****************Evaluation done.*****************
+2026-08-13 12:40:59,347   INFO  Epoch 12 has been evaluated
+2026-08-13 12:40:59,348   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_13.pth to GPU
+2026-08-13 12:40:59,408   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:59,413   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:40:59,414   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:40:59,414   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:40:59,416   INFO  *************** EPOCH 13 EVALUATION *****************
+2026-08-13 12:41:08,128   INFO  *************** Performance of EPOCH 13 *****************
+2026-08-13 12:41:08,128   INFO  Generate label finished(sec_per_example: 0.1075 second).
+2026-08-13 12:41:08,128   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:41:08,128   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:41:08,128   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:41:08,128   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:41:08,128   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:41:08,128   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:41:08,128   INFO  Average predicted number of objects(81 samples): 0.025
+2026-08-13 12:41:08,678   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_13/val/final_result/data/results_nusc.json
+2026-08-13 12:41:08,864   INFO  Evaluation failed: list index out of range
+2026-08-13 12:41:08,865   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_13/val
+2026-08-13 12:41:08,865   INFO  ****************Evaluation done.*****************
+2026-08-13 12:41:08,867   INFO  Epoch 13 has been evaluated
+2026-08-13 12:41:08,867   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_14.pth to GPU
+2026-08-13 12:41:08,920   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:08,925   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:41:08,926   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:41:08,926   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:41:08,926   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:41:08,926   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:41:08,926   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:08,926   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:41:08,926   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:08,926   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:08,926   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:08,926   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:08,926   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:08,926   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:08,926   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:41:08,927   INFO  *************** EPOCH 14 EVALUATION *****************
+2026-08-13 12:41:17,001   INFO  *************** Performance of EPOCH 14 *****************
+2026-08-13 12:41:17,001   INFO  Generate label finished(sec_per_example: 0.0997 second).
+2026-08-13 12:41:17,001   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:41:17,002   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:41:17,002   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:41:17,002   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:41:17,002   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:41:17,002   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:41:17,002   INFO  Average predicted number of objects(81 samples): 0.062
+2026-08-13 12:41:17,534   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_14/val/final_result/data/results_nusc.json
+2026-08-13 12:41:17,722   INFO  Evaluation failed: list index out of range
+2026-08-13 12:41:17,724   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_14/val
+2026-08-13 12:41:17,724   INFO  ****************Evaluation done.*****************
+2026-08-13 12:41:17,725   INFO  Epoch 14 has been evaluated
+2026-08-13 12:41:17,725   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_15.pth to GPU
+2026-08-13 12:41:17,779   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:41:17,784   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:17,785   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:17,785   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:41:17,787   INFO  *************** EPOCH 15 EVALUATION *****************
+2026-08-13 12:41:25,836   INFO  *************** Performance of EPOCH 15 *****************
+2026-08-13 12:41:25,836   INFO  Generate label finished(sec_per_example: 0.0994 second).
+2026-08-13 12:41:25,836   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:41:25,836   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:41:25,836   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:41:25,836   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:41:25,836   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:41:25,836   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:41:25,836   INFO  Average predicted number of objects(81 samples): 0.025
+2026-08-13 12:41:26,336   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_15/val/final_result/data/results_nusc.json
+2026-08-13 12:41:26,518   INFO  Evaluation failed: list index out of range
+2026-08-13 12:41:26,520   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_15/val
+2026-08-13 12:41:26,520   INFO  ****************Evaluation done.*****************
+2026-08-13 12:41:26,520   INFO  Epoch 15 has been evaluated
+2026-08-13 12:41:26,521   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_16.pth to GPU
+2026-08-13 12:41:26,574   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:26,578   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:26,579   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:26,580   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:41:26,581   INFO  *************** EPOCH 16 EVALUATION *****************
+2026-08-13 12:41:34,722   INFO  *************** Performance of EPOCH 16 *****************
+2026-08-13 12:41:34,722   INFO  Generate label finished(sec_per_example: 0.1005 second).
+2026-08-13 12:41:34,722   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:41:34,722   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:41:34,722   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:41:34,722   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:41:34,722   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:41:34,722   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:41:34,722   INFO  Average predicted number of objects(81 samples): 0.086
+2026-08-13 12:41:35,240   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_16/val/final_result/data/results_nusc.json
+2026-08-13 12:41:35,460   INFO  Evaluation failed: list index out of range
+2026-08-13 12:41:35,461   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_16/val
+2026-08-13 12:41:35,462   INFO  ****************Evaluation done.*****************
+2026-08-13 12:41:35,463   INFO  Epoch 16 has been evaluated
+2026-08-13 12:41:35,463   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_17.pth to GPU
+2026-08-13 12:41:35,507   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:35,512   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:35,513   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:35,513   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:41:35,515   INFO  *************** EPOCH 17 EVALUATION *****************
+2026-08-13 12:41:43,843   INFO  *************** Performance of EPOCH 17 *****************
+2026-08-13 12:41:43,843   INFO  Generate label finished(sec_per_example: 0.1028 second).
+2026-08-13 12:41:43,843   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:41:43,843   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:41:43,843   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:41:43,843   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:41:43,843   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:41:43,844   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:41:43,844   INFO  Average predicted number of objects(81 samples): 0.185
+2026-08-13 12:41:44,353   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_17/val/final_result/data/results_nusc.json
+2026-08-13 12:41:44,554   INFO  Evaluation failed: list index out of range
+2026-08-13 12:41:44,558   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_17/val
+2026-08-13 12:41:44,558   INFO  ****************Evaluation done.*****************
+2026-08-13 12:41:44,560   INFO  Epoch 17 has been evaluated
+2026-08-13 12:41:44,560   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_18.pth to GPU
+2026-08-13 12:41:44,612   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:44,617   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:44,618   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:44,618   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:41:44,619   INFO  *************** EPOCH 18 EVALUATION *****************
+2026-08-13 12:41:52,697   INFO  *************** Performance of EPOCH 18 *****************
+2026-08-13 12:41:52,697   INFO  Generate label finished(sec_per_example: 0.0997 second).
+2026-08-13 12:41:52,697   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:41:52,697   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:41:52,697   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:41:52,697   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:41:52,697   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:41:52,697   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:41:52,698   INFO  Average predicted number of objects(81 samples): 0.210
+2026-08-13 12:41:53,540   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_18/val/final_result/data/results_nusc.json
+2026-08-13 12:41:53,739   INFO  Evaluation failed: list index out of range
+2026-08-13 12:41:53,741   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_18/val
+2026-08-13 12:41:53,741   INFO  ****************Evaluation done.*****************
+2026-08-13 12:41:53,742   INFO  Epoch 18 has been evaluated
+2026-08-13 12:41:53,743   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_19.pth to GPU
+2026-08-13 12:41:53,799   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:53,804   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:41:53,805   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:41:53,805   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:41:53,809   INFO  *************** EPOCH 19 EVALUATION *****************
+2026-08-13 12:42:02,607   INFO  *************** Performance of EPOCH 19 *****************
+2026-08-13 12:42:02,608   INFO  Generate label finished(sec_per_example: 0.1086 second).
+2026-08-13 12:42:02,608   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:42:02,608   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:42:02,608   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:42:02,608   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:42:02,608   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:42:02,608   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:42:02,608   INFO  Average predicted number of objects(81 samples): 0.704
+2026-08-13 12:42:03,471   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_19/val/final_result/data/results_nusc.json
+2026-08-13 12:42:03,696   INFO  Evaluation failed: list index out of range
+2026-08-13 12:42:03,698   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_19/val
+2026-08-13 12:42:03,699   INFO  ****************Evaluation done.*****************
+2026-08-13 12:42:03,701   INFO  Epoch 19 has been evaluated
+2026-08-13 12:42:03,701   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/unfrozen_backbone_1_94/ckpt/checkpoint_epoch_20.pth to GPU
+2026-08-13 12:42:03,762   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+pyd75e03f
+2026-08-13 12:42:03,767   INFO  Not updated weight backbone_3d.conv1.1.conv.weight: torch.Size([16, 3, 3, 3, 16])
+2026-08-13 12:42:03,767   INFO  Not updated weight backbone_3d.conv1.1.bn1.weight: torch.Size([16])
+2026-08-13 12:42:03,767   INFO  Not updated weight backbone_3d.conv1.1.bn1.bias: torch.Size([16])
+2026-08-13 12:42:03,767   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_mean: torch.Size([16])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv1.1.bn1.running_var: torch.Size([16])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv1.1.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 16])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv1.1.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv1.1.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv2.3.conv.weight: torch.Size([32, 3, 3, 3, 32])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv2.3.bn1.weight: torch.Size([32])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv2.3.bn1.bias: torch.Size([32])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_mean: torch.Size([32])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv2.3.bn1.running_var: torch.Size([32])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv2.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 32])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv2.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv2.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv3.3.conv.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv3.3.bn1.weight: torch.Size([64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv3.3.bn1.bias: torch.Size([64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_mean: torch.Size([64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv3.3.bn1.running_var: torch.Size([64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv3.3.bn1.num_batches_tracked: torch.Size([])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.0.weight: torch.Size([64, 3, 3, 3, 64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.weight: torch.Size([64])
+2026-08-13 12:42:03,768   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.bias: torch.Size([64])
+2026-08-13 12:42:03,769   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_mean: torch.Size([64])
+2026-08-13 12:42:03,769   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.running_var: torch.Size([64])
+2026-08-13 12:42:03,769   INFO  Not updated weight backbone_3d.conv3.3.conv_enlarge.1.num_batches_tracked: torch.Size([])
+2026-08-13 12:42:03,769   INFO  Not updated weight backbone_3d.conv3.3.conv_imp.weight: torch.Size([27, 3, 3, 3, 64])
+2026-08-13 12:42:03,769   INFO  ==> Done (loaded 163/202)
+2026-08-13 12:42:03,771   INFO  *************** EPOCH 20 EVALUATION *****************
+2026-08-13 12:42:12,592   INFO  *************** Performance of EPOCH 20 *****************
+2026-08-13 12:42:12,592   INFO  Generate label finished(sec_per_example: 0.1089 second).
+2026-08-13 12:42:12,592   INFO  recall_roi_0.3: 0.000000
+2026-08-13 12:42:12,592   INFO  recall_rcnn_0.3: 0.000000
+2026-08-13 12:42:12,592   INFO  recall_roi_0.5: 0.000000
+2026-08-13 12:42:12,592   INFO  recall_rcnn_0.5: 0.000000
+2026-08-13 12:42:12,592   INFO  recall_roi_0.7: 0.000000
+2026-08-13 12:42:12,592   INFO  recall_rcnn_0.7: 0.000000
+2026-08-13 12:42:12,592   INFO  Average predicted number of objects(81 samples): 0.827
+2026-08-13 12:42:13,113   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_20/val/final_result/data/results_nusc.json
+2026-08-13 12:42:13,389   INFO  Evaluation failed: list index out of range
+2026-08-13 12:42:13,391   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_all_default/default/epoch_20/val
+2026-08-13 12:42:13,391   INFO  ****************Evaluation done.*****************
+2026-08-13 12:42:13,392   INFO  Epoch 20 has been evaluated
