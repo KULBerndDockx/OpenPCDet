@@ -16,6 +16,11 @@ from pcdet.models import build_network, load_data_to_gpu
 from pcdet.utils import common_utils
 from visual_utils.multiview_renderer import MultiViewRenderer
 
+KITTI_TO_USE = '000422'
+NUSCENES_TO_USE = 'n008-2018-08-01-15-16-36-0400__LIDAR_TOP__1533151609547766'
+EROD_TO_USE = '0326'
+
+TO_USE = [KITTI_TO_USE, NUSCENES_TO_USE, EROD_TO_USE]
 
 class DemoDataset(DatasetTemplate):
     def __init__(self, dataset_cfg, class_names, training=True, root_path=None, logger=None, ext='.npy'):
@@ -134,6 +139,11 @@ def draw_bev_image(points, pred_boxes, pred_scores, pred_labels, class_names, sa
     else:
         if save_path is not None:
             fig.savefig(save_path, facecolor='black')
+            save_name = Path(save_path).stem.rsplit('_', 1)[-1]
+
+            if save_name in TO_USE:
+                file_name = Path(save_path).name
+                fig.savefig("afbeeldingen" / f'{file_name}.png', facecolor='black')
         if created_fig:
             plt.close(fig)
         return None
