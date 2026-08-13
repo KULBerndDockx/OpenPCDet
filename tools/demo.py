@@ -286,7 +286,7 @@ def main():
             pred_labels = pred_dicts[0]['pred_labels'].cpu().numpy()
 
             sample_name = Path(demo_dataset.sample_file_list[idx]).stem
-            save_path = output_dir / f'{sample_name}.png'
+            save_path = output_dir / f'{args.extra_tag}_{sample_name}.png'
 
             if args.realtime:
                 fig_ax = draw_bev_image(points, pred_boxes, pred_scores, pred_labels,
