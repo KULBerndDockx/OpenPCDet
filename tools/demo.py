@@ -161,7 +161,7 @@ def get_box_corners_2d(cx, cy, dx, dy, heading):
     return corners
 
 
-def _render_prediction_outputs(points, boxes, scores, labels, class_names, sample_name, output_dir, score_thresh):
+def _render_prediction_outputs(points, boxes, scores, labels, class_names, sample_name, output_dir, score_thresh, extra_tag=None):
     """Render frame and per-instance prediction images in a worker process."""
     renderer = MultiViewRenderer()
 
@@ -178,7 +178,7 @@ def _render_prediction_outputs(points, boxes, scores, labels, class_names, sampl
         pred_class_names.append(cls_name)
         pred_names.append(f'{cls_name} {scores[i]:.2f}')
 
-    frame_save_path = Path(output_dir) / f'{sample_name}.png'
+    frame_save_path = Path(output_dir) / f'{extra_tag}_{sample_name}.png'
     renderer.draw_frame(
         points=points,
         boxes=boxes,
@@ -304,7 +304,8 @@ def main():
                     list(cfg.CLASS_NAMES),
                     sample_name,
                     str(output_dir),
-                    render_score_thresh
+                    render_score_thresh,
+                    args.extra_tag
                 )
                 futures.append((sample_name, fut))
 
