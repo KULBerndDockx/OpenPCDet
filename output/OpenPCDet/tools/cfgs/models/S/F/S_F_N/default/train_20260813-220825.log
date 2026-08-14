@@ -6468,3 +6468,186 @@
 
 2026-08-14 08:36:27,865   INFO  Train:    4/4 (100%) [52060/55563 ( 94%)]  Loss: 1.037 (1.05)  LR: 2.902e-07  Time cost: 3:41:30/14:54 [10:27:59/14:54]  Acc_iter 218750      Data time: 0.00(0.00)  Forward time: 0.26(0.25)  Batch time: 0.26(0.26)
 2026-08-14 08:36:41,047   INFO  Train:    4/4 (100%) [52110/55563 ( 94%)]  Loss: 2.220 (1.05)  LR: 2.821e-07  Time cost: 3:41:43/14:41 [10:28:13/14:41]  Acc_iter 218800      Data time: 0.00(0.00)  Forward time: 0.26(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:36:54,092   INFO  Train:    4/4 (100%) [52160/55563 ( 94%)]  Loss: 0.7042 (1.05)  LR: 2.741e-07  Time cost: 3:41:56/14:28 [10:28:26/14:28]  Acc_iter 218850      Data time: 0.00(0.00)  Forward time: 0.27(0.25)  Batch time: 0.27(0.26)
+2026-08-14 08:36:54,468   INFO  a1e06a0b30c0                Fri Aug 14 08:36:54 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 64°C,  97 % |  7103 /  8192 MB | root(6428M)
+
+2026-08-14 08:37:07,675   INFO  Train:    4/4 (100%) [52210/55563 ( 94%)]  Loss: 1.266 (1.05)  LR: 2.662e-07  Time cost: 3:42:10/14:16 [10:28:39/14:16]  Acc_iter 218900      Data time: 0.00(0.00)  Forward time: 0.30(0.25)  Batch time: 0.30(0.26)
+2026-08-14 08:37:20,876   INFO  Train:    4/4 (100%) [52260/55563 ( 94%)]  Loss: 1.251 (1.05)  LR: 2.584e-07  Time cost: 3:42:23/14:03 [10:28:52/14:03]  Acc_iter 218950      Data time: 0.00(0.00)  Forward time: 0.27(0.25)  Batch time: 0.27(0.26)
+2026-08-14 08:37:33,626   INFO  Train:    4/4 (100%) [52310/55563 ( 94%)]  Loss: 1.415 (1.05)  LR: 2.507e-07  Time cost: 3:42:36/13:50 [10:29:05/13:50]  Acc_iter 219000      Data time: 0.00(0.00)  Forward time: 0.24(0.25)  Batch time: 0.24(0.26)
+2026-08-14 08:37:34,003   INFO  a1e06a0b30c0                Fri Aug 14 08:37:33 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 64°C,   4 % |  7065 /  8192 MB | root(6428M)
+
+2026-08-14 08:37:46,475   INFO  Train:    4/4 (100%) [52360/55563 ( 94%)]  Loss: 1.403 (1.05)  LR: 2.431e-07  Time cost: 3:42:49/13:37 [10:29:18/13:37]  Acc_iter 219050      Data time: 0.00(0.00)  Forward time: 0.27(0.25)  Batch time: 0.27(0.26)
+2026-08-14 08:37:59,266   INFO  Train:    4/4 (100%) [52410/55563 ( 94%)]  Loss: 1.559 (1.05)  LR: 2.357e-07  Time cost: 3:43:02/13:25 [10:29:31/13:25]  Acc_iter 219100      Data time: 0.00(0.00)  Forward time: 0.25(0.25)  Batch time: 0.25(0.26)
+2026-08-14 08:38:11,957   INFO  Train:    4/4 (100%) [52460/55563 ( 94%)]  Loss: 0.5568 (1.05)  LR: 2.284e-07  Time cost: 3:43:14/13:12 [10:29:44/13:12]  Acc_iter 219150      Data time: 0.00(0.00)  Forward time: 0.24(0.25)  Batch time: 0.24(0.26)
+2026-08-14 08:38:12,340   INFO  a1e06a0b30c0                Fri Aug 14 08:38:12 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 69°C,  70 % |  7064 /  8192 MB | root(6428M)
+
+2026-08-14 08:38:25,393   INFO  Train:    4/4 (100%) [52510/55563 ( 95%)]  Loss: 0.4962 (1.05)  LR: 2.212e-07  Time cost: 3:43:28/12:59 [10:29:57/12:59]  Acc_iter 219200      Data time: 0.00(0.00)  Forward time: 0.25(0.25)  Batch time: 0.25(0.26)
+2026-08-14 08:38:38,347   INFO  Train:    4/4 (100%) [52560/55563 ( 95%)]  Loss: 1.141 (1.05)  LR: 2.141e-07  Time cost: 3:43:41/12:46 [10:30:10/12:46]  Acc_iter 219250      Data time: 0.00(0.00)  Forward time: 0.25(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:38:50,881   INFO  Train:    4/4 (100%) [52610/55563 ( 95%)]  Loss: 0.4440 (1.05)  LR: 2.071e-07  Time cost: 3:43:53/12:34 [10:30:23/12:34]  Acc_iter 219300      Data time: 0.00(0.00)  Forward time: 0.22(0.25)  Batch time: 0.22(0.26)
+2026-08-14 08:38:51,261   INFO  a1e06a0b30c0                Fri Aug 14 08:38:51 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 70°C,  94 % |  7065 /  8192 MB | root(6428M)
+
+2026-08-14 08:39:04,431   INFO  Train:    4/4 (100%) [52660/55563 ( 95%)]  Loss: 0.8459 (1.05)  LR: 2.003e-07  Time cost: 3:44:07/12:21 [10:30:36/12:21]  Acc_iter 219350      Data time: 0.00(0.00)  Forward time: 0.25(0.25)  Batch time: 0.25(0.26)
+2026-08-14 08:39:17,834   INFO  Train:    4/4 (100%) [52710/55563 ( 95%)]  Loss: 0.7729 (1.05)  LR: 1.935e-07  Time cost: 3:44:20/12:08 [10:30:49/12:08]  Acc_iter 219400      Data time: 0.00(0.00)  Forward time: 0.26(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:39:30,546   INFO  Train:    4/4 (100%) [52760/55563 ( 95%)]  Loss: 1.312 (1.05)  LR: 1.869e-07  Time cost: 3:44:33/11:55 [10:31:02/11:55]  Acc_iter 219450      Data time: 0.00(0.00)  Forward time: 0.25(0.25)  Batch time: 0.25(0.26)
+2026-08-14 08:39:30,930   INFO  a1e06a0b30c0                Fri Aug 14 08:39:30 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 69°C,  73 % |  7064 /  8192 MB | root(6428M)
+
+2026-08-14 08:39:43,766   INFO  Train:    4/4 (100%) [52810/55563 ( 95%)]  Loss: 2.286 (1.05)  LR: 1.804e-07  Time cost: 3:44:46/11:43 [10:31:15/11:43]  Acc_iter 219500      Data time: 0.00(0.00)  Forward time: 0.25(0.25)  Batch time: 0.25(0.26)
+2026-08-14 08:39:57,377   INFO  Save latest model to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/ckpt/latest_model
+2026-08-14 08:39:57,666   INFO  Train:    4/4 (100%) [52860/55563 ( 95%)]  Loss: 0.4762 (1.05)  LR: 1.740e-07  Time cost: 3:45:00/11:30 [10:31:29/11:30]  Acc_iter 219550      Data time: 0.11(0.00)  Forward time: 0.29(0.25)  Batch time: 0.39(0.26)
+2026-08-14 08:40:11,706   INFO  Train:    4/4 (100%) [52910/55563 ( 95%)]  Loss: 1.525 (1.05)  LR: 1.678e-07  Time cost: 3:45:14/11:17 [10:31:43/11:17]  Acc_iter 219600      Data time: 0.00(0.00)  Forward time: 0.32(0.25)  Batch time: 0.32(0.26)
+2026-08-14 08:40:12,166   INFO  a1e06a0b30c0                Fri Aug 14 08:40:12 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 65°C,  15 % |  7063 /  8192 MB | root(6428M)
+
+2026-08-14 08:40:25,619   INFO  Train:    4/4 (100%) [52960/55563 ( 95%)]  Loss: 1.396 (1.05)  LR: 1.616e-07  Time cost: 3:45:28/11:04 [10:31:57/11:04]  Acc_iter 219650      Data time: 0.00(0.00)  Forward time: 0.27(0.25)  Batch time: 0.27(0.26)
+2026-08-14 08:40:38,451   INFO  Train:    4/4 (100%) [53010/55563 ( 95%)]  Loss: 0.5106 (1.05)  LR: 1.556e-07  Time cost: 3:45:41/10:52 [10:32:10/10:52]  Acc_iter 219700      Data time: 0.00(0.00)  Forward time: 0.23(0.25)  Batch time: 0.23(0.26)
+2026-08-14 08:40:51,626   INFO  Train:    4/4 (100%) [53060/55563 ( 95%)]  Loss: 0.6102 (1.05)  LR: 1.497e-07  Time cost: 3:45:54/10:39 [10:32:23/10:39]  Acc_iter 219750      Data time: 0.00(0.00)  Forward time: 0.22(0.25)  Batch time: 0.22(0.26)
+2026-08-14 08:40:52,037   INFO  a1e06a0b30c0                Fri Aug 14 08:40:52 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 64°C,   9 % |  7058 /  8192 MB | root(6428M)
+
+2026-08-14 08:41:05,810   INFO  Train:    4/4 (100%) [53110/55563 ( 96%)]  Loss: 0.7397 (1.05)  LR: 1.439e-07  Time cost: 3:46:08/10:26 [10:32:37/10:26]  Acc_iter 219800      Data time: 0.00(0.00)  Forward time: 0.31(0.25)  Batch time: 0.31(0.26)
+2026-08-14 08:41:19,266   INFO  Train:    4/4 (100%) [53160/55563 ( 96%)]  Loss: 0.8462 (1.05)  LR: 1.382e-07  Time cost: 3:46:22/10:13 [10:32:51/10:13]  Acc_iter 219850      Data time: 0.00(0.00)  Forward time: 0.26(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:41:32,320   INFO  Train:    4/4 (100%) [53210/55563 ( 96%)]  Loss: 0.8615 (1.05)  LR: 1.326e-07  Time cost: 3:46:35/10:01 [10:33:04/10:01]  Acc_iter 219900      Data time: 0.00(0.00)  Forward time: 0.22(0.25)  Batch time: 0.22(0.26)
+2026-08-14 08:41:32,706   INFO  a1e06a0b30c0                Fri Aug 14 08:41:32 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 71°C,  99 % |  7058 /  8192 MB | root(6428M)
+
+2026-08-14 08:41:46,082   INFO  Train:    4/4 (100%) [53260/55563 ( 96%)]  Loss: 0.6441 (1.05)  LR: 1.272e-07  Time cost: 3:46:48/09:48 [10:33:18/09:48]  Acc_iter 219950      Data time: 0.00(0.00)  Forward time: 0.30(0.25)  Batch time: 0.30(0.26)
+2026-08-14 08:41:59,736   INFO  Train:    4/4 (100%) [53310/55563 ( 96%)]  Loss: 1.738 (1.05)  LR: 1.218e-07  Time cost: 3:47:02/09:35 [10:33:31/09:35]  Acc_iter 220000      Data time: 0.00(0.00)  Forward time: 0.29(0.25)  Batch time: 0.29(0.26)
+2026-08-14 08:42:13,344   INFO  Train:    4/4 (100%) [53360/55563 ( 96%)]  Loss: 1.235 (1.05)  LR: 1.166e-07  Time cost: 3:47:16/09:22 [10:33:45/09:22]  Acc_iter 220050      Data time: 0.00(0.00)  Forward time: 0.27(0.25)  Batch time: 0.28(0.26)
+2026-08-14 08:42:13,744   INFO  a1e06a0b30c0                Fri Aug 14 08:42:13 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 70°C,  87 % |  7058 /  8192 MB | root(6428M)
+
+2026-08-14 08:42:26,707   INFO  Train:    4/4 (100%) [53410/55563 ( 96%)]  Loss: 0.3282 (1.05)  LR: 1.115e-07  Time cost: 3:47:29/09:10 [10:33:58/09:10]  Acc_iter 220100      Data time: 0.00(0.00)  Forward time: 0.25(0.25)  Batch time: 0.25(0.26)
+2026-08-14 08:42:39,824   INFO  Train:    4/4 (100%) [53460/55563 ( 96%)]  Loss: 1.978 (1.05)  LR: 1.065e-07  Time cost: 3:47:42/08:57 [10:34:11/08:57]  Acc_iter 220150      Data time: 0.00(0.00)  Forward time: 0.28(0.25)  Batch time: 0.28(0.26)
+2026-08-14 08:42:53,022   INFO  Train:    4/4 (100%) [53510/55563 ( 96%)]  Loss: 0.6025 (1.05)  LR: 1.017e-07  Time cost: 3:47:55/08:44 [10:34:25/08:44]  Acc_iter 220200      Data time: 0.00(0.00)  Forward time: 0.28(0.25)  Batch time: 0.28(0.26)
+2026-08-14 08:42:53,397   INFO  a1e06a0b30c0                Fri Aug 14 08:42:53 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 70°C,  77 % |  7057 /  8192 MB | root(6428M)
+
+2026-08-14 08:43:06,748   INFO  Train:    4/4 (100%) [53560/55563 ( 96%)]  Loss: 1.603 (1.05)  LR: 9.693e-08  Time cost: 3:48:09/08:31 [10:34:38/08:31]  Acc_iter 220250      Data time: 0.00(0.00)  Forward time: 0.29(0.25)  Batch time: 0.29(0.26)
+2026-08-14 08:43:19,974   INFO  Train:    4/4 (100%) [53610/55563 ( 96%)]  Loss: 0.5921 (1.05)  LR: 9.230e-08  Time cost: 3:48:22/08:19 [10:34:52/08:19]  Acc_iter 220300      Data time: 0.00(0.00)  Forward time: 0.25(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:43:33,010   INFO  Train:    4/4 (100%) [53660/55563 ( 97%)]  Loss: 1.365 (1.05)  LR: 8.779e-08  Time cost: 3:48:35/08:06 [10:35:05/08:06]  Acc_iter 220350      Data time: 0.00(0.00)  Forward time: 0.28(0.25)  Batch time: 0.28(0.26)
+2026-08-14 08:43:33,463   INFO  a1e06a0b30c0                Fri Aug 14 08:43:33 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 68°C,  76 % |  7052 /  8192 MB | root(6428M)
+
+2026-08-14 08:43:46,780   INFO  Train:    4/4 (100%) [53710/55563 ( 97%)]  Loss: 1.821 (1.05)  LR: 8.339e-08  Time cost: 3:48:49/07:53 [10:35:18/07:53]  Acc_iter 220400      Data time: 0.00(0.00)  Forward time: 0.29(0.25)  Batch time: 0.29(0.26)
+2026-08-14 08:43:59,999   INFO  Train:    4/4 (100%) [53760/55563 ( 97%)]  Loss: 1.316 (1.05)  LR: 7.911e-08  Time cost: 3:49:02/07:40 [10:35:32/07:40]  Acc_iter 220450      Data time: 0.00(0.00)  Forward time: 0.22(0.25)  Batch time: 0.22(0.26)
+2026-08-14 08:44:13,876   INFO  Train:    4/4 (100%) [53810/55563 ( 97%)]  Loss: 0.7908 (1.05)  LR: 7.495e-08  Time cost: 3:49:16/07:28 [10:35:45/07:28]  Acc_iter 220500      Data time: 0.00(0.00)  Forward time: 0.28(0.25)  Batch time: 0.28(0.26)
+2026-08-14 08:44:14,279   INFO  a1e06a0b30c0                Fri Aug 14 08:44:14 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 70°C,  99 % |  7052 /  8192 MB | root(6428M)
+
+2026-08-14 08:44:27,170   INFO  Train:    4/4 (100%) [53860/55563 ( 97%)]  Loss: 0.7844 (1.05)  LR: 7.090e-08  Time cost: 3:49:29/07:15 [10:35:59/07:15]  Acc_iter 220550      Data time: 0.00(0.00)  Forward time: 0.25(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:44:40,075   INFO  Train:    4/4 (100%) [53910/55563 ( 97%)]  Loss: 1.176 (1.05)  LR: 6.697e-08  Time cost: 3:49:42/07:02 [10:36:12/07:02]  Acc_iter 220600      Data time: 0.00(0.00)  Forward time: 0.29(0.25)  Batch time: 0.29(0.26)
+2026-08-14 08:44:53,272   INFO  Train:    4/4 (100%) [53960/55563 ( 97%)]  Loss: 1.379 (1.05)  LR: 6.316e-08  Time cost: 3:49:56/06:49 [10:36:25/06:49]  Acc_iter 220650      Data time: 0.00(0.00)  Forward time: 0.25(0.25)  Batch time: 0.25(0.26)
+2026-08-14 08:44:53,731   INFO  a1e06a0b30c0                Fri Aug 14 08:44:53 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 66°C,  75 % |  7052 /  8192 MB | root(6428M)
+
+2026-08-14 08:44:57,584   INFO  Save latest model to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/ckpt/latest_model
+2026-08-14 08:45:07,344   INFO  Train:    4/4 (100%) [54010/55563 ( 97%)]  Loss: 0.6531 (1.05)  LR: 5.947e-08  Time cost: 3:50:10/06:37 [10:36:39/06:37]  Acc_iter 220700      Data time: 0.00(0.00)  Forward time: 0.25(0.25)  Batch time: 0.25(0.26)
+2026-08-14 08:45:20,729   INFO  Train:    4/4 (100%) [54060/55563 ( 97%)]  Loss: 1.727 (1.05)  LR: 5.589e-08  Time cost: 3:50:23/06:24 [10:36:52/06:24]  Acc_iter 220750      Data time: 0.00(0.00)  Forward time: 0.26(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:45:33,779   INFO  Train:    4/4 (100%) [54110/55563 ( 97%)]  Loss: 1.232 (1.05)  LR: 5.243e-08  Time cost: 3:50:36/06:11 [10:37:05/06:11]  Acc_iter 220800      Data time: 0.00(0.00)  Forward time: 0.31(0.25)  Batch time: 0.31(0.26)
+2026-08-14 08:45:34,206   INFO  a1e06a0b30c0                Fri Aug 14 08:45:34 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 67°C,  85 % |  7050 /  8192 MB | root(6428M)
+
+2026-08-14 08:45:47,416   INFO  Train:    4/4 (100%) [54160/55563 ( 97%)]  Loss: 0.5067 (1.05)  LR: 4.909e-08  Time cost: 3:50:50/05:58 [10:37:19/05:58]  Acc_iter 220850      Data time: 0.00(0.00)  Forward time: 0.30(0.25)  Batch time: 0.30(0.26)
+2026-08-14 08:46:00,844   INFO  Train:    4/4 (100%) [54210/55563 ( 98%)]  Loss: 0.8301 (1.05)  LR: 4.586e-08  Time cost: 3:51:03/05:46 [10:37:32/05:46]  Acc_iter 220900      Data time: 0.00(0.00)  Forward time: 0.26(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:46:14,804   INFO  Train:    4/4 (100%) [54260/55563 ( 98%)]  Loss: 1.431 (1.05)  LR: 4.275e-08  Time cost: 3:51:17/05:33 [10:37:46/05:33]  Acc_iter 220950      Data time: 0.00(0.00)  Forward time: 0.26(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:46:15,228   INFO  a1e06a0b30c0                Fri Aug 14 08:46:15 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 70°C,  99 % |  7052 /  8192 MB | root(6428M)
+
+2026-08-14 08:46:28,434   INFO  Train:    4/4 (100%) [54310/55563 ( 98%)]  Loss: 1.611 (1.05)  LR: 3.976e-08  Time cost: 3:51:31/05:20 [10:38:00/05:20]  Acc_iter 221000      Data time: 0.00(0.00)  Forward time: 0.28(0.25)  Batch time: 0.28(0.26)
+2026-08-14 08:46:41,247   INFO  Train:    4/4 (100%) [54360/55563 ( 98%)]  Loss: 0.8643 (1.05)  LR: 3.688e-08  Time cost: 3:51:44/05:07 [10:38:13/05:07]  Acc_iter 221050      Data time: 0.00(0.00)  Forward time: 0.23(0.25)  Batch time: 0.23(0.26)
+2026-08-14 08:46:54,179   INFO  Train:    4/4 (100%) [54410/55563 ( 98%)]  Loss: 0.8330 (1.05)  LR: 3.413e-08  Time cost: 3:51:56/04:54 [10:38:26/04:54]  Acc_iter 221100      Data time: 0.00(0.00)  Forward time: 0.26(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:46:54,564   INFO  a1e06a0b30c0                Fri Aug 14 08:46:54 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 65°C,  99 % |  7052 /  8192 MB | root(6428M)
+
+2026-08-14 08:47:08,136   INFO  Train:    4/4 (100%) [54460/55563 ( 98%)]  Loss: 1.318 (1.05)  LR: 3.149e-08  Time cost: 3:52:10/04:42 [10:38:40/04:42]  Acc_iter 221150      Data time: 0.00(0.00)  Forward time: 0.29(0.25)  Batch time: 0.29(0.26)
+2026-08-14 08:47:21,071   INFO  Train:    4/4 (100%) [54510/55563 ( 98%)]  Loss: 0.6345 (1.05)  LR: 2.896e-08  Time cost: 3:52:23/04:29 [10:38:53/04:29]  Acc_iter 221200      Data time: 0.00(0.00)  Forward time: 0.23(0.25)  Batch time: 0.24(0.26)
+2026-08-14 08:47:34,522   INFO  Train:    4/4 (100%) [54560/55563 ( 98%)]  Loss: 1.683 (1.05)  LR: 2.655e-08  Time cost: 3:52:37/04:16 [10:39:06/04:16]  Acc_iter 221250      Data time: 0.00(0.00)  Forward time: 0.27(0.25)  Batch time: 0.27(0.26)
+2026-08-14 08:47:34,936   INFO  a1e06a0b30c0                Fri Aug 14 08:47:34 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 69°C,  82 % |  7052 /  8192 MB | root(6428M)
+
+2026-08-14 08:47:47,761   INFO  Train:    4/4 (100%) [54610/55563 ( 98%)]  Loss: 0.7330 (1.05)  LR: 2.426e-08  Time cost: 3:52:50/04:03 [10:39:19/04:03]  Acc_iter 221300      Data time: 0.00(0.00)  Forward time: 0.25(0.25)  Batch time: 0.25(0.26)
+2026-08-14 08:48:01,337   INFO  Train:    4/4 (100%) [54660/55563 ( 98%)]  Loss: 1.810 (1.05)  LR: 2.209e-08  Time cost: 3:53:04/03:51 [10:39:33/03:51]  Acc_iter 221350      Data time: 0.00(0.00)  Forward time: 0.30(0.25)  Batch time: 0.30(0.26)
+2026-08-14 08:48:14,760   INFO  Train:    4/4 (100%) [54710/55563 ( 98%)]  Loss: 0.4757 (1.05)  LR: 2.004e-08  Time cost: 3:53:17/03:38 [10:39:46/03:38]  Acc_iter 221400      Data time: 0.00(0.00)  Forward time: 0.23(0.25)  Batch time: 0.24(0.26)
+2026-08-14 08:48:15,173   INFO  a1e06a0b30c0                Fri Aug 14 08:48:15 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 66°C,  22 % |  7052 /  8192 MB | root(6428M)
+
+2026-08-14 08:48:28,344   INFO  Train:    4/4 (100%) [54760/55563 ( 99%)]  Loss: 1.187 (1.05)  LR: 1.810e-08  Time cost: 3:53:31/03:25 [10:40:00/03:25]  Acc_iter 221450      Data time: 0.00(0.00)  Forward time: 0.27(0.25)  Batch time: 0.27(0.26)
+2026-08-14 08:48:41,291   INFO  Train:    4/4 (100%) [54810/55563 ( 99%)]  Loss: 1.003 (1.05)  LR: 1.628e-08  Time cost: 3:53:44/03:12 [10:40:13/03:12]  Acc_iter 221500      Data time: 0.00(0.00)  Forward time: 0.29(0.25)  Batch time: 0.29(0.26)
+2026-08-14 08:48:54,379   INFO  Train:    4/4 (100%) [54860/55563 ( 99%)]  Loss: 1.486 (1.05)  LR: 1.457e-08  Time cost: 3:53:57/02:59 [10:40:26/02:59]  Acc_iter 221550      Data time: 0.00(0.00)  Forward time: 0.27(0.25)  Batch time: 0.27(0.26)
+2026-08-14 08:48:54,851   INFO  a1e06a0b30c0                Fri Aug 14 08:48:54 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 72°C,  98 % |  7052 /  8192 MB | root(6428M)
+
+2026-08-14 08:49:09,029   INFO  Train:    4/4 (100%) [54910/55563 ( 99%)]  Loss: 0.7696 (1.05)  LR: 1.298e-08  Time cost: 3:54:11/02:47 [10:40:41/02:47]  Acc_iter 221600      Data time: 0.00(0.00)  Forward time: 0.26(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:49:22,315   INFO  Train:    4/4 (100%) [54960/55563 ( 99%)]  Loss: 0.9393 (1.05)  LR: 1.151e-08  Time cost: 3:54:25/02:34 [10:40:54/02:34]  Acc_iter 221650      Data time: 0.00(0.00)  Forward time: 0.23(0.25)  Batch time: 0.23(0.26)
+2026-08-14 08:49:35,439   INFO  Train:    4/4 (100%) [55010/55563 ( 99%)]  Loss: 1.884 (1.05)  LR: 1.016e-08  Time cost: 3:54:38/02:21 [10:41:07/02:21]  Acc_iter 221700      Data time: 0.00(0.00)  Forward time: 0.24(0.25)  Batch time: 0.24(0.26)
+2026-08-14 08:49:35,824   INFO  a1e06a0b30c0                Fri Aug 14 08:49:35 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 70°C,  84 % |  7052 /  8192 MB | root(6428M)
+
+2026-08-14 08:49:49,188   INFO  Train:    4/4 (100%) [55060/55563 ( 99%)]  Loss: 0.6782 (1.05)  LR: 8.924e-09  Time cost: 3:54:51/02:08 [10:41:21/02:08]  Acc_iter 221750      Data time: 0.00(0.00)  Forward time: 0.26(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:49:57,443   INFO  Save latest model to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/ckpt/latest_model
+2026-08-14 08:50:03,206   INFO  Train:    4/4 (100%) [55110/55563 ( 99%)]  Loss: 0.9883 (1.05)  LR: 7.805e-09  Time cost: 3:55:05/01:55 [10:41:35/01:55]  Acc_iter 221800      Data time: 0.00(0.00)  Forward time: 0.28(0.25)  Batch time: 0.28(0.26)
+2026-08-14 08:50:16,758   INFO  Train:    4/4 (100%) [55160/55563 ( 99%)]  Loss: 0.5936 (1.05)  LR: 6.803e-09  Time cost: 3:55:19/01:43 [10:41:48/01:43]  Acc_iter 221850      Data time: 0.00(0.00)  Forward time: 0.25(0.25)  Batch time: 0.25(0.26)
+2026-08-14 08:50:17,158   INFO  a1e06a0b30c0                Fri Aug 14 08:50:17 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 67°C,  56 % |  7050 /  8192 MB | root(6428M)
+
+2026-08-14 08:50:30,074   INFO  Train:    4/4 (100%) [55210/55563 ( 99%)]  Loss: 0.7837 (1.05)  LR: 5.918e-09  Time cost: 3:55:32/01:30 [10:42:02/01:30]  Acc_iter 221900      Data time: 0.00(0.00)  Forward time: 0.26(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:50:43,109   INFO  Train:    4/4 (100%) [55260/55563 ( 99%)]  Loss: 1.622 (1.05)  LR: 5.150e-09  Time cost: 3:55:45/01:17 [10:42:15/01:17]  Acc_iter 221950      Data time: 0.00(0.00)  Forward time: 0.23(0.25)  Batch time: 0.23(0.26)
+2026-08-14 08:50:56,405   INFO  Train:    4/4 (100%) [55310/55563 (100%)]  Loss: 0.4282 (1.05)  LR: 4.499e-09  Time cost: 3:55:59/01:04 [10:42:28/01:04]  Acc_iter 222000      Data time: 0.00(0.00)  Forward time: 0.23(0.25)  Batch time: 0.23(0.26)
+2026-08-14 08:50:56,892   INFO  a1e06a0b30c0                Fri Aug 14 08:50:56 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 68°C,  95 % |  7050 /  8192 MB | root(6428M)
+
+2026-08-14 08:51:11,041   INFO  Train:    4/4 (100%) [55360/55563 (100%)]  Loss: 0.9788 (1.05)  LR: 3.965e-09  Time cost: 3:56:13/00:51 [10:42:43/00:51]  Acc_iter 222050      Data time: 0.00(0.00)  Forward time: 0.30(0.25)  Batch time: 0.30(0.26)
+2026-08-14 08:51:24,170   INFO  Train:    4/4 (100%) [55410/55563 (100%)]  Loss: 0.8194 (1.05)  LR: 3.548e-09  Time cost: 3:56:26/00:39 [10:42:56/00:39]  Acc_iter 222100      Data time: 0.00(0.00)  Forward time: 0.22(0.25)  Batch time: 0.22(0.26)
+2026-08-14 08:51:37,238   INFO  Train:    4/4 (100%) [55460/55563 (100%)]  Loss: 1.185 (1.05)  LR: 3.248e-09  Time cost: 3:56:40/00:26 [10:43:09/00:26]  Acc_iter 222150      Data time: 0.00(0.00)  Forward time: 0.28(0.25)  Batch time: 0.28(0.26)
+2026-08-14 08:51:37,640   INFO  a1e06a0b30c0                Fri Aug 14 08:51:37 2026  580.173.02
+[0] NVIDIA GeForce RTX 3070 | 66°C,  96 % |  7050 /  8192 MB | root(6428M)
+
+2026-08-14 08:51:50,952   INFO  Train:    4/4 (100%) [55510/55563 (100%)]  Loss: 0.9800 (1.05)  LR: 3.066e-09  Time cost: 3:56:53/00:13 [10:43:23/00:13]  Acc_iter 222200      Data time: 0.00(0.00)  Forward time: 0.28(0.25)  Batch time: 0.28(0.26)
+2026-08-14 08:52:04,370   INFO  Train:    4/4 (100%) [55560/55563 (100%)]  Loss: 0.7091 (1.05)  LR: 3.000e-09  Time cost: 3:57:07/00:00 [10:43:36/00:00]  Acc_iter 222250      Data time: 0.00(0.00)  Forward time: 0.29(0.25)  Batch time: 0.29(0.26)
+2026-08-14 08:52:04,911   INFO  Train:    4/4 (100%) [55562/55563 (100%)]  Loss: 0.6830 (1.05)  LR: 3.000e-09  Time cost: 3:57:07/00:00 [10:43:37/00:00]  Acc_iter 222252      Data time: 0.00(0.00)  Forward time: 0.26(0.25)  Batch time: 0.26(0.26)
+2026-08-14 08:52:05,691   INFO  **********************End training OpenPCDet/tools/cfgs/models/S/F/S_F_N(default)**********************
+
+
+
+2026-08-14 08:52:05,691   INFO  **********************Start evaluation OpenPCDet/tools/cfgs/models/S/F/S_F_N(default)**********************
+2026-08-14 08:52:05,692   INFO  Loading NuScenes dataset
+2026-08-14 08:52:05,941   INFO  Total samples for NuScenes dataset: 6019
+2026-08-14 08:52:05,944   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/ckpt/checkpoint_epoch_4.pth to GPU
+2026-08-14 08:52:05,999   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py3ce5612
+2026-08-14 08:52:06,006   INFO  ==> Done (loaded 202/202)
+2026-08-14 08:52:06,010   INFO  *************** EPOCH 4 EVALUATION *****************
+2026-08-14 09:02:42,676   INFO  *************** Performance of EPOCH 4 *****************
+2026-08-14 09:02:42,676   INFO  Generate label finished(sec_per_example: 0.1058 second).
+2026-08-14 09:02:42,676   INFO  recall_roi_0.3: 0.000000
+2026-08-14 09:02:42,677   INFO  recall_rcnn_0.3: 0.619450
+2026-08-14 09:02:42,677   INFO  recall_roi_0.5: 0.000000
+2026-08-14 09:02:42,677   INFO  recall_rcnn_0.5: 0.487810
+2026-08-14 09:02:42,677   INFO  recall_roi_0.7: 0.000000
+2026-08-14 09:02:42,677   INFO  recall_rcnn_0.7: 0.246112
+2026-08-14 09:02:42,679   INFO  Average predicted number of objects(6019 samples): 44.269
+2026-08-14 09:03:55,616   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_with_train/epoch_4/val/final_result/data/results_nusc.json
+2026-08-14 09:05:02,956   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.19, 0.15, 0.22, 2.21, 0.54 | 51.25, 56.65, 61.55, 64.49 | mean AP: 0.5848706246783901
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.14, 0.28, 1.37, 0.93, 0.77 | 55.43, 56.35, 57.87, 60.05 | mean AP: 0.574265385540697
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.26, 1.52, 1.07, 0.26 | 2.33, 2.54, 2.57, 2.74 | mean AP: 0.025440808886322958
+--------------average performance-------------
+trans_err:	 0.7515
+scale_err:	 0.7683
+orient_err:	 1.0120
+vel_err:	 1.1520
+attr_err:	 0.8220
+mAP:	 0.1185
+NDS:	 0.1250
+
+2026-08-14 09:05:02,958   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/eval/eval_with_train/epoch_4/val
+2026-08-14 09:05:02,958   INFO  ****************Evaluation done.*****************
+2026-08-14 09:05:02,983   INFO  Epoch 4 has been evaluated
+2026-08-14 09:05:33,014   INFO  **********************End evaluation OpenPCDet/tools/cfgs/models/S/F/S_F_N(default)**********************

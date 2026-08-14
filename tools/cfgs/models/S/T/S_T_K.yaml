@@ -3,25 +3,20 @@ CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
 DATA_CONFIG: 
     _BASE_CONFIG_: cfgs/dataset_configs/kitti_dataset.yaml
 
-    #POINT_CLOUD_RANGE: [0, -32.0, -3, 52.8, 32.0, 1]
-    #VOXEL_SIZE: [0.4, 0.2, 0.2]
-    #MAX_POINTS_PER_VOXEL: 45
-
 MODEL:
     NAME: SECONDNet_TENT
-
     TENT:
         ENABLED: True
-        LR: 0.0001
-        STEPS: 4
+        LR: 0.000025
+        STEPS: 2
         EPISODIC: False
         ADAPT_MODULES: ['backbone_2d']
         # Entropy objective settings (for sigmoid/Bernoulli entropy)
         # Use either ENTROPY_TOPK (>0) or ENTROPY_SCORE_THRESH (>0). If both are disabled,
         # all anchors contribute, which is often dominated by easy background anchors.
-        ENTROPY_TOPK: 5
-        ENTROPY_SCORE_THRESH: 0
-        ENTROPY_WEIGHT: 0.2
+        ENTROPY_TOPK: 0
+        ENTROPY_SCORE_THRESH: 0.55
+        ENTROPY_WEIGHT: 0.015
 
     VFE:
         NAME: MeanVFE
