@@ -11,9 +11,6 @@ MODEL:
         STEPS: 2
         EPISODIC: False
         ADAPT_MODULES: ['backbone_2d']
-        # Entropy objective settings (for sigmoid/Bernoulli entropy)
-        # Use either ENTROPY_TOPK (>0) or ENTROPY_SCORE_THRESH (>0). If both are disabled,
-        # all anchors contribute, which is often dominated by easy background anchors.
         ENTROPY_TOPK: 0
         ENTROPY_SCORE_THRESH: 0.55
         ENTROPY_WEIGHT: 0.015

@@ -79,16 +79,13 @@ MODEL:
 
     TENT:
         ENABLED: True
-        LR: 0.0001
-        STEPS: 1
+        LR: 0.000025
+        STEPS: 2
         EPISODIC: False
         ADAPT_MODULES: ['backbone_2d']
-        # Entropy objective settings (for sigmoid/Bernoulli entropy)
-        # Use either ENTROPY_TOPK (>0) or ENTROPY_SCORE_THRESH (>0). If both are disabled,
-        # all anchors contribute, which is often dominated by easy background anchors.
         ENTROPY_TOPK: 0
-        ENTROPY_SCORE_THRESH: 0.6
-        ENTROPY_WEIGHT: 0.4
+        ENTROPY_SCORE_THRESH: 0.55
+        ENTROPY_WEIGHT: 0.015
 
     VFE:
         NAME: PillarVFE
@@ -123,8 +120,6 @@ MODEL:
                 'class_name': 'Car',
                 'anchor_sizes': [[3.9, 1.6, 1.56]],
                 'anchor_rotations': [0, 1.57],
-              # Note: EROD GT bottom-z median is ~ -1.26 (custom_infos_val.pkl, after transforms),
-              # but changing this at test time can double-shift decoded z. Keep KITTI-trained anchor.
               'anchor_bottom_heights': [-1.78],
                 'align_center': False,
                 'feature_map_stride': 2,
@@ -135,8 +130,6 @@ MODEL:
                 'class_name': 'Pedestrian',
                 'anchor_sizes': [[0.8, 0.6, 1.73]],
                 'anchor_rotations': [0, 1.57],
-              # Note: EROD GT bottom-z median is ~ -1.34 (custom_infos_val.pkl, after transforms),
-              # but changing this at test time can double-shift decoded z. Keep KITTI-trained anchor.
               'anchor_bottom_heights': [-0.6],
                 'align_center': False,
                 'feature_map_stride': 2,
@@ -147,8 +140,6 @@ MODEL:
                 'class_name': 'Cyclist',
                 'anchor_sizes': [[1.76, 0.6, 1.73]],
                 'anchor_rotations': [0, 1.57],
-              # Note: EROD GT bottom-z median is ~ -1.10 (custom_infos_val.pkl, after transforms),
-              # but changing this at test time can double-shift decoded z. Keep KITTI-trained anchor.
               'anchor_bottom_heights': [-0.6],
                 'align_center': False,
                 'feature_map_stride': 2,
