@@ -14,16 +14,16 @@ DATA_CONFIG:
 
     # Align EROD's LiDAR frame to KITTI-like frame without retraining.
     # Suggested by tools/find_best_lidar_transform.py on GT labels.
-    LIDAR_COORD_TRANSFORM:
-      ENABLE: True
-      ROT_Z_DEG: 90
-      FLIP_X: False
-      FLIP_Y: False
-      TRANSLATION: [0.0, 0.0, 0.0]
+    #LIDAR_COORD_TRANSFORM:
+    #  ENABLE: True
+    #  ROT_Z_DEG: 90
+    #  FLIP_X: False
+    #  FLIP_Y: False
+    #  TRANSLATION: [0.0, 0.0, 0.0]
 
     # If EROD defines heading=0 along a different axis, shift GT heading here (degrees).
     # Try -90 / +90 if Car IoU stays near-zero.
-    HEADING_OFFSET_DEG: -90
+    #HEADING_OFFSET_DEG: -90
 
     # Restrict eval to the configured ROI to avoid penalizing detections for GT outside KITTI range.
     FILTER_EVAL_OUTSIDE_RANGE: True
@@ -174,7 +174,7 @@ MODEL:
         NMS_CONFIG:
             MULTI_CLASSES_NMS: False
             NMS_TYPE: nms_gpu
-            NMS_THRESH: 0.05
+            NMS_THRESH: 0.005
             NMS_PRE_MAXSIZE: 1000
             NMS_POST_MAXSIZE: 100
 
