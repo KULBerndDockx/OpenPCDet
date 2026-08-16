@@ -11,8 +11,7 @@ DATA_CONFIG:
       MAX_NUMBER_OF_VOXELS: {train: 40000, test: 40000}
 
 MODEL:
-    NAME: PointPillar
-
+    NAME: PointPillar_TENT
     TENT:
         ENABLED: True
         LR: 0.000025
