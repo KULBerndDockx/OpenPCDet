@@ -25,7 +25,7 @@ python3 -m pcdet.datasets.kitti.kitti_dataset --func create_kitti_infos --cfg_fi
 
 - **EROD Labels:** `python3 visualize_labels.py --data_path /OpenPCDet/erod/points --label_path /OpenPCDet/erod/labels --ext .npy --z_min -1.0 --z_max 3.0`
 - **nuSc Labels:** `cd /OpenPCDet/tools && python3 visualize_labels.py --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --label_path /OpenPCDet/erod/labels --ext .npy   --z_min -1.0 --z_max 3.0`
-
+- **KITTI Labels** `python3 visualize_labels.py --data_path --data_path /OpenPCDet/datasets/kitti/testing/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --z_min -1.0 --z_max 3.0`
 
 ---
 
@@ -38,7 +38,7 @@ python3 -m pcdet.datasets.kitti.kitti_dataset --func create_kitti_infos --cfg_fi
 - **nuSc (Fine-tune):** `python3 train.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_D_N.yaml --pretrained_model /OpenPCDet/pcdet/models/pth/second_7862.pth --extra_tag unfrozen_backbone_1_93 --freeze_backbone`
 
 - **KITT (Focal):** `python3 train.py --cfg_file tools/cfgs/models/S/F/S_F_K.yaml` done
-- **nuSc (Focal) (Fine-tune):** `python3 train.py --cfg_file /OpenPCDet/tools/cfgs/models/S/F/S_F_N.yaml --pretrained_model /OpenPCDet/output/custom_models/S/F/S_F/default/ckpt/checkpoint_epoch_80.pth`
+- **nuSc (Focal) (Fine-tune):** `python3 train.py --cfg_file /OpenPCDet/tools/cfgs/models/S/F/S_F_N.yaml --pretrained_model /OpenPCDet/output/cfgs/models/S/F/S_F_K/default/ckpt/checkpoint_epoch_14.pth`
 
 
 ### PointPillar
@@ -191,7 +191,7 @@ tools/cfgs/models/P/T/
 
 ## 5. vis
 
-python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/F/S_F/S_KITTI_F_def_1/eval/epoch_80/val/default/result.pkl 
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_K/default/eval/epoch_7862/val/default/result.pkl
 
 
 python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/default/eval/epoch_7862/val/default/result.pkl 
@@ -224,19 +224,14 @@ python3 visualize_labels.py --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/s
 custom_models/S/default/
 - **KITT(def):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/models/S/D/S_N.yaml --ckpt /OpenPCDet/pcdet/models/pth/S_7862.pth --extra_tag S_N_def --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --ext .bin`
 
-
 - **KITT(ftd):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/models/S.yaml --ckpt /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S_N/default/ckpt/checkpoint_epoch_80.pth --extra_tag S_F_Ktd`
 
-
 ### SECOND (FOCAL)
-
 - **KITT(def):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/models/S/F/S_F.yaml --ckpt /OpenPCDet/output/custom_models/S/F/S_F/default/ckpt/checkpoint_epoch_80.pth --extra_tag S_F_K_def_1`
-
 
 - **KITT(ftd):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/models/S/F/S_F.yaml --ckpt output/OpenPCDet/tools/cfgs/models/S/F/S_F_N/default/ckpt/checkpoint_epoch_40.pth --extra_tag S_F_K_ftd_1`
 
 ### SECOND (TENT)
-
 - **KITT(def):** `python3 demo.py --cfg_file /OpenPCDet/tools/cfgs/models/S/T/S_T.yaml --ckpt /OpenPCDet/pcdet/models/pth/S_7862.pth --extra_tag S_T_K_def`
 
 
