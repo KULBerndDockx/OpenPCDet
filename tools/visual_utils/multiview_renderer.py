@@ -86,7 +86,7 @@ class MultiViewRenderer:
         return corners
 
     def draw_frame(self, points, boxes, names, save_path, point_range=(-50, -50, 50, 50),
-                   z_range=None, bev_title='BEV (X-Y)', front_title='Front View (X-Z)'):
+                   z_range=(-3,3), bev_title='BEV (X-Y)', front_title='Front View (X-Z)'):
         fig, (ax_bev, ax_front) = plt.subplots(1, 2, figsize=(18, 9), dpi=300)
         self._draw_frame_axes(ax_bev, ax_front, points, boxes, names, point_range, z_range, bev_title, front_title)
 
@@ -95,7 +95,7 @@ class MultiViewRenderer:
         plt.close(fig)
 
     def draw_compare_frame(self, points, gt_boxes, gt_names, pred_boxes, pred_names, save_path,
-                           point_range=(-50, -50, 50, 50), z_range=None,
+                           point_range=(-50, -50, 50, 50), z_range=(-3,3),
                            gt_title='Ground Truth', pred_title='Detections'):
         fig, axes = plt.subplots(2, 2, figsize=(20, 16), dpi=300)
         self._draw_frame_axes(

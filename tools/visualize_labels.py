@@ -15,6 +15,10 @@ NuScenes usage (no per-frame .txt labels; uses OpenPCDet info .pkl):
         --output_dir /OpenPCDet/output/gt_images_nuscenes
 
 
+
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --nuscenes_info /OpenPCDet/datasets/nuscenes/v1.0-mini/nuscenes_infos_10sweeps_val.pkl --ext .npy --single_image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/default/eval/epoch_7862/val/default/result.pkl   --z_min -1.0 --z_max 3.0
+
+
 NuScenes usage (no per-frame .txt labels; uses OpenPCDet info .pkl):
     python3 visualize_labels.py --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini --nuscenes_info /OpenPCDet/datasets/nuscenes/v1.0-mini/nuscenes_infos_10sweeps_val.pkl --output_dir /OpenPCDet/output/gt_images_nuscenes_000
 """
@@ -39,7 +43,7 @@ from visual_utils.multiview_renderer import MultiViewRenderer
 RENDERER = MultiViewRenderer()
 
 KITTI_SINGLE_IMAGE_ID = '000422'
-NUSCENES_SINGLE_IMAGE_STEM = 'n008-2018-08-01-15-16-36-0400__LIDAR_TOP__1533151609547766.pcd'
+NUSCENES_SINGLE_IMAGE_STEM = 'n008-2018-08-01-15-16-36-0400__LIDAR_TOP__1533151616997246.pcd'
 #KITTI_SINGLE_IMAGE_ID = 'n008-2018-08-01-15-16-36-0400__LIDAR_TOP__1533151609547766.pcd'
 
 
@@ -68,7 +72,7 @@ def get_box_corners_2d(cx, cy, dx, dy, heading):
 
 
 def draw_bev_image(points, gt_boxes, gt_names, save_path,
-                   point_range=(-50, -50, 50, 50), z_range=None):
+                   point_range=(-50, -50, 50, 50), z_range=(-3.0, 1.0)):
     """
     Draw a two-panel image:
       1) BEV (X-Y)
@@ -84,7 +88,7 @@ def draw_bev_image(points, gt_boxes, gt_names, save_path,
 
     if z_range is None:
         # Keep front view stable even with outlier points.
-        z_min_plot, z_max_plot = -5.0, 5.0
+        z_min_plot, z_max_plot = -3.0, 1.0
     else:
         z_min_plot, z_max_plot = z_range
 
@@ -691,7 +695,7 @@ def main():
                         help='Where to save the BEV images')
     parser.add_argument('--result_pkl', type=str, default=None,
                         help='Optional OpenPCDet result.pkl with detections for GT-vs-detection comparison')
-    parser.add_argument('--single-image', action='store_true',
+    parser.add_argument('--single_image', action='store_true',
                         help='Only render the hardcoded KITTI or NuScenes frame defined in the script')
     parser.add_argument('--z_min', type=float, default=None,
                         help='Min height (Z) of points to plot')
