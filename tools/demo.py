@@ -17,7 +17,9 @@ from pcdet.utils import common_utils
 from visual_utils.multiview_renderer import MultiViewRenderer
 
 KITTI_TO_USE = '000422'
-NUSCENES_TO_USE = 'n008-2018-08-01-15-16-36-0400__LIDAR_TOP__1533151609547766'
+#NUSCENES_TO_USE = '1533151616997246'
+NUSCENES_TO_USE = '1533151616947490'
+
 EROD_TO_USE = '0326'
 
 TO_USE = [KITTI_TO_USE, NUSCENES_TO_USE, EROD_TO_USE]
@@ -41,7 +43,25 @@ class DemoDataset(DatasetTemplate):
         data_file_list = glob.glob(str(root_path / f'*{self.ext}')) if self.root_path.is_dir() else [self.root_path]
 
         data_file_list.sort()
-        self.sample_file_list = data_file_list[174:423]
+        if ext==".bin":
+            #print(data_file_list)
+            print(root_path)
+
+            self.sample_file_list = data_file_list[422:423]
+            if "kitti" in str(root_path):
+                self.sample_file_list = data_file_list[422:423]
+            else:
+
+                print(len(data_file_list))
+                indices = [i for i, p in enumerate(data_file_list) if "1533151616447606" in str(p)]
+                print(indices)
+                self.sample_file_list = data_file_list[241:242]
+                print(self.sample_file_list)
+
+        elif ext==".npy":
+            self.sample_file_list = data_file_list[326:327]
+  
+    
 
     def __len__(self):
         return len(self.sample_file_list)
@@ -63,13 +83,14 @@ class DemoDataset(DatasetTemplate):
                 points[:, 3] = points[:, 3] / 255.0
         else:
             raise NotImplementedError
-
+        print("Raw file:", points.shape)
         input_dict = {
             'points': points,
             'frame_id': index,
         }
-
+        print("Before prepare_data:", points.shape)
         data_dict = self.prepare_data(data_dict=input_dict)
+        print("After prepare_data :", data_dict['points'].shape)
         return data_dict
 
 
@@ -267,6 +288,8 @@ def main():
     model.eval()
 
     output_dir = cfg.ROOT_DIR / 'output' / 'demo_images' / args.extra_tag
+    output_dir = cfg.ROOT_DIR / 'output' / 'demo_images' / "BEV"
+
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Use DataLoader for parallel point cloud loading
@@ -293,6 +316,8 @@ def main():
             pred_dicts, _ = model.forward(data_dict)
 
             points = data_dict['points'][:, 1:].cpu().numpy()
+            print(data_dict['points'].shape)
+            print("After numpy:", points.shape)
             pred_boxes = pred_dicts[0]['pred_boxes'].cpu().numpy()
             pred_scores = pred_dicts[0]['pred_scores'].cpu().numpy()
             pred_labels = pred_dicts[0]['pred_labels'].cpu().numpy()
@@ -306,20 +331,21 @@ def main():
                                        show_realtime=True, fig_ax=fig_ax)
                 logger.info(f'  Displaying BEV image realtime -> {sample_name}')
             else:
-                # Render images in parallel background processes
-                fut = render_pool.submit(
-                    _render_prediction_outputs,
-                    points,
-                    pred_boxes,
-                    pred_scores,
-                    pred_labels,
-                    list(cfg.CLASS_NAMES),
-                    sample_name,
-                    str(output_dir),
-                    render_score_thresh,
-                    args.extra_tag
-                )
-                futures.append((sample_name, fut))
+                if True:
+                    # Render images in parallel background processes
+                    fut = render_pool.submit(
+                        _render_prediction_outputs,
+                        points,
+                        pred_boxes,
+                        pred_scores,
+                        pred_labels,
+                        list(cfg.CLASS_NAMES),
+                        sample_name,
+                        str(output_dir),
+                        render_score_thresh,
+                        args.extra_tag
+                    )
+                    futures.append((sample_name, fut))
 
     # Wait for all renders to finish
     if render_pool is not None:

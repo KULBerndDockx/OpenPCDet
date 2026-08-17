@@ -6,14 +6,20 @@ Usage:
     python3 visualize_labels.py \
         --data_path /OpenPCDet/erod/points \
         --label_path /OpenPCDet/erod/labels \
+        --output_dir /OpenPCDet/output/gt_images_erod
         --ext .npy
+python3 visualize_labels.py --data_path /OpenPCDet/erod/points --label_path /OpenPCDet/erod/labels --output_dir /OpenPCDet/output/gt_images_erod --ext .npy
+
+
+python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --output_dir /OpenPCDet/output/gt_images_kitti
 
 NuScenes usage (no per-frame .txt labels; uses OpenPCDet info .pkl):
     python3 visualize_labels.py \
         --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini \
-        --nuscenes_info /OpenPCDet/datasets/nuscenes/v1.0-mini/nuscenes_infos_10sweeps_val.pkl \
+        --nuscenes_info /OpenPCDet/datasets/nuscenes/v1.0-mini/nuscenes_infos_1sweeps_val.pkl \
         --output_dir /OpenPCDet/output/gt_images_nuscenes
 
+python3 visualize_labels.py  --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini --nuscenes_info /OpenPCDet/datasets/nuscenes/v1.0-mini/nuscenes_infos_1sweeps_val.pkl --output_dir /OpenPCDet/output/gt_images_nuscenes
 
 
 python3 visualize_labels.py --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --nuscenes_info /OpenPCDet/datasets/nuscenes/v1.0-mini/nuscenes_infos_10sweeps_val.pkl --ext .npy --single_image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/default/eval/epoch_7862/val/default/result.pkl   --z_min -1.0 --z_max 3.0
@@ -435,15 +441,16 @@ def _process_one(pc_file, label_dir, output_dir, ext, z_range):
     # Frame-level image (existing output).
     frame_save_path = Path(output_dir) / f'{stem}.png'
     frame_names = [f'{name} (GT)' for name in gt_names]
-    RENDERER.draw_frame(
-        points=points,
-        boxes=gt_boxes,
-        names=frame_names,
-        save_path=frame_save_path,
-        z_range=z_range,
-        bev_title='BEV (X-Y)  -  Ground Truth',
-        front_title='Front View (X-Z)  -  Ground Truth'
-    )
+    if "422" in stem or "0326" in stem:
+        RENDERER.draw_frame(
+            points=points,
+            boxes=gt_boxes,
+            names=frame_names,
+            save_path=frame_save_path,
+            z_range=z_range,
+            bev_title='BEV (X-Y)  -  Ground Truth',
+            front_title='Front View (X-Z)  -  Ground Truth'
+        )
 
     # Per-object images.
     instances_dir = Path(output_dir) / 'instances'
@@ -485,16 +492,17 @@ def _process_one_nuscenes(sample, output_dir, z_range):
 
     frame_save_path = Path(output_dir) / f'{stem}.png'
     frame_names = [f'{name} (GT)' for name in gt_names]
-    RENDERER.draw_frame(
-        points=points,
-        boxes=gt_boxes,
-        names=frame_names,
-        save_path=frame_save_path,
-        z_range=z_range,
-        bev_title='BEV (X-Y)  -  Ground Truth',
-        front_title='Front View (X-Z)  -  Ground Truth'
-    )
-
+    if "1616" in stem or "00422" in stem :
+        RENDERER.draw_frame(
+            points=points,
+            boxes=gt_boxes,
+            names=frame_names,
+            save_path=frame_save_path,
+            z_range=z_range,
+            bev_title='BEV (X-Y)  -  Ground Truth',
+            front_title='Front View (X-Z)  -  Ground Truth'
+        )
+    """
     instances_dir = Path(output_dir) / 'instances'
     instances_dir.mkdir(parents=True, exist_ok=True)
 
@@ -505,7 +513,7 @@ def _process_one_nuscenes(sample, output_dir, z_range):
         frame_key=frame_key,
         instances_dir=instances_dir
     )
-
+    """
     return (
         f'[{stem}]  frame -> {frame_save_path.name}, '
         f'instances -> {len(gt_boxes)}'
