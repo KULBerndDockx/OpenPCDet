@@ -26,7 +26,7 @@ python3 visualize_labels.py --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/s
 
 
 NuScenes usage (no per-frame .txt labels; uses OpenPCDet info .pkl):
-    python3 visualize_labels.py --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini --nuscenes_info /OpenPCDet/datasets/nuscenes/v1.0-mini/nuscenes_infos_10sweeps_val.pkl --output_dir /OpenPCDet/output/gt_images_nuscenes_000
+    python3 visualize_labels.py --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini --nuscenes_info /OpenPCDet/datasets/nuscenes/v1.0-mini/nuscenes_infos_1sweeps_val.pkl --output_dir /OpenPCDet/output/gt_images_nuscenes_000
 """
 
 import argparse
@@ -49,8 +49,8 @@ from visual_utils.multiview_renderer import MultiViewRenderer
 RENDERER = MultiViewRenderer()
 
 KITTI_SINGLE_IMAGE_ID = '000422'
-NUSCENES_SINGLE_IMAGE_STEM = 'n008-2018-08-01-15-16-36-0400__LIDAR_TOP__1533151616997246.pcd'
-#KITTI_SINGLE_IMAGE_ID = 'n008-2018-08-01-15-16-36-0400__LIDAR_TOP__1533151609547766.pcd'
+#NUSCENES_SINGLE_IMAGE_STEM = 'n008-2018-08-01-15-16-36-0400__LIDAR_TOP__1533151616997246.pcd'
+NUSCENES_SINGLE_IMAGE_STEM = 'n008-2018-08-01-15-16-36-0400__LIDAR_TOP__1533151616947490.pcd'
 
 
 # ── BEV drawing (same as demo.py) ────────────────────────────────────────────
@@ -102,10 +102,14 @@ def draw_bev_image(points, gt_boxes, gt_names, save_path,
 
     # Class -> colour mapping
     class_colors = {
-        'Car': 'lime', 'Vehicle': 'lime',
-        'Pedestrian': 'cyan',
-        'Cyclist': 'yellow',
-    }
+            'Car': 'lime',
+            'Vehicle': 'lime',
+            'Pedestrian': 'cyan',
+            'Cyclist': 'yellow',
+            'car': 'lime',
+            'pedestrian': 'cyan',
+            'bicycle': 'yellow',
+        }
     default_color = 'magenta'
 
     # BEV panel (x=forward, y=left)
@@ -441,7 +445,7 @@ def _process_one(pc_file, label_dir, output_dir, ext, z_range):
     # Frame-level image (existing output).
     frame_save_path = Path(output_dir) / f'{stem}.png'
     frame_names = [f'{name} (GT)' for name in gt_names]
-    if "422" in stem or "0326" in stem:
+    if "422" in stem or "0326" in stem :
         RENDERER.draw_frame(
             points=points,
             boxes=gt_boxes,
@@ -492,7 +496,7 @@ def _process_one_nuscenes(sample, output_dir, z_range):
 
     frame_save_path = Path(output_dir) / f'{stem}.png'
     frame_names = [f'{name} (GT)' for name in gt_names]
-    if "1616" in stem or "00422" in stem :
+    if "1616" in stem or "00422" in stem:
         RENDERER.draw_frame(
             points=points,
             boxes=gt_boxes,
@@ -732,7 +736,7 @@ def main():
         print(f'Loaded {len(samples)} NuScenes samples from {info_path}')
 
         if args.single_image:
-            samples = [sample for sample in samples if sample['stem'] == NUSCENES_SINGLE_IMAGE_STEM]
+            #samples = [sample for sample in samples if sample['stem'] == NUSCENES_SINGLE_IMAGE_STEM]
             if not samples:
                 raise FileNotFoundError(
                     f'No NuScenes sample found for NUSCENES_SINGLE_IMAGE_STEM={NUSCENES_SINGLE_IMAGE_STEM}'
@@ -771,7 +775,7 @@ def main():
     print(f'Found {len(pc_files)} point cloud files in {data_path}')
 
     if args.single_image:
-        pc_files = [pc_file for pc_file in pc_files if Path(pc_file).stem == KITTI_SINGLE_IMAGE_ID]
+        #pc_files = [pc_file for pc_file in pc_files if Path(pc_file).stem == KITTI_SINGLE_IMAGE_ID]
         if not pc_files:
             raise FileNotFoundError(
                 f'No point cloud found for KITTI_SINGLE_IMAGE_ID={KITTI_SINGLE_IMAGE_ID} in {data_path}'

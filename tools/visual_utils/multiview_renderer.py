@@ -9,13 +9,13 @@ import matplotlib.pyplot as plt
 class MultiViewRenderer:
     def __init__(self):
         self.class_colors = {
-            'Car': 'green',
-            'Vehicle': 'green',
-            'Pedestrian': 'blue',
-            'Cyclist': 'goldenrod',
-            'car': 'green',
-            'pedestrian': 'blue',
-            'bicycle': 'goldenrod',
+            'Car': 'lime',
+            'Vehicle': 'lime',
+            'Pedestrian': 'cyan',
+            'Cyclist': 'yellow',
+            'car': 'lime',
+            'pedestrian': 'cyan',
+            'bicycle': 'yellow',
         }
         self.default_color = 'magenta'
 
@@ -32,7 +32,7 @@ class MultiViewRenderer:
         else:
             z_min_plot, z_max_plot = z_range
 
-        ax_bev.scatter(points[:, 1], points[:, 0], s=0.1, c='black', alpha=1.0)
+        ax_bev.scatter(points[:, 1], points[:, 0], s=0.1, c='white', alpha=1.0)
         #ax_front.scatter(points[:, 0], points[:, 2], s=0.1, c='white', alpha=0.5)
 
         for i, box in enumerate(boxes):
@@ -57,7 +57,7 @@ class MultiViewRenderer:
 
         ax_bev.set_xlim(point_range[1], point_range[3])
         ax_bev.set_ylim(point_range[0], point_range[2])
-        ax_bev.set_facecolor('white')
+        ax_bev.set_facecolor('black')
         ax_bev.set_aspect('equal')
         ax_bev.set_xlabel('Y (m)')
         ax_bev.set_ylabel('X (m)')
@@ -66,6 +66,7 @@ class MultiViewRenderer:
         # Keep the border (spines)
         for spine in ax_bev.spines.values():
             spine.set_visible(True)
+            spine.set_color("white")
 
         # Remove ticks and numbers
         ax_bev.set_xticks([])
@@ -152,7 +153,7 @@ class MultiViewRenderer:
         self._draw_frame_axes(ax_bev, ax_front, points, boxes, names, point_range, z_range, bev_title, front_title)
 
         fig.tight_layout()
-        fig.savefig(str(save_path), facecolor='white')
+        fig.savefig(str(save_path), facecolor='black')
         plt.close(fig)
 
     def draw_compare_frame(self, points, gt_boxes, gt_names, pred_boxes, pred_names, save_path,
@@ -168,7 +169,7 @@ class MultiViewRenderer:
             bev_title=f'BEV (X-Y) — {pred_title}', front_title=f'Front View (X-Z) — {pred_title}'
         )
         fig.tight_layout()
-        fig.savefig(str(save_path), facecolor='black')
+        fig.savefig(str(save_path), facecolor='white')
         plt.close(fig)
 
     @staticmethod
