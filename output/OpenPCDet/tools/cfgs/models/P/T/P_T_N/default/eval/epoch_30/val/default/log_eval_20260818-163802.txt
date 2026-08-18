@@ -1,0 +1,162 @@
+2026-08-18 16:38:02,059   INFO  **********************Start logging**********************
+2026-08-18 16:38:02,059   INFO  CUDA_VISIBLE_DEVICES=ALL
+2026-08-18 16:38:02,059   INFO  cfg_file         /OpenPCDet/tools/cfgs/models/P/T/P_T_N.yaml
+2026-08-18 16:38:02,059   INFO  batch_size       4
+2026-08-18 16:38:02,059   INFO  workers          4
+2026-08-18 16:38:02,059   INFO  extra_tag        default
+2026-08-18 16:38:02,059   INFO  ckpt             /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_30.pth
+2026-08-18 16:38:02,059   INFO  pretrained_model None
+2026-08-18 16:38:02,059   INFO  launcher         none
+2026-08-18 16:38:02,059   INFO  tcp_port         18888
+2026-08-18 16:38:02,059   INFO  local_rank       None
+2026-08-18 16:38:02,059   INFO  set_cfgs         None
+2026-08-18 16:38:02,059   INFO  max_waiting_mins 1
+2026-08-18 16:38:02,059   INFO  start_epoch      0
+2026-08-18 16:38:02,059   INFO  eval_tag         default
+2026-08-18 16:38:02,059   INFO  eval_all         False
+2026-08-18 16:38:02,059   INFO  ckpt_dir         None
+2026-08-18 16:38:02,059   INFO  save_to_file     False
+2026-08-18 16:38:02,059   INFO  infer_time       False
+2026-08-18 16:38:02,059   INFO  cfg.ROOT_DIR: /OpenPCDet
+2026-08-18 16:38:02,059   INFO  cfg.LOCAL_RANK: 0
+2026-08-18 16:38:02,059   INFO  cfg.CLASS_NAMES: ['car', 'pedestrian', 'bicycle']
+2026-08-18 16:38:02,059   INFO  ----------- DATA_CONFIG -----------
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.DATASET: NuScenesDataset
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.DATA_PATH: ../datasets/nuscenes
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.VERSION: v1.0-mini
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.MAX_SWEEPS: 1
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.PRED_VELOCITY: False
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.SET_NAN_VELOCITY_TO_ZEROS: True
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.FILTER_MIN_POINTS_IN_GT: 1
+2026-08-18 16:38:02,060   INFO  ----------- MAP_CLASS_TO_KITTI -----------
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.car: Car
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.pedestrian: Pedestrian
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.MAP_CLASS_TO_KITTI.bicycle: Cyclist
+2026-08-18 16:38:02,060   INFO  ----------- DATA_SPLIT -----------
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.DATA_SPLIT.train: train
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.DATA_SPLIT.test: val
+2026-08-18 16:38:02,060   INFO  ----------- INFO_PATH -----------
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.INFO_PATH.train: ['nuscenes_infos_1sweeps_train.pkl']
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.INFO_PATH.test: ['nuscenes_infos_1sweeps_val.pkl']
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.POINT_CLOUD_RANGE: [-51.2, -32.0, -3.0, 51.2, 32.0, 1.0]
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.BALANCED_RESAMPLING: True
+2026-08-18 16:38:02,060   INFO  ----------- DATA_AUGMENTOR -----------
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.DISABLE_AUG_LIST: ['gt_sampling']
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.AUG_CONFIG_LIST: [{'NAME': 'gt_sampling', 'DB_INFO_PATH': ['nuscenes_dbinfos_1sweeps_withvelo.pkl'], 'PREPARE': {'filter_by_min_points': ['car:5', 'bicycle:5', 'pedestrian:5']}, 'SAMPLE_GROUPS': ['car:2', 'bicycle:6', 'pedestrian:2'], 'NUM_POINT_FEATURES': 4, 'DATABASE_WITH_FAKELIDAR': False, 'REMOVE_EXTRA_WIDTH': [0.0, 0.0, 0.0], 'LIMIT_WHOLE_SCENE': True}, {'NAME': 'random_world_flip', 'ALONG_AXIS_LIST': ['x', 'y']}, {'NAME': 'random_world_rotation', 'WORLD_ROT_ANGLE': [-0.3925, 0.3925]}, {'NAME': 'random_world_scaling', 'WORLD_SCALE_RANGE': [0.95, 1.05]}]
+2026-08-18 16:38:02,060   INFO  ----------- POINT_FEATURE_ENCODING -----------
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.encoding_type: absolute_coordinates_encoding
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.used_feature_list: ['x', 'y', 'z', 'intensity']
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.src_feature_list: ['x', 'y', 'z', 'intensity']
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG.DATA_PROCESSOR: [{'NAME': 'transform_points_to_voxels', 'VOXEL_SIZE': [0.16, 0.16, 4.0], 'MAX_POINTS_PER_VOXEL': 100, 'MAX_NUMBER_OF_VOXELS': {'train': 40000, 'test': 40000}}]
+2026-08-18 16:38:02,060   INFO  cfg.DATA_CONFIG._BASE_CONFIG_: cfgs/dataset_configs/nuscenes_dataset.yaml
+2026-08-18 16:38:02,060   INFO  ----------- MODEL -----------
+2026-08-18 16:38:02,060   INFO  cfg.MODEL.NAME: PointPillar_TENT
+2026-08-18 16:38:02,060   INFO  ----------- TENT -----------
+2026-08-18 16:38:02,060   INFO  cfg.MODEL.TENT.ENABLED: True
+2026-08-18 16:38:02,060   INFO  cfg.MODEL.TENT.LR: 2.5e-05
+2026-08-18 16:38:02,060   INFO  cfg.MODEL.TENT.STEPS: 2
+2026-08-18 16:38:02,060   INFO  cfg.MODEL.TENT.EPISODIC: False
+2026-08-18 16:38:02,060   INFO  cfg.MODEL.TENT.ADAPT_MODULES: ['backbone_2d']
+2026-08-18 16:38:02,060   INFO  cfg.MODEL.TENT.ENTROPY_TOPK: 0
+2026-08-18 16:38:02,060   INFO  cfg.MODEL.TENT.ENTROPY_SCORE_THRESH: 0.55
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.TENT.ENTROPY_WEIGHT: 0.015
+2026-08-18 16:38:02,061   INFO  ----------- VFE -----------
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.VFE.NAME: PillarVFE
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.VFE.WITH_DISTANCE: False
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.VFE.USE_ABSLOTE_XYZ: True
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.VFE.USE_NORM: True
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.VFE.NUM_FILTERS: [64]
+2026-08-18 16:38:02,061   INFO  ----------- MAP_TO_BEV -----------
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.MAP_TO_BEV.NAME: PointPillarScatter
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.MAP_TO_BEV.NUM_BEV_FEATURES: 64
+2026-08-18 16:38:02,061   INFO  ----------- BACKBONE_2D -----------
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.BACKBONE_2D.NAME: BaseBEVBackbone
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.BACKBONE_2D.LAYER_NUMS: [3, 5, 5]
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.BACKBONE_2D.LAYER_STRIDES: [2, 2, 2]
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.BACKBONE_2D.NUM_FILTERS: [64, 128, 256]
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.BACKBONE_2D.UPSAMPLE_STRIDES: [1, 2, 4]
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.BACKBONE_2D.NUM_UPSAMPLE_FILTERS: [128, 128, 128]
+2026-08-18 16:38:02,061   INFO  ----------- DENSE_HEAD -----------
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.NAME: AnchorHeadSingle
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.CLASS_AGNOSTIC: False
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.USE_DIRECTION_CLASSIFIER: True
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.DIR_OFFSET: 0.78539
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.DIR_LIMIT_OFFSET: 0.0
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.NUM_DIR_BINS: 2
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.ANCHOR_GENERATOR_CONFIG: [{'class_name': 'car', 'anchor_sizes': [[3.9, 1.6, 1.56]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-1.78], 'align_center': False, 'feature_map_stride': 2, 'matched_threshold': 0.6, 'unmatched_threshold': 0.45}, {'class_name': 'pedestrian', 'anchor_sizes': [[0.8, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 2, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}, {'class_name': 'bicycle', 'anchor_sizes': [[1.76, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 2, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}]
+2026-08-18 16:38:02,061   INFO  ----------- TARGET_ASSIGNER_CONFIG -----------
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NAME: AxisAlignedTargetAssigner
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.POS_FRACTION: -1.0
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.SAMPLE_SIZE: 512
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NORM_BY_NUM_EXAMPLES: False
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.MATCH_HEIGHT: False
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.BOX_CODER: ResidualCoder
+2026-08-18 16:38:02,061   INFO  ----------- LOSS_CONFIG -----------
+2026-08-18 16:38:02,061   INFO  ----------- LOSS_WEIGHTS -----------
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.cls_weight: 1.0
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.loc_weight: 2.0
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.dir_weight: 0.2
+2026-08-18 16:38:02,061   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.code_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-18 16:38:02,061   INFO  ----------- POST_PROCESSING -----------
+2026-08-18 16:38:02,062   INFO  cfg.MODEL.POST_PROCESSING.RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
+2026-08-18 16:38:02,062   INFO  cfg.MODEL.POST_PROCESSING.SCORE_THRESH: 0.1
+2026-08-18 16:38:02,062   INFO  cfg.MODEL.POST_PROCESSING.OUTPUT_RAW_SCORE: False
+2026-08-18 16:38:02,062   INFO  cfg.MODEL.POST_PROCESSING.EVAL_METRIC: kitti
+2026-08-18 16:38:02,062   INFO  ----------- NMS_CONFIG -----------
+2026-08-18 16:38:02,062   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.MULTI_CLASSES_NMS: False
+2026-08-18 16:38:02,062   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_TYPE: nms_gpu
+2026-08-18 16:38:02,062   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_THRESH: 0.005
+2026-08-18 16:38:02,062   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_PRE_MAXSIZE: 1000
+2026-08-18 16:38:02,062   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_POST_MAXSIZE: 50
+2026-08-18 16:38:02,062   INFO  ----------- OPTIMIZATION -----------
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.BATCH_SIZE_PER_GPU: 4
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.NUM_EPOCHS: 40
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.OPTIMIZER: adam_onecycle
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.LR: 0.0003
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.WEIGHT_DECAY: 0.01
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.MOMENTUM: 0.9
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.MOMS: [0.95, 0.85]
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.PCT_START: 0.2
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.DIV_FACTOR: 10
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.DECAY_STEP_LIST: [25, 35]
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.LR_DECAY: 0.1
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.LR_CLIP: 1e-07
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.LR_WARMUP: False
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.WARMUP_EPOCH: 1
+2026-08-18 16:38:02,062   INFO  cfg.OPTIMIZATION.GRAD_NORM_CLIP: 10
+2026-08-18 16:38:02,062   INFO  cfg.TAG: P_T_N
+2026-08-18 16:38:02,062   INFO  cfg.EXP_GROUP_PATH: OpenPCDet/tools/cfgs/models/P/T
+2026-08-18 16:38:02,062   INFO  Loading NuScenes dataset
+2026-08-18 16:38:02,065   INFO  Total samples for NuScenes dataset: 81
+2026-08-18 16:38:03,474   INFO  ==> Loading parameters from checkpoint /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_D_N/unfrozen_backbone_1/ckpt/checkpoint_epoch_30.pth to GPU
+2026-08-18 16:38:03,535   INFO  ==> Checkpoint trained from version: pcdet+0.6.0+233f849+py408b825
+2026-08-18 16:38:03,547   INFO  ==> Done (loaded 127/127)
+2026-08-18 16:38:03,557   INFO  *************** EPOCH 30 EVALUATION *****************
+2026-08-18 16:38:14,596   INFO  *************** Performance of EPOCH 30 *****************
+2026-08-18 16:38:14,597   INFO  Generate label finished(sec_per_example: 0.1363 second).
+2026-08-18 16:38:14,597   INFO  recall_roi_0.3: 0.000000
+2026-08-18 16:38:14,597   INFO  recall_rcnn_0.3: 0.677920
+2026-08-18 16:38:14,597   INFO  recall_roi_0.5: 0.000000
+2026-08-18 16:38:14,597   INFO  recall_rcnn_0.5: 0.553528
+2026-08-18 16:38:14,597   INFO  recall_roi_0.7: 0.000000
+2026-08-18 16:38:14,597   INFO  recall_rcnn_0.7: 0.273418
+2026-08-18 16:38:14,597   INFO  Average predicted number of objects(81 samples): 48.864
+2026-08-18 16:38:15,923   INFO  The predictions of NuScenes have been saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/T/P_T_N/default/eval/epoch_30/val/default/final_result/data/results_nusc.json
+2026-08-18 16:38:18,068   INFO  ----------------Nuscene detection_cvpr_2019 results-----------------
+***car (car) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.18, 0.16, 0.23, 0.38, 0.12 | 60.05, 69.14, 73.38, 75.42 | mean AP: 0.6949754617874258
+***pedestrian (pedestrian) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.12, 0.25, 1.25, 0.92, 0.82 | 65.72, 66.38, 68.71, 73.16 | mean AP: 0.6849029603136328
+***bicycle (bicycle) error@trans, scale, orient, vel, attr | AP@0.5, 1.0, 2.0, 4.0
+0.25, 0.17, 0.53, 3.77, 0.59 | 1.47, 1.47, 1.47, 1.47 | mean AP: 0.014656138947791532
+--------------average performance-------------
+trans_err:	 0.7553
+scale_err:	 0.7572
+orient_err:	 0.8904
+vel_err:	 1.2580
+attr_err:	 0.8167
+mAP:	 0.1395
+NDS:	 0.1478
+
+2026-08-18 16:38:18,069   INFO  Result is saved to /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/T/P_T_N/default/eval/epoch_30/val/default
+2026-08-18 16:38:18,069   INFO  ****************Evaluation done.*****************
