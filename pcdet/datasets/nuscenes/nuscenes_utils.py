@@ -594,10 +594,26 @@ def format_nuscene_results(metrics, class_names, version='default'):
 
     result += '--------------average performance-------------\n'
     details = {}
+    
     for key, val in metrics['tp_errors'].items():
         result += '%s:\t %.4f\n' % (key, val)
         details[key] = val
 
+    # Log AP for every NuScenes class and matching distance threshold.
+    for eval_name, distance_aps in metrics['label_aps'].items():
+        for distance, ap in distance_aps.items():
+            details[f'NuScenes/AP/{eval_name}/{distance}m'] = ap
+
+        details[f'NuScenes/AP/{eval_name}/mean_distance'] = (
+            metrics['mean_dist_aps'][eval_name]
+        )
+
+
+    """
+    for key, val in metrics['tp_errors'].items():
+        result += '%s:\t %.4f\n' % (key, val)
+        details[key] = val
+    """
     result += 'mAP:\t %.4f\n' % metrics['mean_ap']
     result += 'NDS:\t %.4f\n' % metrics['nd_score']
 
