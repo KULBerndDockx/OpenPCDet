@@ -214,6 +214,10 @@ python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velod
 
 python3 visualize_labels.py --data_path /OpenPCDet/datasets/kitti/training/velodyne --label_path /OpenPCDet/datasets/kitti/training/label_2 --ext .bin --single-image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/T/P_T/P_KITTI_T_ftd/eval/epoch_40/val/default/result.pkl 
 
+
+cd /OpenPCDet/tools && python3 visualize_labels.py --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --label_path /OpenPCDet/erod/labels --ext .npy --single_image --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/models/S/D/S_D_N/default/eval/epoch_7862/val/default/result.pkl   --z_min -1.0 --z_max 3.0
+
+
 python3 visualize_labels.py --data_path /OpenPCDet/datasets/nuscenes/v1.0-mini/sweeps/LIDAR_TOP --label_path /OpenPCDet/erod/labels --ext .npy  --ext .bin --single-image  --result_pkl /OpenPCDet/output/OpenPCDet/tools/cfgs/models/P/D/P_N/P_N_default_def/eval/epoch_7728/test/default/result.pkl
 
 
